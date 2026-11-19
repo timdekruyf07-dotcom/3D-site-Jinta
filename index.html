@@ -20,7 +20,6 @@
 }
 
 * { box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
 
 body {
@@ -40,7 +39,9 @@ a:focus-visible {
     outline-offset: 3px;
 }
 
-/* BACKGROUND 3D */
+/* ==========================================
+   3D CANVAS
+========================================== */
 
 #webgl {
     position: fixed;
@@ -51,7 +52,9 @@ a:focus-visible {
     pointer-events: none;
 }
 
-/* HEADER */
+/* ==========================================
+   NAVIGATION
+========================================== */
 
 .header {
     position: fixed;
@@ -97,7 +100,9 @@ a:focus-visible {
     font-size: 23px;
 }
 
-/* PROGRESS */
+/* ==========================================
+   SCROLL PROGRESS
+========================================== */
 
 .progress {
     position: fixed;
@@ -115,7 +120,9 @@ a:focus-visible {
     background: #ff6244;
 }
 
-/* SECTIONS */
+/* ==========================================
+   SECTIONS
+========================================== */
 
 .section {
     position: relative;
@@ -134,7 +141,9 @@ a:focus-visible {
 .content a,
 .content button { pointer-events: auto; }
 
-/* HERO */
+/* ==========================================
+   HERO
+========================================== */
 
 #hero {
     background-color: #291436;
@@ -190,7 +199,9 @@ a:focus-visible {
     white-space: nowrap;
 }
 
-/* FLAVOURS */
+/* ==========================================
+   FLAVOURS
+========================================== */
 
 #flavours { background: #f8e8e8; }
 
@@ -239,7 +250,9 @@ a:focus-visible {
     font: 12px/1.7 'DM Mono', monospace;
 }
 
-/* FLAVOUR SELECTOR */
+/* ==========================================
+   FLAVOUR SELECTOR
+========================================== */
 
 .flavour-selector {
     position: absolute;
@@ -300,7 +313,9 @@ a:focus-visible {
     box-shadow: inset -5px -5px 0 #0002;
 }
 
-.option-name { font: 700 9px 'DM Mono', monospace; }
+.option-name {
+    font: 700 9px 'DM Mono', monospace;
+}
 
 .selector-footer {
     text-align: center;
@@ -308,7 +323,30 @@ a:focus-visible {
     font: 10px 'DM Mono', monospace;
 }
 
-/* PLAY WITH YOUR FOOD */
+/* ==========================================
+   NEW: STANDARD FLAVOUR ORDER BUTTON
+========================================== */
+
+.order-flavour-btn {
+    display: block;
+    width: 100%;
+    margin-top: 14px;
+    padding: 14px 10px;
+    border: 2px solid var(--ink);
+    background: var(--ink);
+    color: white;
+    font: 700 11px 'DM Mono', monospace;
+    transition: transform .2s, background .2s;
+}
+
+.order-flavour-btn:hover {
+    background: #492a56;
+    transform: translateY(-2px);
+}
+
+/* ==========================================
+   PLAY WITH YOUR FOOD
+========================================== */
 
 #play {
     position: relative;
@@ -363,7 +401,9 @@ a:focus-visible {
     font: 13px/1.7 'DM Mono', monospace;
 }
 
-/* GAME */
+/* ==========================================
+   GAME LAYOUT
+========================================== */
 
 .game-layout {
     position: relative;
@@ -444,7 +484,9 @@ a:focus-visible {
     max-width: 55%;
 }
 
-/* RECIPE */
+/* ==========================================
+   RECIPE TICKET
+========================================== */
 
 .recipe {
     border: 3px solid var(--ink);
@@ -476,7 +518,9 @@ a:focus-visible {
     margin: 13px 0;
 }
 
-.recipe-label { font: 700 11px 'DM Mono', monospace; }
+.recipe-label {
+    font: 700 11px 'DM Mono', monospace;
+}
 
 .ingredients {
     list-style: none;
@@ -506,7 +550,10 @@ a:focus-visible {
     font-size: 16px;
 }
 
-.ingredients .empty { opacity: .6; line-height: 1.65; }
+.ingredients .empty {
+    opacity: .6;
+    line-height: 1.65;
+}
 
 .mix-preview {
     display: flex;
@@ -568,7 +615,9 @@ a:focus-visible {
     font: 11px/1.5 'DM Mono', monospace;
 }
 
-/* INGREDIENT SHELF */
+/* ==========================================
+   INGREDIENT SHELF
+========================================== */
 
 .ingredient-picker {
     position: relative;
@@ -589,7 +638,8 @@ a:focus-visible {
 
 .picker-grid {
     display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-template-columns:
+        repeat(7, minmax(0, 1fr));
     gap: 10px;
 }
 
@@ -633,9 +683,232 @@ a:focus-visible {
     font: 11px 'DM Mono', monospace;
 }
 
-.play-bottom a { border-bottom: 1px solid currentColor; }
+.play-bottom a {
+    border-bottom: 1px solid currentColor;
+}
 
-/* TICKER */
+/* ==========================================
+   RESULT CUP
+========================================== */
+
+.cup-result {
+    position: absolute;
+    inset: 0;
+    z-index: 7;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s, visibility .3s;
+}
+
+.cup-result.visible {
+    opacity: 1;
+    visibility: visible;
+    z-index: 9;
+    pointer-events: none;
+    background: transparent;
+}
+
+.result-header {
+    position: absolute;
+    inset: 16px 18px auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font: 700 10px 'DM Mono', monospace;
+    letter-spacing: .05em;
+    z-index: 10;
+}
+
+.result-header button {
+    pointer-events: auto;
+    background: var(--ink);
+    color: white;
+    border: 0;
+    font: 20px 'DM Mono', monospace;
+    width: 42px;
+    height: 42px;
+}
+
+.result-details {
+    position: absolute;
+    left: 4%;
+    right: 4%;
+    bottom: 4%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    text-align: center;
+    z-index: 10;
+}
+
+.result-details h3 {
+    margin: 0;
+    font: clamp(22px, 3vw, 42px)/.9
+          'Archivo Black', sans-serif;
+    letter-spacing: -.05em;
+}
+
+.result-details p {
+    margin: 0;
+    font: 11px/1.4 'DM Mono', monospace;
+    max-width: 420px;
+}
+
+.result-details strong {
+    font: 700 12px 'DM Mono', monospace;
+}
+
+.result-details button {
+    pointer-events: auto;
+    border: 2px solid var(--ink);
+    background: var(--ink);
+    color: white;
+    padding: 12px 16px;
+    font: 700 11px 'DM Mono', monospace;
+}
+
+#orderCustomBtn {
+    background: #ed3157;
+    border-color: #24112f;
+}
+
+.result-instruction { opacity: .7; }
+
+/* ==========================================
+   ORDER DIALOG
+========================================== */
+
+.order-dialog {
+    padding: 0;
+    border: 3px solid #24112f;
+    box-shadow: 14px 14px 0 #24112f;
+    max-width: min(520px, calc(100vw - 34px));
+    width: 100%;
+    color: #24112f;
+    background: #fff8e9;
+}
+
+.order-dialog::backdrop {
+    background: rgba(20, 9, 32, .72);
+    backdrop-filter: blur(5px);
+}
+
+.order-card {
+    padding: clamp(17px, 4vw, 30px);
+}
+
+.order-topline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    font: 700 11px 'DM Mono', monospace;
+}
+
+.order-close {
+    background: #24112f;
+    color: white;
+    border: 0;
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+}
+
+.order-card h2 {
+    font: clamp(40px, 8vw, 66px)/.85
+          'Archivo Black', sans-serif;
+    letter-spacing: -.075em;
+    margin: 22px 0;
+}
+
+.order-product {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    padding: 16px 0;
+    border-block: 2px dashed #24112f;
+}
+
+.order-swatch {
+    display: block;
+    width: 62px;
+    height: 62px;
+    flex: none;
+    border: 2px solid #24112f;
+    border-radius: 50%;
+}
+
+.order-product strong {
+    font: 700 15px 'DM Mono', monospace;
+}
+
+.order-product p {
+    font: 11px/1.6 'DM Mono', monospace;
+    margin: 6px 0 0;
+    overflow-wrap: anywhere;
+}
+
+.order-quantity {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    font: 700 12px 'DM Mono', monospace;
+    margin: 22px 0;
+}
+
+.order-quantity input {
+    width: 85px;
+    padding: 10px;
+    border: 2px solid #24112f;
+    background: white;
+    color: #24112f;
+    font: 700 18px 'DM Mono', monospace;
+}
+
+.order-review {
+    padding: 13px;
+    background: #eee7d8;
+    font: 11px/1.7 'DM Mono', monospace;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+.order-explainer {
+    font: 11px/1.65 'DM Mono', monospace;
+    margin: 17px 0;
+}
+
+.order-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.order-actions button {
+    padding: 13px 7px;
+    border: 2px solid #24112f;
+    background: #24112f;
+    color: white;
+    font: 700 11px 'DM Mono', monospace;
+}
+
+.order-actions button:first-child {
+    background: white;
+    color: #24112f;
+}
+
+.order-feedback {
+    min-height: 16px;
+    font: 11px/1.5 'DM Mono', monospace;
+}
+
+/* ==========================================
+   TICKER
+========================================== */
 
 .ticker {
     position: relative;
@@ -657,7 +930,9 @@ a:focus-visible {
     to { transform: translateX(-50%); }
 }
 
-/* FOOTER */
+/* ==========================================
+   FOOTER
+========================================== */
 
 footer {
     position: relative;
@@ -684,7 +959,9 @@ footer h2 {
     font: 11px 'DM Mono', monospace;
 }
 
-/* LOADER */
+/* ==========================================
+   LOADER
+========================================== */
 
 .loader {
     position: fixed;
@@ -724,98 +1001,22 @@ footer h2 {
     background: #ffc629;
 }
 
-/* RESULT PANEL */
-
-.cup-result {
-    position: absolute;
-    inset: 0;
-    z-index: 7;
-    pointer-events: none;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity .3s, visibility .3s;
-}
-
-.cup-result.visible {
-    opacity: 1;
-    visibility: visible;
-    z-index: 9;
-    pointer-events: none;
-    background: transparent;
-}
-
-.result-header {
-    position: absolute;
-    inset: 16px 18px auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    font: 700 10px 'DM Mono', monospace;
-    letter-spacing: .05em;
-}
-
-.result-header button {
-    pointer-events: auto;
-    background: var(--ink);
-    color: white;
-    border: 0;
-    font: 20px 'DM Mono', monospace;
-    width: 42px;
-    height: 42px;
-}
-
-.result-details {
-    position: absolute;
-    left: 4%;
-    right: 4%;
-    bottom: 4%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 7px;
-    text-align: center;
-}
-
-.result-details h3 {
-    margin: 0;
-    font: clamp(22px, 3vw, 42px)/.9
-          'Archivo Black', sans-serif;
-    letter-spacing: -.05em;
-}
-
-.result-details p {
-    margin: 0;
-    font: 11px/1.4 'DM Mono', monospace;
-    max-width: 420px;
-}
-
-.result-details strong {
-    font: 700 12px 'DM Mono', monospace;
-}
-
-.result-details button {
-    pointer-events: auto;
-    border: 2px solid var(--ink);
-    background: var(--ink);
-    color: white;
-    padding: 12px 16px;
-    font: 700 11px 'DM Mono', monospace;
-}
-
-.result-instruction { opacity: .7; }
-
-.cup-result.visible .result-header,
-.cup-result.visible .result-details {
-    z-index: 10;
-}
-
-/* RESPONSIVE */
+/* ==========================================
+   RESPONSIVE
+========================================== */
 
 @media (max-width: 1000px) {
-    .game-layout { grid-template-columns: 1fr; }
-    .game-stage { min-height: 470px; }
-    .picker-grid { grid-template-columns: repeat(4, 1fr); }
+    .game-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .game-stage {
+        min-height: 470px;
+    }
+
+    .picker-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
 @media (max-width: 650px) {
@@ -826,7 +1027,11 @@ footer h2 {
 
     .hero-title { font-size: 32vw; }
     .hero-copy { font-size: 10px; bottom: 15%; }
-    .flavour-title { top: 25%; font-size: 13vw; }
+
+    .flavour-title {
+        top: 25%;
+        font-size: 13vw;
+    }
 
     .flavour-description {
         top: 54%;
@@ -850,10 +1055,19 @@ footer h2 {
         box-shadow: 5px 5px 0 var(--ink);
     }
 
-    .flavour-option { min-height: 61px; padding: 6px 2px; }
-    .swatch { height: 24px; width: 24px; }
+    .flavour-option {
+        min-height: 61px;
+        padding: 6px 2px;
+    }
+
+    .swatch {
+        width: 24px;
+        height: 24px;
+    }
+
     .option-name { font-size: 8px; }
     .selector-heading { font-size: 10px; }
+    .selector-footer { font-size: 9px; }
 
     #play { padding: 95px 4vw 65px; }
     .play-head { display: block; }
@@ -865,8 +1079,14 @@ footer h2 {
         box-shadow: 5px 5px 0 var(--ink);
     }
 
-    .recipe { box-shadow: 5px 5px 0 var(--ink); }
-    .picker-grid { grid-template-columns: repeat(3, 1fr); }
+    .recipe {
+        box-shadow: 5px 5px 0 var(--ink);
+    }
+
+    .picker-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
     .pick-btn { min-height: 85px; }
 
     .play-bottom,
@@ -878,6 +1098,12 @@ footer h2 {
     .result-details { bottom: 5%; gap: 5px; }
     .result-details h3 { font-size: 23px; }
     .result-instruction { display: none; }
+
+    .order-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .order-card h2 { font-size: 42px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -894,45 +1120,78 @@ footer h2 {
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
 </head>
 
 <body>
 
-<!-- LOADING -->
+<!-- ==========================================
+     LOADING SCREEN
+========================================== -->
+
 <div class="loader" id="loader">
     <h1>FRUIT.</h1>
     <p>PREPARING THE GOOD STUFF...</p>
+
     <div class="loader-track">
         <div class="loader-fill" id="loadFill"></div>
     </div>
 </div>
 
+<!-- ==========================================
+     PROGRESS
+========================================== -->
+
 <div class="progress">
     <span class="progress-fill" id="progressFill"></span>
 </div>
 
-<canvas id="webgl" aria-label="Geanimeerde 3D-drankproducten"></canvas>
+<!-- ==========================================
+     WEBGL
+========================================== -->
 
-<!-- HEADER -->
+<canvas
+    id="webgl"
+    aria-label="Geanimeerde 3D-drankproducten">
+</canvas>
+
+<!-- ==========================================
+     HEADER
+========================================== -->
+
 <header class="header">
+
     <a href="#hero" class="logo">FRUIT®</a>
 
     <nav class="nav">
         <a href="#hero">HOME</a>
         <a href="#flavours">FLAVOURS</a>
         <a href="#play">PLAY</a>
-        <button id="nextScene" aria-label="Volgende scène">↗</button>
+
+        <button id="nextScene" aria-label="Volgende scène">
+            ↗
+        </button>
     </nav>
+
 </header>
 
 <main>
 
-<!-- HERO -->
-<section class="section" id="hero">
-    <div class="content">
-        <div class="eyebrow">THE GOOD STUFF / 001</div>
+<!-- ==========================================
+     HERO
+========================================== -->
 
-        <h1 class="hero-title" id="heroTitle">FRUIT</h1>
+<section class="section" id="hero">
+
+    <div class="content">
+
+        <div class="eyebrow">
+            THE GOOD STUFF / 001
+        </div>
+
+        <h1 class="hero-title" id="heroTitle">
+            FRUIT
+        </h1>
 
         <div class="hero-copy">
             SIX FLAVOURS.<br>
@@ -941,27 +1200,45 @@ footer h2 {
         </div>
 
         <div class="scene-number">01 / 03</div>
-        <div class="scroll-note">SCROLL TO EXPLORE ↓</div>
+
+        <div class="scroll-note">
+            SCROLL TO EXPLORE ↓
+        </div>
+
     </div>
+
 </section>
 
-<!-- FLAVOURS -->
+<!-- ==========================================
+     FLAVOURS
+========================================== -->
+
 <section class="section" id="flavours">
+
     <div class="content">
-        <div class="flavour-top">PICK YOUR FLAVOUR / 002</div>
+
+        <div class="flavour-top">
+            PICK YOUR FLAVOUR / 002
+        </div>
 
         <h2 class="flavour-title" id="flavourTitle">
             <span>SO</span> STRAWBERRY
         </h2>
 
         <div class="flavour-description">
-            <h3 id="flavourName">STRAWBERRY RUSH</h3>
+
+            <h3 id="flavourName">
+                STRAWBERRY RUSH
+            </h3>
+
             <p id="flavourDescription">
                 Big berry energy. Sweet design. Bold personality.
             </p>
+
         </div>
 
         <div class="flavour-selector">
+
             <div class="selector-heading">
                 <span>✳ CHOOSE YOUR FLAVOUR</span>
                 <span id="flavourCount">01 / 06</span>
@@ -977,16 +1254,32 @@ footer h2 {
             <div class="selector-footer">
                 CLICK A FLAVOUR TO CHANGE THE WORLD ↗
             </div>
+
+            <button
+                type="button"
+                class="order-flavour-btn"
+                id="orderFlavourBtn">
+                🛒 BESTEL DEZE SMAAK ↗
+            </button>
+
         </div>
+
     </div>
+
 </section>
 
-<!-- BLENDER -->
+<!-- ==========================================
+     PLAY WITH YOUR FOOD
+========================================== -->
+
 <section id="play">
 
     <div class="play-head">
+
         <div>
-            <div class="overline">003 / THE INTERACTIVE FRUIT LAB</div>
+            <div class="overline">
+                003 / THE INTERACTIVE FRUIT LAB
+            </div>
 
             <h2>
                 PLAY WITH<br>
@@ -995,12 +1288,16 @@ footer h2 {
         </div>
 
         <p>
-            PAK EEN STUK FRUIT, SLEEP HET IN DE BLENDER
-            EN MAAK JE EIGEN MIX. ELKE COMBINATIE IS ANDERS. ✳
+            PAK EEN STUK FRUIT, SLEEP HET IN DE
+            BLENDER EN MAAK JE EIGEN MIX.
+            ELKE COMBINATIE IS ANDERS. ✳
         </p>
+
     </div>
 
     <div class="game-layout">
+
+        <!-- 3D BLENDER -->
 
         <div class="game-stage" id="gameStage">
 
@@ -1009,6 +1306,8 @@ footer h2 {
                 aria-label="Interactieve 3D-blender met sleepbaar fruit">
             </canvas>
 
+            <!-- RESULT PANEL -->
+
             <div
                 class="cup-result"
                 id="cupResult"
@@ -1016,7 +1315,10 @@ footer h2 {
                 aria-hidden="true">
 
                 <div class="result-header">
-                    <span>✳ FRESHLY POURED / YOUR OWN MIX</span>
+
+                    <span>
+                        ✳ FRESHLY POURED / YOUR OWN MIX
+                    </span>
 
                     <button
                         type="button"
@@ -1024,27 +1326,46 @@ footer h2 {
                         aria-label="Sluit je mix">
                         ✕
                     </button>
+
                 </div>
 
                 <div class="result-details">
+
                     <h3>YOUR OWN<br>MIX!</h3>
+
                     <p id="resultIngredients"></p>
-                    <strong id="resultHex">#FFFFFF</strong>
+
+                    <strong id="resultHex">
+                        #FFFFFF
+                    </strong>
 
                     <p class="result-instruction">
                         DRAAI DE BEKER MET JE MUIS OF VINGER ↔
                     </p>
 
-                    <button type="button" id="newMixBtn">
+                    <button
+                        type="button"
+                        id="orderCustomBtn">
+                        🛒 BESTEL MIJN MIX ↗
+                    </button>
+
+                    <button
+                        type="button"
+                        id="newMixBtn">
                         ↺ MAAK NOG EEN MIX
                     </button>
+
                 </div>
+
             </div>
 
             <span class="drop-hint" id="dropHint">
                 KIES FRUIT LINKS · DROP IN DE KAN RECHTS ↗
             </span>
+
         </div>
+
+        <!-- RECIPE TICKET -->
 
         <aside class="recipe">
 
@@ -1053,38 +1374,58 @@ footer h2 {
             </div>
 
             <h3>YOUR MIX.</h3>
+
             <hr class="dash">
 
-            <div class="recipe-label">INGREDIENTS / MAX 8</div>
+            <div class="recipe-label">
+                INGREDIENTS / MAX 8
+            </div>
 
             <ul
                 class="ingredients"
                 id="ingredients"
                 aria-live="polite">
-                <li class="empty">NOG GEEN FRUIT TOEGEVOEGD.</li>
+
+                <li class="empty">
+                    NOG GEEN FRUIT TOEGEVOEGD.
+                </li>
+
             </ul>
 
             <hr class="dash">
 
-            <div class="recipe-label">COLOUR PREVIEW</div>
+            <div class="recipe-label">
+                COLOUR PREVIEW
+            </div>
 
             <div class="mix-preview">
+
                 <div class="color-disc" id="colorDisc"></div>
 
                 <div>
                     <strong id="colorCode">#F5F0E4</strong>
-                    <small id="mixCount">0 INGREDIENTEN</small>
+                    <small id="mixCount">
+                        0 INGREDIENTEN
+                    </small>
                 </div>
+
             </div>
 
             <div class="actions">
-                <button class="action-btn" id="blendBtn" disabled>
+
+                <button
+                    class="action-btn"
+                    id="blendBtn"
+                    disabled>
                     ✳ BLEND IT!
                 </button>
 
-                <button class="action-btn secondary" id="resetBtn">
+                <button
+                    class="action-btn secondary"
+                    id="resetBtn">
                     ↺ RESET
                 </button>
+
             </div>
 
             <div
@@ -1093,53 +1434,205 @@ footer h2 {
                 aria-live="polite">
                 DROP FRUIT TO GET STARTED.
             </div>
+
         </aside>
+
     </div>
 
+    <!-- INGREDIENT SHELF -->
+
     <div class="ingredient-picker">
-        <h3>THE INGREDIENT SHELF ↗</h3>
+
+        <h3>
+            THE INGREDIENT SHELF ↗
+        </h3>
 
         <p>
-            JE KUNT OOK HIER KLIKKEN OM FRUIT TOE TE VOEGEN.
-            DEZELFDE SMAAK MAG VAKER.
+            JE KUNT OOK HIER KLIKKEN OM FRUIT TOE
+            TE VOEGEN. DEZELFDE SMAAK MAG VAKER.
         </p>
 
         <div class="picker-grid" id="pickerGrid"></div>
+
     </div>
 
     <div class="play-bottom">
+
         <span>
             7 INGREDIENTEN · ONE BLENDER · ENDLESS POSSIBILITIES
         </span>
 
-        <a href="#flavours">← BACK TO FLAVOURS</a>
+        <a href="#flavours">
+            ← BACK TO FLAVOURS
+        </a>
+
     </div>
+
 </section>
 
 </main>
 
+<!-- ==========================================
+     ORDER REQUEST DIALOG
+========================================== -->
+
+<dialog
+    class="order-dialog"
+    id="orderDialog"
+    aria-labelledby="orderTitle">
+
+    <form
+        method="dialog"
+        class="order-card"
+        id="orderForm">
+
+        <div class="order-topline">
+
+            <span>FRUIT LAB® / ORDER REQUEST</span>
+
+            <button
+                type="button"
+                class="order-close"
+                id="closeOrder"
+                aria-label="Sluiten">
+                ✕
+            </button>
+
+        </div>
+
+        <h2 id="orderTitle">
+            YOUR ORDER.
+        </h2>
+
+        <div class="order-product">
+
+            <span
+                class="order-swatch"
+                id="orderSwatch">
+            </span>
+
+            <div>
+
+                <strong id="orderProductName">
+                    STRAWBERRY RUSH
+                </strong>
+
+                <p id="orderProductInfo">
+                    Standaard flavour
+                </p>
+
+            </div>
+
+        </div>
+
+        <label
+            class="order-quantity"
+            for="orderQuantity">
+
+            AANTAL BEKERS
+
+            <input
+                id="orderQuantity"
+                type="number"
+                min="1"
+                max="12"
+                step="1"
+                value="1"
+                required>
+
+        </label>
+
+        <div
+            class="order-review"
+            id="orderReview"
+            aria-live="polite">
+        </div>
+
+        <p class="order-explainer">
+
+            Dit is een
+            <strong>vrijblijvende bestelaanvraag</strong>,
+            geen betaling of bevestigde bestelling.
+
+            GitHub Pages kan niet zelfstandig bestellingen ontvangen.
+
+            Bij 'OPEN E-MAIL' opent een conceptbericht;
+            vul daar zelf het e-mailadres van de aanbieder in.
+
+        </p>
+
+        <div class="order-actions">
+
+            <button type="button" id="copyOrder">
+                KOPIEER AANVRAAG
+            </button>
+
+            <button type="button" id="emailOrder">
+                OPEN E-MAIL ↗
+            </button>
+
+        </div>
+
+        <p
+            class="order-feedback"
+            id="orderFeedback"
+            role="status">
+        </p>
+
+    </form>
+
+</dialog>
+
+<!-- ==========================================
+     TICKER
+========================================== -->
+
 <div class="ticker" id="ticker">
+
     <div class="ticker-track">
+
         ✳ PICK IT ✳ DROP IT ✳ BLEND IT ✳ MAKE IT YOUR OWN
         ✳ PICK IT ✳ DROP IT ✳ BLEND IT ✳ MAKE IT YOUR OWN
         ✳ PICK IT ✳ DROP IT ✳ BLEND IT ✳ MAKE IT YOUR OWN ✳
+
     </div>
+
 </div>
 
+<!-- ==========================================
+     FOOTER
+========================================== -->
+
 <footer>
+
     <h2>STAY<br>JUICY.</h2>
 
     <div class="footer-bottom">
-        <span>© 2026 FRUIT LAB — INTERACTIVE CONCEPT</span>
-        <span>THREE.JS / GSAP / WEBGL</span>
-        <a href="#hero">BACK TO TOP ↑</a>
+
+        <span>
+            © 2026 FRUIT LAB — INTERACTIVE CONCEPT
+        </span>
+
+        <span>
+            THREE.JS / GSAP / WEBGL
+        </span>
+
+        <a href="#hero">
+            BACK TO TOP ↑
+        </a>
+
     </div>
+
 </footer>
+
+<!-- ==========================================
+     JAVASCRIPT
+========================================== -->
 
 <script type="module">
 
 import * as THREE from
-    'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
+'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
 
 const gsap = window.gsap;
 const ScrollTrigger = window.ScrollTrigger;
@@ -1151,10 +1644,11 @@ const reduce = matchMedia(
 ).matches;
 
 /* ==========================================
-   FLAVOURS
+   SIX STANDARD FLAVOURS
 ========================================== */
 
 const FLAVOURS = [
+
     {
         id: 'strawberry',
         name: 'STRAWBERRY RUSH',
@@ -1169,6 +1663,7 @@ const FLAVOURS = [
         label: '#fff0f3',
         ink: '#7c1535'
     },
+
     {
         id: 'mango',
         name: 'MANGO MADNESS',
@@ -1183,6 +1678,7 @@ const FLAVOURS = [
         label: '#fff1cb',
         ink: '#77331b'
     },
+
     {
         id: 'blueberry',
         name: 'BLUEBERRY BLAST',
@@ -1197,6 +1693,7 @@ const FLAVOURS = [
         label: '#eeeeff',
         ink: '#20266c'
     },
+
     {
         id: 'lime',
         name: 'LIME LIGHTNING',
@@ -1211,6 +1708,7 @@ const FLAVOURS = [
         label: '#f4ffe7',
         ink: '#275326'
     },
+
     {
         id: 'peach',
         name: 'PEACH PARADISE',
@@ -1225,6 +1723,7 @@ const FLAVOURS = [
         label: '#fff0e4',
         ink: '#854036'
     },
+
     {
         id: 'grape',
         name: 'GRAPE GALAXY',
@@ -1239,19 +1738,27 @@ const FLAVOURS = [
         label: '#f3e9ff',
         ink: '#502070'
     }
+
 ];
 
+/* ==========================================
+   INGREDIENTS
+========================================== */
+
 const INGREDIENTS = [
+
     ...FLAVOURS.map(f => ({
         id: f.id,
         name: f.short,
         color: f.primary
     })),
+
     {
         id: 'coconut',
         name: 'COCONUT MILK',
         color: '#ffffff'
     }
+
 ];
 
 const findIngredient = id =>
@@ -1262,46 +1769,63 @@ const findIngredient = id =>
 ========================================== */
 
 function hexFromRgb(r, g, b) {
+
     return '#' + [r, g, b].map(v =>
-        Math.max(0, Math.min(255, Math.round(v)))
-            .toString(16)
-            .padStart(2, '0')
+
+        Math.max(
+            0,
+            Math.min(255, Math.round(v))
+        )
+        .toString(16)
+        .padStart(2, '0')
+
     ).join('').toUpperCase();
+
 }
 
 function averageColors(ids) {
 
-    if (!ids.length) return '#F5F0E4';
+    if (!ids.length) {
+        return '#F5F0E4';
+    }
 
     const sum = [0, 0, 0];
 
     for (const id of ids) {
-        const c = findIngredient(id).color;
+
+        const color = findIngredient(id).color;
 
         for (let i = 0; i < 3; i++) {
+
             sum[i] += parseInt(
-                c.slice(1 + i * 2, 3 + i * 2),
+                color.slice(1 + i * 2, 3 + i * 2),
                 16
             );
+
         }
+
     }
 
     return hexFromRgb(
         ...sum.map(n => n / ids.length)
     );
+
 }
 
 /* ==========================================
-   THREE.JS HELPERS
+   MATERIAL HELPERS
 ========================================== */
 
 const mat = (color, roughness = .35) =>
+
     new THREE.MeshPhysicalMaterial({
+
         color,
         roughness,
         metalness: .02,
         clearcoat: .65,
         clearcoatRoughness: .15
+
     });
 
 const mesh = (geometry, material) =>
@@ -1309,255 +1833,427 @@ const mesh = (geometry, material) =>
 
 function smoothColor(material, hex, duration = .6) {
 
-    const to = new THREE.Color(hex);
+    const target = new THREE.Color(hex);
 
     gsap.to(material.color, {
-        r: to.r,
-        g: to.g,
-        b: to.b,
+
+        r: target.r,
+        g: target.g,
+        b: target.b,
+
         duration: reduce ? 0 : duration,
+
         overwrite: true
+
     });
+
 }
 
 /* ==========================================
-   CREATE FRUIT
+   FRUIT MODELS
 ========================================== */
 
 function fruitModel(id) {
 
-    const g = new THREE.Group();
+    const group = new THREE.Group();
+
     const item = findIngredient(id);
+
     const skin = mat(item.color, .32);
 
-    g.userData.skin = skin;
+    group.userData.skin = skin;
 
-    const leafMat = mat('#267943', .55);
+    const leafMaterial = mat('#267943', .55);
+
+    /* STRAWBERRY */
 
     if (id === 'strawberry') {
 
         const body = mesh(
+
             new THREE.SphereGeometry(.48, 32, 24),
+
             skin
+
         );
 
         body.scale.set(.87, 1.12, .9);
-        g.add(body);
 
-        const seeds = mat('#ffe0a0');
+        group.add(body);
+
+        const seedMaterial = mat('#ffe0a0');
 
         for (let row = 1; row < 7; row++) {
+
             for (let col = 0; col < 10; col++) {
 
-                const t = row / 7 * Math.PI;
-                const p = col / 10 * Math.PI * 2 + row * .3;
+                const theta =
+                    row / 7 * Math.PI;
 
-                const s = mesh(
-                    new THREE.SphereGeometry(.017, 6, 6),
-                    seeds
+                const phi =
+                    col / 10 * Math.PI * 2 + row * .3;
+
+                const seed = mesh(
+
+                    new THREE.SphereGeometry(
+                        .017,
+                        6,
+                        6
+                    ),
+
+                    seedMaterial
+
                 );
 
-                s.position.set(
-                    Math.sin(t) * Math.cos(p) * .426,
-                    Math.cos(t) * .53,
-                    Math.sin(t) * Math.sin(p) * .44
+                seed.position.set(
+
+                    Math.sin(theta) *
+                    Math.cos(phi) * .426,
+
+                    Math.cos(theta) * .53,
+
+                    Math.sin(theta) *
+                    Math.sin(phi) * .44
+
                 );
 
-                g.add(s);
+                group.add(seed);
+
             }
+
         }
 
         for (let i = 0; i < 5; i++) {
 
-            const a = i * Math.PI * 2 / 5;
+            const angle = i * Math.PI * 2 / 5;
 
             const leaf = mesh(
-                new THREE.ConeGeometry(.12, .3, 4),
-                leafMat
+
+                new THREE.ConeGeometry(
+                    .12,
+                    .3,
+                    4
+                ),
+
+                leafMaterial
+
             );
 
             leaf.position.set(
-                Math.cos(a) * .17,
+
+                Math.cos(angle) * .17,
+
                 .51,
-                Math.sin(a) * .17
+
+                Math.sin(angle) * .17
+
             );
 
-            leaf.rotation.z = Math.cos(a) * .8;
-            leaf.rotation.x = Math.sin(a) * .8;
+            leaf.rotation.z =
+                Math.cos(angle) * .8;
 
-            g.add(leaf);
+            leaf.rotation.x =
+                Math.sin(angle) * .8;
+
+            group.add(leaf);
+
         }
 
-    } else if (id === 'mango') {
+    }
+
+    /* MANGO */
+
+    else if (id === 'mango') {
 
         const body = mesh(
+
             new THREE.SphereGeometry(.5, 32, 24),
+
             skin
+
         );
 
         body.scale.set(1.15, .8, .76);
         body.rotation.z = -.3;
-        g.add(body);
+
+        group.add(body);
 
         const leaf = mesh(
+
             new THREE.SphereGeometry(.18, 12, 10),
-            leafMat
+
+            leafMaterial
+
         );
 
         leaf.scale.set(1.8, .22, .55);
         leaf.position.set(-.23, .42, 0);
         leaf.rotation.z = -.3;
 
-        g.add(leaf);
+        group.add(leaf);
 
-    } else if (id === 'blueberry') {
+    }
+
+    /* BLUEBERRY */
+
+    else if (id === 'blueberry') {
 
         for (let i = 0; i < 7; i++) {
 
-            const a = i * 2.4;
-            const r = i === 0 ? 0 : .35;
+            const angle = i * 2.4;
 
-            const b = mesh(
+            const radius = i === 0 ? 0 : .35;
+
+            const berry = mesh(
+
                 new THREE.SphereGeometry(.24, 20, 16),
+
                 skin
+
             );
 
-            b.position.set(
-                Math.cos(a) * r,
-                Math.sin(a) * r * .7,
+            berry.position.set(
+
+                Math.cos(angle) * radius,
+
+                Math.sin(angle) * radius * .7,
+
                 (i % 3) * .15 - .15
+
             );
 
-            g.add(b);
+            group.add(berry);
+
         }
 
-    } else if (id === 'lime') {
+    }
+
+    /* LIME */
+
+    else if (id === 'lime') {
 
         const body = mesh(
+
             new THREE.SphereGeometry(.48, 32, 24),
+
             skin
+
         );
 
-        g.add(body);
+        group.add(body);
 
         const stripe = mesh(
-            new THREE.TorusGeometry(.35, .015, 6, 44),
+
+            new THREE.TorusGeometry(
+                .35,
+                .015,
+                6,
+                44
+            ),
+
             mat('#e5ff90')
+
         );
 
         stripe.position.z = .339;
-        g.add(stripe);
+
+        group.add(stripe);
 
         for (let i = 0; i < 8; i++) {
 
-            const a = i * Math.PI / 4;
+            const angle = i * Math.PI / 4;
 
             const line = mesh(
+
                 new THREE.CylinderGeometry(
-                    .012, .012, .34, 6
+                    .012,
+                    .012,
+                    .34,
+                    6
                 ),
+
                 mat('#f1ffc2')
+
             );
 
-            line.rotation.z = Math.PI / 2 - a;
+            line.rotation.z =
+                Math.PI / 2 - angle;
 
             line.position.set(
-                Math.cos(a) * .17,
-                Math.sin(a) * .17,
+
+                Math.cos(angle) * .17,
+
+                Math.sin(angle) * .17,
+
                 .36
+
             );
 
-            g.add(line);
+            group.add(line);
+
         }
 
-    } else if (id === 'peach') {
+    }
+
+    /* PEACH */
+
+    else if (id === 'peach') {
 
         const body = mesh(
+
             new THREE.SphereGeometry(.5, 32, 24),
+
             skin
+
         );
 
         body.scale.set(1, .96, .92);
-        g.add(body);
+
+        group.add(body);
 
         const groove = mesh(
-            new THREE.TorusGeometry(.39, .012, 6, 48),
+
+            new THREE.TorusGeometry(
+                .39,
+                .012,
+                6,
+                48
+            ),
+
             mat('#db665e')
+
         );
 
         groove.rotation.y = Math.PI / 2;
-        g.add(groove);
+
+        group.add(groove);
 
         const leaf = mesh(
+
             new THREE.SphereGeometry(.2, 12, 10),
-            leafMat
+
+            leafMaterial
+
         );
 
         leaf.scale.set(1.6, .26, .55);
         leaf.position.set(.13, .49, 0);
         leaf.rotation.z = .5;
 
-        g.add(leaf);
+        group.add(leaf);
 
-    } else if (id === 'grape') {
+    }
+
+    /* GRAPE */
+
+    else if (id === 'grape') {
 
         for (let row = 0; row < 4; row++) {
-            for (let col = 0; col < 3 - row % 2; col++) {
 
-                const b = mesh(
-                    new THREE.SphereGeometry(.18, 16, 12),
+            for (
+                let col = 0;
+                col < 3 - row % 2;
+                col++
+            ) {
+
+                const grape = mesh(
+
+                    new THREE.SphereGeometry(
+                        .18,
+                        16,
+                        12
+                    ),
+
                     skin
+
                 );
 
-                b.position.set(
+                grape.position.set(
+
                     (col - (2 - row % 2) / 2) * .32,
+
                     .45 - row * .27,
+
                     Math.sin(row + col) * .12
+
                 );
 
-                g.add(b);
+                group.add(grape);
+
             }
+
         }
 
         const stem = mesh(
-            new THREE.CylinderGeometry(.035, .035, .25, 8),
-            leafMat
+
+            new THREE.CylinderGeometry(
+                .035,
+                .035,
+                .25,
+                8
+            ),
+
+            leafMaterial
+
         );
 
         stem.position.y = .6;
-        g.add(stem);
 
-    } else if (id === 'coconut') {
+        group.add(stem);
+
+    }
+
+    /* COCONUT */
+
+    else if (id === 'coconut') {
 
         const body = mesh(
+
             new THREE.SphereGeometry(.5, 32, 24),
+
             mat('#8b5837')
+
         );
 
         body.scale.set(1, .8, .9);
-        g.add(body);
+
+        group.add(body);
 
         const cut = mesh(
+
             new THREE.CircleGeometry(.39, 40),
+
             skin
+
         );
 
         cut.rotation.x = -Math.PI / 2;
         cut.position.y = .405;
-        g.add(cut);
 
-        const rim = mesh(
-            new THREE.TorusGeometry(.4, .065, 10, 40),
+        group.add(cut);
+
+        const ring = mesh(
+
+            new THREE.TorusGeometry(
+                .4,
+                .065,
+                10,
+                40
+            ),
+
             mat('#e8e0ca')
+
         );
 
-        rim.rotation.x = Math.PI / 2;
-        rim.position.y = .405;
+        ring.rotation.x = Math.PI / 2;
+        ring.position.y = .405;
 
-        g.add(rim);
+        group.add(ring);
+
     }
 
-    return g;
+    return group;
+
 }
 
 /* ==========================================
@@ -1567,140 +2263,249 @@ function fruitModel(id) {
 const bgCanvas = document.querySelector('#webgl');
 
 const renderer = new THREE.WebGLRenderer({
+
     canvas: bgCanvas,
     antialias: true,
     alpha: true
+
 });
 
 renderer.setPixelRatio(
     Math.min(devicePixelRatio, 2)
 );
 
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.outputColorSpace =
+    THREE.SRGBColorSpace;
+
+renderer.toneMapping =
+    THREE.ACESFilmicToneMapping;
+
 renderer.setSize(innerWidth, innerHeight);
 
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(
+
     35,
+
     innerWidth / innerHeight,
+
     .1,
+
     100
+
 );
 
 camera.position.z = 12;
 
 scene.add(
-    new THREE.HemisphereLight('#ffffff', '#533a60', 2.7)
+
+    new THREE.HemisphereLight(
+
+        '#ffffff',
+
+        '#533a60',
+
+        2.7
+
+    )
+
 );
 
-const key = new THREE.DirectionalLight('#ffffff', 4);
-key.position.set(4, 6, 8);
-scene.add(key);
+const keyLight = new THREE.DirectionalLight(
+    '#ffffff',
+    4
+);
 
-const rim = new THREE.DirectionalLight('#ffb8d8', 2.5);
-rim.position.set(-5, 3, -4);
-scene.add(rim);
+keyLight.position.set(4, 6, 8);
+
+scene.add(keyLight);
+
+const rimLight = new THREE.DirectionalLight(
+    '#ffb8d8',
+    2.5
+);
+
+rimLight.position.set(-5, 3, -4);
+
+scene.add(rimLight);
 
 /* ==========================================
-   DRINK CUP LABEL
+   CUP LABEL
 ========================================== */
 
 function cupLabel(flavour) {
 
-    const c = document.createElement('canvas');
-    c.width = 512;
-    c.height = 512;
+    const canvas = document.createElement('canvas');
 
-    const x = c.getContext('2d');
+    canvas.width = 512;
+    canvas.height = 512;
 
-    x.fillStyle = flavour.label;
-    x.fillRect(0, 0, 512, 512);
+    const ctx = canvas.getContext('2d');
 
-    x.fillStyle = flavour.ink;
-    x.textAlign = 'center';
+    ctx.fillStyle = flavour.label;
 
-    x.font = 'bold 30px Arial';
-    x.fillText('FRUIT LAB®', 256, 55);
+    ctx.fillRect(0, 0, 512, 512);
 
-    x.fillRect(35, 70, 442, 5);
+    ctx.fillStyle = flavour.ink;
+    ctx.textAlign = 'center';
 
-    x.font = '900 70px Arial Black,Arial';
-    x.fillText(flavour.short, 256, 260, 470);
+    ctx.font = 'bold 30px Arial';
 
-    x.font = '900 125px Arial';
-    x.fillText('✳', 256, 395);
+    ctx.fillText(
+        'FRUIT LAB®',
+        256,
+        55
+    );
 
-    x.font = 'bold 18px monospace';
-    x.fillText('ALL FLAVOUR · NO BORING', 256, 465);
+    ctx.fillRect(35, 70, 442, 5);
 
-    const t = new THREE.CanvasTexture(c);
-    t.colorSpace = THREE.SRGBColorSpace;
+    ctx.font = '900 70px Arial Black,Arial';
 
-    return t;
+    ctx.fillText(
+        flavour.short,
+        256,
+        260,
+        470
+    );
+
+    ctx.font = '900 125px Arial';
+
+    ctx.fillText(
+        '✳',
+        256,
+        395
+    );
+
+    ctx.font = 'bold 18px monospace';
+
+    ctx.fillText(
+        'ALL FLAVOUR · NO BORING',
+        256,
+        465
+    );
+
+    const texture = new THREE.CanvasTexture(canvas);
+
+    texture.colorSpace = THREE.SRGBColorSpace;
+
+    return texture;
+
 }
 
 /* ==========================================
-   CREATE DRINK CUP
+   CREATE CUP
 ========================================== */
 
 function makeCup(flavour) {
 
-    const g = new THREE.Group();
-    const bodyMat = mat(flavour.primary, .25);
+    const group = new THREE.Group();
 
-    g.add(
+    const bodyMaterial = mat(flavour.primary, .25);
+
+    group.add(
+
         mesh(
-            new THREE.CylinderGeometry(.7, .5, 2.3, 48),
-            bodyMat
+
+            new THREE.CylinderGeometry(
+                .7,
+                .5,
+                2.3,
+                48
+            ),
+
+            bodyMaterial
+
         )
+
     );
 
     const lid = mesh(
-        new THREE.CylinderGeometry(.77, .77, .16, 48),
+
+        new THREE.CylinderGeometry(
+            .77,
+            .77,
+            .16,
+            48
+        ),
+
         mat('#fff5e9')
+
     );
 
     lid.position.y = 1.2;
-    g.add(lid);
+
+    group.add(lid);
 
     const dome = mesh(
+
         new THREE.SphereGeometry(
-            .65, 32, 16,
-            0, Math.PI * 2,
-            0, Math.PI / 2
+
+            .65,
+            32,
+            16,
+            0,
+            Math.PI * 2,
+            0,
+            Math.PI / 2
+
         ),
+
         new THREE.MeshPhysicalMaterial({
+
             color: 'white',
+
             transparent: true,
+
             opacity: .28,
+
             roughness: .07,
+
             side: THREE.DoubleSide,
+
             depthWrite: false
+
         })
+
     );
 
     dome.position.y = 1.3;
-    g.add(dome);
+
+    group.add(dome);
 
     const straw = mesh(
-        new THREE.CylinderGeometry(.052, .052, 1.6, 12),
+
+        new THREE.CylinderGeometry(
+            .052,
+            .052,
+            1.6,
+            12
+        ),
+
         mat('#fff0bc')
+
     );
 
     straw.position.set(.17, 2.04, 0);
     straw.rotation.z = -.14;
-    g.add(straw);
 
-    const labelMat = new THREE.MeshStandardMaterial({
-        map: cupLabel(flavour),
-        roughness: .5,
-        side: THREE.DoubleSide
-    });
+    group.add(straw);
+
+    const labelMaterial =
+        new THREE.MeshStandardMaterial({
+
+            map: cupLabel(flavour),
+
+            roughness: .5,
+
+            side: THREE.DoubleSide
+
+        });
 
     const label = mesh(
+
         new THREE.CylinderGeometry(
+
             .708,
             .508,
             1.5,
@@ -1709,17 +2514,29 @@ function makeCup(flavour) {
             true,
             -Math.PI * .83,
             Math.PI * 1.66
+
         ),
-        labelMat
+
+        labelMaterial
+
     );
 
     label.position.y = -.13;
-    g.add(label);
 
-    g.userData = { bodyMat, labelMat };
+    group.add(label);
 
-    return g;
+    group.userData = {
+        bodyMat: bodyMaterial,
+        labelMat: labelMaterial
+    };
+
+    return group;
+
 }
+
+/* ==========================================
+   UPDATE CUP
+========================================== */
 
 function recolorCup(cup, flavour) {
 
@@ -1728,19 +2545,24 @@ function recolorCup(cup, flavour) {
         flavour.primary
     );
 
-    const old = cup.userData.labelMat.map;
+    const oldTexture =
+        cup.userData.labelMat.map;
 
-    cup.userData.labelMat.map = cupLabel(flavour);
+    cup.userData.labelMat.map =
+        cupLabel(flavour);
+
     cup.userData.labelMat.needsUpdate = true;
 
-    old.dispose();
+    oldTexture.dispose();
+
 }
 
 /* ==========================================
-   HERO PRODUCTS
+   HERO CUPS
 ========================================== */
 
 const heroGroup = new THREE.Group();
+
 scene.add(heroGroup);
 
 const leftCup = makeCup(FLAVOURS[1]);
@@ -1756,24 +2578,33 @@ centerCup.rotation.z = -.12;
 rightCup.position.set(2.5, -.15, -.5);
 rightCup.rotation.z = -.2;
 
-heroGroup.add(leftCup, centerCup, rightCup);
+heroGroup.add(
+    leftCup,
+    centerCup,
+    rightCup
+);
 
 /* ==========================================
-   FLAVOUR WORLD
+   FEATURE FRUIT
 ========================================== */
 
 const flavourGroup = new THREE.Group();
+
 scene.add(flavourGroup);
 
 let featureFruit = fruitModel('strawberry');
+
 featureFruit.scale.setScalar(2.3);
+
 flavourGroup.add(featureFruit);
 
 const miniCup = makeCup(FLAVOURS[0]);
+
 miniCup.scale.setScalar(.48);
 miniCup.position.set(.9, -.25, 1.3);
 
 flavourGroup.add(miniCup);
+
 flavourGroup.scale.setScalar(0);
 flavourGroup.position.y = -1;
 
@@ -1783,116 +2614,195 @@ flavourGroup.position.y = -1;
 
 let activeFlavour = 0;
 
-const flavourGrid = document.querySelector('#flavourGrid');
+const flavourGrid =
+    document.querySelector('#flavourGrid');
 
-flavourGrid.innerHTML = FLAVOURS.map((f, i) => `
-    <button
-        class="flavour-option ${i === 0 ? 'active' : ''}"
-        data-flavour="${i}"
-        aria-pressed="${i === 0}">
+flavourGrid.innerHTML = FLAVOURS.map(
 
-        <span
-            class="swatch"
-            style="background:${f.primary}">
-        </span>
+    (flavour, index) => `
 
-        <span class="option-name">${f.short}</span>
-    </button>
-`).join('');
+        <button
 
-function selectFlavour(i) {
+            class="flavour-option ${index === 0 ? 'active' : ''}"
+
+            data-flavour="${index}"
+
+            aria-pressed="${index === 0}">
+
+            <span
+                class="swatch"
+                style="background:${flavour.primary}">
+            </span>
+
+            <span class="option-name">
+                ${flavour.short}
+            </span>
+
+        </button>
+
+    `
+
+).join('');
+
+/* ==========================================
+   CHANGE FLAVOUR
+========================================== */
+
+function selectFlavour(index) {
 
     activeFlavour =
-        (i + FLAVOURS.length) % FLAVOURS.length;
+        (index + FLAVOURS.length)
+        % FLAVOURS.length;
 
-    const f = FLAVOURS[activeFlavour];
+    const flavour = FLAVOURS[activeFlavour];
 
-    document.querySelectorAll('[data-flavour]').forEach(b => {
+    document.querySelectorAll(
+        '[data-flavour]'
+    ).forEach(button => {
 
         const active =
-            Number(b.dataset.flavour) === activeFlavour;
+            Number(button.dataset.flavour) ===
+            activeFlavour;
 
-        b.classList.toggle('active', active);
-        b.setAttribute('aria-pressed', String(active));
+        button.classList.toggle('active', active);
+
+        button.setAttribute(
+            'aria-pressed',
+            String(active)
+        );
+
     });
 
-    document.querySelector('#flavourTitle').innerHTML =
-        `<span>SO</span> ${f.short}`;
+    document.querySelector(
+        '#flavourTitle'
+    ).innerHTML =
 
-    document.querySelector('#flavourName').textContent =
-        f.name;
+        `<span>SO</span> ${flavour.short}`;
 
-    document.querySelector('#flavourDescription').textContent =
-        f.description;
+    document.querySelector(
+        '#flavourName'
+    ).textContent = flavour.name;
 
-    document.querySelector('#flavourCount').textContent =
+    document.querySelector(
+        '#flavourDescription'
+    ).textContent = flavour.description;
+
+    document.querySelector(
+        '#flavourCount'
+    ).textContent =
+
         `${String(activeFlavour + 1).padStart(2, '0')} / 06`;
 
     for (const [selector, color] of [
-        ['#hero', f.hero],
-        ['#flavours', f.background],
-        ['#play', f.play],
-        ['#ticker', f.accent]
+
+        ['#hero', flavour.hero],
+
+        ['#flavours', flavour.background],
+
+        ['#play', flavour.play],
+
+        ['#ticker', flavour.accent]
+
     ]) {
+
         gsap.to(selector, {
+
             backgroundColor: color,
+
             duration: reduce ? 0 : .7,
+
             overwrite: true
+
         });
+
     }
 
     gsap.to('.play-head em', {
-        color: f.accent,
+
+        color: flavour.accent,
+
         duration: reduce ? 0 : .7
+
     });
 
-    recolorCup(centerCup, f);
+    recolorCup(centerCup, flavour);
 
     recolorCup(
+
         leftCup,
-        FLAVOURS[(activeFlavour + 5) % 6]
+
+        FLAVOURS[
+            (activeFlavour + 5) % 6
+        ]
+
     );
 
     recolorCup(
+
         rightCup,
-        FLAVOURS[(activeFlavour + 1) % 6]
+
+        FLAVOURS[
+            (activeFlavour + 1) % 6
+        ]
+
     );
 
-    recolorCup(miniCup, f);
+    recolorCup(miniCup, flavour);
 
     flavourGroup.remove(featureFruit);
 
-    featureFruit.traverse(o => {
-        if (o.isMesh) {
-            o.geometry.dispose();
-            o.material.dispose();
+    featureFruit.traverse(object => {
+
+        if (object.isMesh) {
+
+            object.geometry.dispose();
+
+            object.material.dispose();
+
         }
+
     });
 
-    featureFruit = fruitModel(f.id);
+    featureFruit = fruitModel(flavour.id);
+
     featureFruit.scale.setScalar(2.3);
+
     flavourGroup.add(featureFruit);
 
     if (!reduce) {
+
         gsap.fromTo(
+
             featureFruit.rotation,
+
             { y: -Math.PI },
+
             {
                 y: 0,
                 duration: 1,
                 ease: 'power3.out'
             }
+
         );
+
     }
+
 }
 
-flavourGrid.addEventListener('click', e => {
+flavourGrid.addEventListener('click', event => {
 
-    const b = e.target.closest('[data-flavour]');
+    const button = event.target.closest(
+        '[data-flavour]'
+    );
 
-    if (b) {
-        selectFlavour(Number(b.dataset.flavour));
+    if (button) {
+
+        selectFlavour(
+            Number(button.dataset.flavour)
+        );
+
     }
+
 });
 
 /* ==========================================
@@ -1905,232 +2815,382 @@ const motion = {
 };
 
 const t1 = gsap.timeline({
+
     scrollTrigger: {
+
         trigger: '#hero',
+
         start: 'top top',
+
         end: 'bottom top',
+
         scrub: reduce ? false : 1.1
+
     }
+
 });
 
 t1.to(heroGroup.position, {
+
     y: -4,
     z: -3,
+
     duration: 1,
     ease: 'none'
+
 }, 0);
 
 t1.to(heroGroup.rotation, {
+
     y: 2.3,
+
     duration: 1,
     ease: 'none'
+
 }, 0);
 
 t1.to(heroGroup.scale, {
+
     x: .2,
     y: .2,
     z: .2,
+
     duration: 1,
     ease: 'none'
+
 }, 0);
 
 t1.to(flavourGroup.scale, {
+
     x: 1,
     y: 1,
     z: 1,
+
     duration: .75,
     ease: 'none'
+
 }, .25);
 
 t1.to(flavourGroup.position, {
+
     y: 0,
+
     duration: .75,
     ease: 'none'
+
 }, .25);
 
 t1.to(motion, {
+
     cameraZ: 9.5,
     cameraX: .2,
+
     duration: 1,
     ease: 'none'
+
 }, 0);
 
 t1.to('#heroTitle', {
+
     opacity: 0,
     scale: 1.4,
+
     duration: .65,
     ease: 'none'
+
 }, 0);
 
-/* FLAVOURS → PLAY */
+/* FLAVOURS TO PLAY */
 
 const t2 = gsap.timeline({
+
     scrollTrigger: {
+
         trigger: '#flavours',
+
         start: 'top top',
+
         end: 'bottom top',
+
         scrub: reduce ? false : 1.1
+
     }
+
 });
 
 t2.to(flavourGroup.position, {
+
     x: -5,
     y: 3,
     z: -4,
+
     duration: 1,
     ease: 'none'
+
 }, 0);
 
 t2.to(flavourGroup.rotation, {
+
     y: 3,
+
     duration: 1,
     ease: 'none'
+
 }, 0);
 
 t2.to(flavourGroup.scale, {
+
     x: .1,
     y: .1,
     z: .1,
+
     duration: 1,
     ease: 'none'
+
 }, 0);
 
 t2.to(motion, {
+
     cameraZ: 12,
     cameraX: 0,
+
     duration: 1,
     ease: 'none'
+
 }, 0);
 
-/* PROGRESS */
+/* ==========================================
+   PROGRESS BAR
+========================================== */
 
 ScrollTrigger.create({
+
     trigger: document.body,
+
     start: 'top top',
+
     end: 'bottom bottom',
-    onUpdate: self => {
-        document.querySelector('#progressFill').style.width =
+
+    onUpdate(self) {
+
+        document.querySelector(
+            '#progressFill'
+        ).style.width =
+
             `${self.progress * 100}%`;
+
     }
+
 });
 
-/* NAVIGATION */
+/* ==========================================
+   NEXT SCENE
+========================================== */
 
-document.querySelector('#nextScene').addEventListener('click', () => {
+document.querySelector(
+    '#nextScene'
+).addEventListener('click', () => {
 
-    const pos = window.scrollY + 100;
+    const position = window.scrollY + 100;
 
     const target = [
+
         '#hero',
+
         '#flavours',
+
         '#play'
+
     ].find(id =>
-        document.querySelector(id).offsetTop > pos
+
+        document.querySelector(id).offsetTop >
+        position
+
     ) || '#hero';
 
-    document.querySelector(target).scrollIntoView({
+    document.querySelector(
+        target
+    ).scrollIntoView({
+
         behavior: reduce ? 'auto' : 'smooth'
+
     });
+
 });
 
-/* MOUSE */
+/* ==========================================
+   MOUSE PARALLAX
+========================================== */
 
 let mx = 0;
 let my = 0;
 
-window.addEventListener('pointermove', e => {
-    mx = e.clientX / innerWidth * 2 - 1;
-    my = e.clientY / innerHeight * 2 - 1;
+window.addEventListener('pointermove', event => {
+
+    mx = event.clientX / innerWidth * 2 - 1;
+
+    my = event.clientY / innerHeight * 2 - 1;
+
 });
 
 /* ==========================================
    BLENDER 3D SCENE
 ========================================== */
 
-const gameCanvas = document.querySelector('#blenderCanvas');
-const gameStage = document.querySelector('#gameStage');
+const gameCanvas =
+    document.querySelector('#blenderCanvas');
+
+const gameStage =
+    document.querySelector('#gameStage');
 
 const gameRenderer = new THREE.WebGLRenderer({
+
     canvas: gameCanvas,
+
     antialias: true,
+
     alpha: true
+
 });
 
 gameRenderer.setPixelRatio(
     Math.min(devicePixelRatio, 2)
 );
 
-gameRenderer.outputColorSpace = THREE.SRGBColorSpace;
-gameRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+gameRenderer.outputColorSpace =
+    THREE.SRGBColorSpace;
+
+gameRenderer.toneMapping =
+    THREE.ACESFilmicToneMapping;
 
 const gameScene = new THREE.Scene();
 
 const gameCamera = new THREE.PerspectiveCamera(
-    35, 1, .1, 100
+
+    35,
+
+    1,
+
+    .1,
+
+    100
+
 );
 
 gameCamera.position.set(0, 1.2, 13);
+
 gameCamera.lookAt(0, 0, 0);
 
 gameScene.add(
-    new THREE.HemisphereLight('#ffffff', '#ab7546', 3)
+
+    new THREE.HemisphereLight(
+
+        '#ffffff',
+
+        '#ab7546',
+
+        3
+
+    )
+
 );
 
-const gameLight = new THREE.DirectionalLight('#ffffff', 4);
+const gameLight = new THREE.DirectionalLight(
+    '#ffffff',
+    4
+);
+
 gameLight.position.set(-2, 7, 8);
+
 gameScene.add(gameLight);
 
-const gameRim = new THREE.DirectionalLight('#fff1a4', 2);
+const gameRim = new THREE.DirectionalLight(
+    '#fff1a4',
+    2
+);
+
 gameRim.position.set(4, 4, -4);
+
 gameScene.add(gameRim);
 
-/* TABLE */
+/* ==========================================
+   TABLE
+========================================== */
 
 const surface = mesh(
-    new THREE.BoxGeometry(18, .16, 4.3),
+
+    new THREE.BoxGeometry(
+        18,
+        .16,
+        4.3
+    ),
+
     mat('#d69e56', .64)
+
 );
 
 surface.position.set(0, -2.65, -.3);
+
 gameScene.add(surface);
 
-/* DRAGGABLE FRUIT */
+/* ==========================================
+   DRAGGABLE FRUIT
+========================================== */
 
 const fruitPositions = [
+
     [-4.8, 1.3],
+
     [-3.35, 1.3],
+
     [-1.9, 1.3],
+
     [-4.8, -.6],
+
     [-3.35, -.6],
+
     [-1.9, -.6],
+
     [-3.35, -2.0]
+
 ];
 
 const draggable = [];
 
-INGREDIENTS.forEach((item, i) => {
+INGREDIENTS.forEach((item, index) => {
 
     const root = new THREE.Group();
 
     root.position.set(
-        fruitPositions[i][0],
-        fruitPositions[i][1],
+
+        fruitPositions[index][0],
+
+        fruitPositions[index][1],
+
         .3
+
     );
 
     const fruit = fruitModel(item.id);
+
     fruit.scale.setScalar(.83);
 
     root.add(fruit);
+
     root.userData.ingredientId = item.id;
 
     gameScene.add(root);
 
     draggable.push({
+
         root,
+
         id: item.id,
+
         home: root.position.clone()
+
     });
+
 });
 
 /* ==========================================
@@ -2139,185 +3199,314 @@ INGREDIENTS.forEach((item, i) => {
 
 const blender = new THREE.Group();
 
-/* NIEUW: BLENDER IETS NAAR LINKS */
-
 blender.position.set(1.1, -.25, 0);
+
 gameScene.add(blender);
 
+/* MOTOR BASE */
+
 const base = mesh(
-    new THREE.CylinderGeometry(1.05, 1.15, .85, 48),
+
+    new THREE.CylinderGeometry(
+        1.05,
+        1.15,
+        .85,
+        48
+    ),
+
     mat('#efeae3', .28)
+
 );
 
 base.position.y = -1.8;
+
 blender.add(base);
 
+/* BASE TRIM */
+
 const baseTrim = mesh(
-    new THREE.CylinderGeometry(1.14, 1.14, .08, 48),
+
+    new THREE.CylinderGeometry(
+        1.14,
+        1.14,
+        .08,
+        48
+    ),
+
     mat('#34303b', .28)
+
 );
 
 baseTrim.position.y = -2.22;
+
 blender.add(baseTrim);
 
+/* DIAL */
+
 const dial = mesh(
-    new THREE.CylinderGeometry(.24, .24, .12, 30),
+
+    new THREE.CylinderGeometry(
+        .24,
+        .24,
+        .12,
+        30
+    ),
+
     mat('#ffc629', .24)
+
 );
 
 dial.rotation.x = Math.PI / 2;
+
 dial.position.set(0, -1.72, 1.09);
+
 blender.add(dial);
 
 /* ==========================================
    GLASS JAR
 ========================================== */
 
-const glassMaterial = new THREE.MeshPhysicalMaterial({
-    color: '#ffffff',
-    transparent: true,
-    opacity: .22,
-    roughness: .09,
-    metalness: .02,
-    side: THREE.DoubleSide,
-    depthWrite: false
-});
+const glassMaterial =
+    new THREE.MeshPhysicalMaterial({
+
+        color: '#ffffff',
+
+        transparent: true,
+
+        opacity: .22,
+
+        roughness: .09,
+
+        metalness: .02,
+
+        side: THREE.DoubleSide,
+
+        depthWrite: false
+
+    });
 
 const jar = mesh(
+
     new THREE.CylinderGeometry(
+
         .98,
         .72,
         2.7,
         48,
         1,
         true
+
     ),
+
     glassMaterial
+
 );
 
 jar.position.y = .15;
+
 blender.add(jar);
 
+/* JAR BOTTOM */
+
 const jarBottom = mesh(
-    new THREE.CylinderGeometry(.72, .72, .1, 48),
+
+    new THREE.CylinderGeometry(
+        .72,
+        .72,
+        .1,
+        48
+    ),
+
     mat('#b8cad1', .25)
+
 );
 
 jarBottom.position.y = -1.22;
+
 blender.add(jarBottom);
 
+/* JAR RIM */
+
 const rimJar = mesh(
-    new THREE.TorusGeometry(.99, .055, 12, 48),
+
+    new THREE.TorusGeometry(
+        .99,
+        .055,
+        12,
+        48
+    ),
+
     mat('#a5beca', .24)
+
 );
 
 rimJar.rotation.x = Math.PI / 2;
+
 rimJar.position.y = 1.5;
+
 blender.add(rimJar);
 
 /* ==========================================
-   NIEUW: MOOIER BLENDERHANDVAT
+   CURVED HANDLE
 ========================================== */
 
-/*
-   Het oude handvat was een open torus.
-
-   Dit handvat is een vloeiende 3D-buis.
-   Het zit aan de linkerkant van de kan,
-   zodat de rechterkant vrij is om te schenken.
-*/
-
 const handleCurve = new THREE.CatmullRomCurve3([
+
     new THREE.Vector3(-.78, .96, 0),
+
     new THREE.Vector3(-1.12, .98, 0),
+
     new THREE.Vector3(-1.47, .73, 0),
+
     new THREE.Vector3(-1.59, .31, 0),
+
     new THREE.Vector3(-1.59, -.19, 0),
+
     new THREE.Vector3(-1.39, -.61, 0),
+
     new THREE.Vector3(-1.01, -.78, 0),
+
     new THREE.Vector3(-.74, -.72, 0)
+
 ], false, 'centripetal');
 
-const handleMat = mat('#f4f1e8', .32);
+const handleMaterial = mat('#f4f1e8', .32);
 
 const handle = mesh(
+
     new THREE.TubeGeometry(
+
         handleCurve,
+
         72,
+
         .115,
+
         14,
+
         false
+
     ),
-    handleMat
+
+    handleMaterial
+
 );
 
 blender.add(handle);
 
-/* TWEE BEVESTIGINGSPUNTEN */
+/* HANDLE MOUNTS */
 
 const handleMounts = new THREE.Group();
 
 for (const y of [.96, -.72]) {
 
     const collar = mesh(
-        new THREE.CylinderGeometry(.16, .16, .20, 18),
+
+        new THREE.CylinderGeometry(
+            .16,
+            .16,
+            .20,
+            18
+        ),
+
         mat('#a5beca', .24)
+
     );
 
     collar.rotation.z = Math.PI / 2;
+
     collar.position.set(-.78, y, 0);
 
     handleMounts.add(collar);
+
 }
 
 blender.add(handleMounts);
 
 /* ==========================================
-   BLENDER LID
+   LID
 ========================================== */
 
 const lid = mesh(
-    new THREE.CylinderGeometry(1.06, 1.03, .18, 48),
+
+    new THREE.CylinderGeometry(
+        1.06,
+        1.03,
+        .18,
+        48
+    ),
+
     mat('#292232', .45)
+
 );
 
 lid.position.y = 1.62;
+
 blender.add(lid);
 
 const lidKnob = mesh(
-    new THREE.CylinderGeometry(.25, .25, .18, 32),
+
+    new THREE.CylinderGeometry(
+        .25,
+        .25,
+        .18,
+        32
+    ),
+
     mat('#f4eeeb')
+
 );
 
 lidKnob.position.y = 1.79;
+
 blender.add(lidKnob);
 
 /* ==========================================
-   BLENDER LIQUID
+   LIQUID
 ========================================== */
 
-const liquidMaterial = new THREE.MeshPhysicalMaterial({
-    color: '#f5f0e4',
-    transparent: true,
-    opacity: .86,
-    roughness: .2,
-    metalness: 0,
-    clearcoat: 1
-});
+const liquidMaterial =
+    new THREE.MeshPhysicalMaterial({
+
+        color: '#f5f0e4',
+
+        transparent: true,
+
+        opacity: .86,
+
+        roughness: .2,
+
+        metalness: 0,
+
+        clearcoat: 1
+
+    });
 
 const liquid = mesh(
-    new THREE.CylinderGeometry(.82, .67, 1, 48),
+
+    new THREE.CylinderGeometry(
+        .82,
+        .67,
+        1,
+        48
+    ),
+
     liquidMaterial
+
 );
 
 liquid.position.y = -.95;
+
 liquid.scale.y = .05;
 
 blender.add(liquid);
 
-/* BLADES */
+/* ==========================================
+   BLADES
+========================================== */
 
 const blades = new THREE.Group();
+
 blades.position.y = -1.06;
 
 blender.add(blades);
@@ -2325,61 +3514,92 @@ blender.add(blades);
 for (let i = 0; i < 4; i++) {
 
     const blade = mesh(
-        new THREE.BoxGeometry(.8, .06, .16),
+
+        new THREE.BoxGeometry(
+            .8,
+            .06,
+            .16
+        ),
+
         mat('#bbc6cb', .2)
+
     );
 
     blade.rotation.y = i * Math.PI / 2;
+
     blades.add(blade);
+
 }
 
-/* DROP HIGHLIGHT */
+/* ==========================================
+   DROP HIGHLIGHT
+========================================== */
 
 const blenderGlow = mesh(
-    new THREE.TorusGeometry(1.16, .04, 8, 48),
+
+    new THREE.TorusGeometry(
+        1.16,
+        .04,
+        8,
+        48
+    ),
+
     new THREE.MeshBasicMaterial({
+
         color: '#ffffff',
+
         transparent: true,
+
         opacity: 0
+
     })
+
 );
 
 blenderGlow.rotation.x = Math.PI / 2;
+
 blenderGlow.position.y = 1.52;
 
 blender.add(blenderGlow);
 
 /* ==========================================
-   MOVABLE JUG
+   MOVABLE BLENDER JUG
 ========================================== */
 
 const jugPivot = new THREE.Group();
 
 jugPivot.position.set(0, -1.18, 0);
+
 blender.add(jugPivot);
 
-/*
-   Alle onderdelen van de kan gaan mee:
-   glas, bodem, rand, handvat, deksel,
-   vloeistof en messen.
-*/
-
 for (const part of [
+
     jar,
+
     jarBottom,
+
     rimJar,
+
     handle,
+
     handleMounts,
+
     lid,
+
     lidKnob,
+
     liquid,
+
     blades
+
 ]) {
+
     blender.remove(part);
 
     part.position.y += 1.18;
 
     jugPivot.add(part);
+
 }
 
 /* ==========================================
@@ -2393,184 +3613,300 @@ let fillLevel = .03;
 function setFillLevel(level, duration = .45) {
 
     fillLevel = Math.max(
+
         .03,
+
         Math.min(FILL_MAX, level)
+
     );
 
     gsap.to(liquid.scale, {
+
         y: fillLevel,
+
         duration: reduce ? 0 : duration,
+
         overwrite: true,
+
         ease: 'power2.out'
+
     });
 
     gsap.to(liquid.position, {
+
         y: .13 + fillLevel / 2,
+
         duration: reduce ? 0 : duration,
+
         overwrite: true,
+
         ease: 'power2.out'
+
     });
+
 }
 
 setFillLevel(.03, 0);
 
 /* ==========================================
-   NIEUW: BEKER STAAT RECHTS
+   CUP POSITION — RIGHT SIDE
 ========================================== */
 
 const CUP_SPOT = new THREE.Vector3(
+
     3.65,
+
     -1.38,
+
     1.05
+
 );
 
 /* ==========================================
-   POURING STREAM
+   POURING LIQUID STREAM
 ========================================== */
 
 const juiceStream = mesh(
-    new THREE.CylinderGeometry(.09, .065, 1, 16),
+
+    new THREE.CylinderGeometry(
+        .09,
+        .065,
+        1,
+        16
+    ),
+
     new THREE.MeshBasicMaterial({
+
         color: '#ff7799',
+
         transparent: true,
+
         opacity: 0,
+
         depthWrite: false
+
     })
+
 );
 
 juiceStream.visible = false;
+
 gameScene.add(juiceStream);
 
-const streamProgress = { value: 0 };
+const streamProgress = {
+    value: 0
+};
 
 const sourceWorld = new THREE.Vector3();
+
 const endWorld = new THREE.Vector3();
+
 const streamDelta = new THREE.Vector3();
 
 function refreshStream() {
 
-    if (!juiceStream.visible) return;
+    if (!juiceStream.visible) {
+        return;
+    }
 
     jugPivot.updateWorldMatrix(true, false);
 
-    /* SCHENKPUNT AAN RECHTERKANT */
-
     sourceWorld.copy(
+
         jugPivot.localToWorld(
-            new THREE.Vector3(.85, 2.68, .17)
+
+            new THREE.Vector3(
+                .85,
+                2.68,
+                .17
+            )
+
         )
+
     );
 
     endWorld.set(
+
         CUP_SPOT.x,
+
         CUP_SPOT.y + 1.12,
+
         CUP_SPOT.z
+
     );
 
     streamDelta.copy(endWorld).sub(sourceWorld);
 
     const portion = Math.max(
+
         .001,
+
         streamProgress.value
+
     );
 
     juiceStream.position
+
         .copy(sourceWorld)
+
         .addScaledVector(
+
             streamDelta,
+
             portion * .5
+
         );
 
     juiceStream.quaternion.setFromUnitVectors(
+
         new THREE.Vector3(0, 1, 0),
+
         streamDelta.clone().normalize()
+
     );
 
     juiceStream.scale.set(
+
         1,
+
         streamDelta.length() * portion,
+
         1
+
     );
 
     juiceStream.material.opacity = .83 * portion;
+
 }
 
 /* ==========================================
-   FINISHED DRINK
+   CUSTOM RESULT CUP
 ========================================== */
 
 const resultRoot = new THREE.Group();
 
 resultRoot.position.copy(CUP_SPOT);
+
 resultRoot.scale.setScalar(0);
 
 gameScene.add(resultRoot);
 
 let resultCup = null;
+
 let resultLiquid = null;
+
 let resultVisible = false;
+
 let rotatingResult = false;
+
 let resultPointerX = 0;
 
-const resultPanel = document.querySelector('#cupResult');
+const resultPanel =
+    document.querySelector('#cupResult');
 
 /* ==========================================
-   CUSTOM LABEL
+   CUSTOM LABEL TEXTURE
 ========================================== */
 
 function makeCustomLabel(color, ids) {
 
-    const c = document.createElement('canvas');
+    const canvas = document.createElement('canvas');
 
-    c.width = 1024;
-    c.height = 1024;
+    canvas.width = 1024;
+    canvas.height = 1024;
 
-    const x = c.getContext('2d');
+    const ctx = canvas.getContext('2d');
 
-    x.fillStyle = '#fffaf1';
-    x.fillRect(0, 0, 1024, 1024);
+    ctx.fillStyle = '#fffaf1';
 
-    x.fillStyle = '#24112f';
-    x.textAlign = 'center';
-
-    x.font = 'bold 58px Arial';
-    x.fillText('FRUIT LAB®', 512, 95);
-
-    x.fillRect(85, 135, 854, 9);
-
-    x.font = '900 165px Arial Black, Arial';
-    x.fillText('YOUR', 512, 355);
-    x.fillText('MIX!', 512, 515);
-
-    x.fillStyle = color;
-    x.beginPath();
-    x.arc(512, 690, 115, 0, Math.PI * 2);
-    x.fill();
-
-    x.strokeStyle = '#24112f';
-    x.lineWidth = 12;
-    x.stroke();
-
-    x.fillStyle = '#24112f';
-
-    x.font = 'bold 38px monospace';
-    x.fillText(color.toUpperCase(), 512, 885);
-
-    x.font = 'bold 23px monospace';
-    x.fillText(
-        ids.length + ' INGREDIENTEN · MADE BY YOU',
-        512,
-        960
+    ctx.fillRect(
+        0,
+        0,
+        1024,
+        1024
     );
 
-    const t = new THREE.CanvasTexture(c);
-    t.colorSpace = THREE.SRGBColorSpace;
+    ctx.fillStyle = '#24112f';
 
-    return t;
+    ctx.textAlign = 'center';
+
+    ctx.font = 'bold 58px Arial';
+
+    ctx.fillText(
+        'FRUIT LAB®',
+        512,
+        95
+    );
+
+    ctx.fillRect(85, 135, 854, 9);
+
+    ctx.font = '900 165px Arial Black, Arial';
+
+    ctx.fillText(
+        'YOUR',
+        512,
+        355
+    );
+
+    ctx.fillText(
+        'MIX!',
+        512,
+        515
+    );
+
+    ctx.fillStyle = color;
+
+    ctx.beginPath();
+
+    ctx.arc(
+        512,
+        690,
+        115,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+    ctx.strokeStyle = '#24112f';
+
+    ctx.lineWidth = 12;
+
+    ctx.stroke();
+
+    ctx.fillStyle = '#24112f';
+
+    ctx.font = 'bold 38px monospace';
+
+    ctx.fillText(
+        color.toUpperCase(),
+        512,
+        885
+    );
+
+    ctx.font = 'bold 23px monospace';
+
+    ctx.fillText(
+
+        ids.length +
+        ' INGREDIENTEN · MADE BY YOU',
+
+        512,
+
+        960
+
+    );
+
+    const texture = new THREE.CanvasTexture(canvas);
+
+    texture.colorSpace = THREE.SRGBColorSpace;
+
+    return texture;
+
 }
 
 /* ==========================================
-   PREPARE RESULT CUP
+   PREPARE EMPTY CUP
 ========================================== */
 
 function prepareResult(color, ids) {
@@ -2578,29 +3914,39 @@ function prepareResult(color, ids) {
     const texture = makeCustomLabel(color, ids);
 
     const flavour = {
+
         primary: color,
+
         label: '#fffaf1',
+
         ink: '#24112f',
+
         short: 'MY MIX'
+
     };
 
     if (resultCup) {
 
         resultRoot.remove(resultCup);
 
-        resultCup.traverse(o => {
+        resultCup.traverse(object => {
 
-            if (o.isMesh) {
+            if (object.isMesh) {
 
-                o.geometry.dispose();
+                object.geometry.dispose();
 
-                if (o.material.map) {
-                    o.material.map.dispose();
+                if (object.material.map) {
+
+                    object.material.map.dispose();
+
                 }
 
-                o.material.dispose();
+                object.material.dispose();
+
             }
+
         });
+
     }
 
     resultCup = makeCup(flavour);
@@ -2608,59 +3954,100 @@ function prepareResult(color, ids) {
     resultCup.userData.labelMat.map.dispose();
 
     resultCup.userData.labelMat.map = texture;
+
     resultCup.userData.labelMat.needsUpdate = true;
 
     resultRoot.add(resultCup);
 
-    /* EMPTY CUP */
+    /* TRANSPARENT CUP */
 
     resultCup.userData.bodyMat.transparent = true;
+
     resultCup.userData.bodyMat.opacity = .24;
+
     resultCup.userData.bodyMat.depthWrite = false;
 
-    /* HIDE LID BEFORE POURING */
+    /* HIDE LID UNTIL POURING FINISHES */
 
     resultCup.children[1].visible = false;
+
     resultCup.children[2].visible = false;
+
     resultCup.children[3].visible = false;
 
-    /* DRINK INSIDE CUP */
+    /* CUP LIQUID */
 
     resultLiquid = mesh(
-        new THREE.CylinderGeometry(.57, .43, 1, 40),
+
+        new THREE.CylinderGeometry(
+            .57,
+            .43,
+            1,
+            40
+        ),
+
         new THREE.MeshStandardMaterial({
+
             color,
+
             transparent: true,
+
             opacity: .92,
+
             roughness: .2
+
         })
+
     );
 
     resultLiquid.position.y = -1.08;
+
     resultLiquid.scale.y = .001;
 
     resultCup.add(resultLiquid);
 
     resultRoot.position.copy(CUP_SPOT);
+
     resultRoot.rotation.set(0, -.12, 0);
+
     resultRoot.scale.setScalar(0);
 
-    document.querySelector('#resultHex').textContent = color;
+    document.querySelector(
+        '#resultHex'
+    ).textContent = color;
 
     const counts = new Map();
 
     for (const id of ids) {
-        counts.set(id, (counts.get(id) || 0) + 1);
+
+        counts.set(
+
+            id,
+
+            (counts.get(id) || 0) + 1
+
+        );
+
     }
 
-    document.querySelector('#resultIngredients').textContent =
+    document.querySelector(
+        '#resultIngredients'
+    ).textContent =
+
         [...counts]
-            .map(([id, n]) =>
-                n + '× ' + findIngredient(id).name
+
+            .map(([id, quantity]) =>
+
+                quantity +
+                '× ' +
+                findIngredient(id).name
+
             )
+
             .join(' + ');
 
     resultVisible = false;
+
 }
 
 /* ==========================================
@@ -2681,10 +4068,15 @@ function showResult() {
     gameCanvas.classList.add('result-active');
 
     gsap.to(resultRoot.rotation, {
+
         y: Math.PI * 2 - .12,
+
         duration: reduce ? 0 : 1.15,
+
         ease: 'power2.out'
+
     });
+
 }
 
 /* ==========================================
@@ -2693,9 +4085,12 @@ function showResult() {
 
 function hideResult() {
 
-    if (!resultVisible) return;
+    if (!resultVisible) {
+        return;
+    }
 
     resultVisible = false;
+
     rotatingResult = false;
 
     resultPanel.classList.remove('visible');
@@ -2708,31 +4103,46 @@ function hideResult() {
     gameCanvas.classList.remove('result-active');
 
     gsap.to(resultRoot.scale, {
+
         x: 0,
         y: 0,
         z: 0,
+
         duration: reduce ? 0 : .35,
+
         overwrite: true
+
     });
 
     gsap.to(jugPivot.position, {
+
         y: -1.18,
+
         duration: reduce ? 0 : .35,
+
         overwrite: true
+
     });
 
     gsap.to(jugPivot.rotation, {
+
         z: 0,
+
         duration: reduce ? 0 : .35,
+
         overwrite: true
+
     });
 
     juiceStream.visible = false;
+
     streamProgress.value = 0;
+
 }
 
-document.querySelector('#closeResult')
-    .addEventListener('click', hideResult);
+document.querySelector(
+    '#closeResult'
+).addEventListener('click', hideResult);
 
 /* ==========================================
    RECIPE STATE
@@ -2741,15 +4151,47 @@ document.querySelector('#closeResult')
 const recipe = [];
 
 let blending = false;
+
 let pouring = false;
+
 let activeDrag = null;
 
-const ingredientsEl = document.querySelector('#ingredients');
-const colorDisc = document.querySelector('#colorDisc');
-const colorCode = document.querySelector('#colorCode');
-const mixCount = document.querySelector('#mixCount');
-const blendStatus = document.querySelector('#blendStatus');
-const blendBtn = document.querySelector('#blendBtn');
+const ingredientsEl =
+    document.querySelector('#ingredients');
+
+const colorDisc =
+    document.querySelector('#colorDisc');
+
+const colorCode =
+    document.querySelector('#colorCode');
+
+const mixCount =
+    document.querySelector('#mixCount');
+
+const blendStatus =
+    document.querySelector('#blendStatus');
+
+const blendBtn =
+    document.querySelector('#blendBtn');
+
+/* ==========================================
+   NEW MIX BUTTON
+========================================== */
+
+document.querySelector(
+    '#newMixBtn'
+).addEventListener('click', () => {
+
+    hideResult();
+
+    recipe.length = 0;
+
+    blendStatus.textContent =
+        'READY FOR A NEW MIX.';
+
+    refreshRecipe();
+
+});
 
 /* ==========================================
    REFRESH RECIPE
@@ -2760,53 +4202,91 @@ function refreshRecipe() {
     const counts = new Map();
 
     for (const id of recipe) {
+
         counts.set(
+
             id,
+
             (counts.get(id) || 0) + 1
+
         );
+
     }
 
     ingredientsEl.innerHTML = counts.size
-        ? [...counts].map(([id, count]) => `
-            <li>
-                <span>
-                    ${count} × ${findIngredient(id).name}
-                </span>
 
-                <button
-                    type="button"
-                    data-remove="${id}"
-                    aria-label="Verwijder één ${findIngredient(id).name}">
-                    −
-                </button>
-            </li>
-        `).join('')
+        ? [...counts].map(
+
+            ([id, count]) => `
+
+                <li>
+
+                    <span>
+
+                        ${count} × ${findIngredient(id).name}
+
+                    </span>
+
+                    <button
+
+                        type="button"
+
+                        data-remove="${id}"
+
+                        aria-label="Verwijder één ${findIngredient(id).name}">
+
+                        −
+
+                    </button>
+
+                </li>
+
+            `
+
+        ).join('')
+
         : '<li class="empty">NOG GEEN FRUIT TOEGEVOEGD.</li>';
 
     const color = averageColors(recipe);
 
     colorDisc.style.backgroundColor = color;
+
     colorCode.textContent = color;
 
     mixCount.textContent =
+
         `${recipe.length} / 8 INGREDIENTEN`;
 
     blendBtn.disabled =
+
         recipe.length === 0 || blending;
 
-    const c = new THREE.Color(color);
+    const target = new THREE.Color(color);
 
     gsap.to(liquidMaterial.color, {
-        r: c.r,
-        g: c.g,
-        b: c.b,
+
+        r: target.r,
+
+        g: target.g,
+
+        b: target.b,
+
         duration: reduce ? 0 : .5,
+
         overwrite: true
+
     });
 
     if (!pouring) {
-        setFillLevel(recipe.length / 8 * FILL_MAX);
+
+        setFillLevel(
+
+            recipe.length / 8 * FILL_MAX
+
+        );
+
     }
+
 }
 
 /* ==========================================
@@ -2815,7 +4295,9 @@ function refreshRecipe() {
 
 function addIngredient(id) {
 
-    if (blending || pouring) return;
+    if (blending || pouring) {
+        return;
+    }
 
     if (resultVisible) {
         hideResult();
@@ -2824,126 +4306,173 @@ function addIngredient(id) {
     if (recipe.length >= 8) {
 
         blendStatus.textContent =
+
             'DE BLENDER IS VOL! DRUK OP BLEND OF RESET.';
 
         return;
+
     }
 
     recipe.push(id);
 
     blendStatus.textContent =
+
         `${findIngredient(id).name} TOEGEVOEGD! ✳`;
 
     refreshRecipe();
 
     gsap.fromTo(
+
         blender.scale,
+
         {
+
             x: 1.05,
+
             y: 1.05,
+
             z: 1.05
+
         },
+
         {
+
             x: 1,
+
             y: 1,
+
             z: 1,
+
             duration: reduce ? 0 : .35,
+
             ease: 'back.out(2)',
+
             overwrite: true
+
         }
+
     );
+
 }
 
 /* ==========================================
    REMOVE INGREDIENT
 ========================================== */
 
-ingredientsEl.addEventListener('click', e => {
+ingredientsEl.addEventListener('click', event => {
 
-    const button = e.target.closest('[data-remove]');
+    const button = event.target.closest(
+        '[data-remove]'
+    );
 
-    if (!button || blending || pouring) return;
+    if (!button || blending || pouring) {
+        return;
+    }
 
     if (resultVisible) {
         hideResult();
     }
 
-    const idx = recipe.lastIndexOf(
+    const index = recipe.lastIndexOf(
         button.dataset.remove
     );
 
-    if (idx >= 0) {
-        recipe.splice(idx, 1);
+    if (index >= 0) {
+
+        recipe.splice(index, 1);
+
     }
 
-    blendStatus.textContent = 'INGREDIËNT VERWIJDERD.';
+    blendStatus.textContent =
+        'INGREDIËNT VERWIJDERD.';
 
     refreshRecipe();
+
 });
 
 /* ==========================================
    INGREDIENT BUTTONS
 ========================================== */
 
-document.querySelector('#pickerGrid').innerHTML =
-    INGREDIENTS.map(i => `
+document.querySelector(
+    '#pickerGrid'
+).innerHTML = INGREDIENTS.map(
+
+    ingredient => `
+
         <button
+
             type="button"
+
             class="pick-btn"
-            data-add="${i.id}"
-            aria-label="Voeg ${i.name} toe">
+
+            data-add="${ingredient.id}"
+
+            aria-label="Voeg ${ingredient.name} toe">
 
             <span
+
                 class="fruit-dot"
-                style="background:${i.color}">
+
+                style="background:${ingredient.color}">
+
             </span>
 
             <span class="pick-name">
-                + ${i.name}
+
+                + ${ingredient.name}
+
             </span>
+
         </button>
-    `).join('');
 
-document.querySelector('#pickerGrid')
-    .addEventListener('click', e => {
+    `
 
-        const b = e.target.closest('[data-add]');
+).join('');
 
-        if (b) {
-            addIngredient(b.dataset.add);
-        }
-    });
+document.querySelector(
+    '#pickerGrid'
+).addEventListener('click', event => {
+
+    const button = event.target.closest(
+        '[data-add]'
+    );
+
+    if (button) {
+
+        addIngredient(
+            button.dataset.add
+        );
+
+    }
+
+});
 
 /* ==========================================
    RESET
 ========================================== */
 
-document.querySelector('#resetBtn')
-    .addEventListener('click', () => {
+document.querySelector(
+    '#resetBtn'
+).addEventListener('click', () => {
 
-        if (blending || pouring) return;
+    if (blending || pouring) {
+        return;
+    }
 
-        hideResult();
-        recipe.length = 0;
+    hideResult();
 
-        blendStatus.textContent = 'READY FOR A NEW MIX.';
+    recipe.length = 0;
 
-        refreshRecipe();
-    });
+    blendStatus.textContent =
+        'READY FOR A NEW MIX.';
 
-document.querySelector('#newMixBtn')
-    .addEventListener('click', () => {
+    refreshRecipe();
 
-        hideResult();
-        recipe.length = 0;
-
-        blendStatus.textContent = 'READY FOR A NEW MIX.';
-
-        refreshRecipe();
-    });
+});
 
 /* ==========================================
-   BLENDING & POURING
+   BLEND AND POUR
 ========================================== */
 
 blendBtn.addEventListener('click', () => {
@@ -2954,176 +4483,266 @@ blendBtn.addEventListener('click', () => {
         !recipe.length ||
         resultVisible
     ) {
+
         return;
+
     }
 
     blending = true;
+
     blendBtn.disabled = true;
 
     const color = averageColors(recipe);
 
-    blendStatus.textContent = 'BLENDING IN PROGRESS...';
+    blendStatus.textContent =
+        'BLENDING IN PROGRESS...';
 
-    prepareResult(color, [...recipe]);
+    prepareResult(
+        color,
+        [...recipe]
+    );
 
     juiceStream.material.color.set(color);
 
-    const d = reduce ? 0 : 1;
+    const duration = reduce ? 0 : 1;
 
-    const tl = gsap.timeline({
+    const timeline = gsap.timeline({
 
         onComplete() {
 
             blending = false;
+
             pouring = false;
 
             blendStatus.textContent =
+
                 `YOUR CUSTOM MIX IS READY! ${color} ✳`;
 
             blendBtn.disabled = false;
 
             showResult();
+
         }
+
     });
 
-    /* 1. BLEND */
+    /* PHASE 1 — BLEND */
 
-    tl.to(blender.rotation, {
+    timeline.to(blender.rotation, {
+
         z: .035,
-        duration: .07 * d,
+
+        duration: .07 * duration,
+
         repeat: 8,
+
         yoyo: true
+
     }, 0);
 
-    tl.to(blades.rotation, {
+    timeline.to(blades.rotation, {
+
         y: blades.rotation.y + Math.PI * 20,
-        duration: .95 * d,
+
+        duration: .95 * duration,
+
         ease: 'power2.inOut'
+
     }, 0);
 
-    tl.to(blender.rotation, {
+    timeline.to(blender.rotation, {
+
         z: 0,
-        duration: .12 * d
+
+        duration: .12 * duration
+
     }, '>');
 
-    /* 2. BEKER VERSCHIJNT RECHTS */
+    /* PHASE 2 — CUP APPEARS ON THE RIGHT */
 
-    tl.to(resultRoot.scale, {
+    timeline.to(resultRoot.scale, {
+
         x: .86,
+
         y: .86,
+
         z: .86,
-        duration: .5 * d,
+
+        duration: .5 * duration,
+
         ease: 'back.out(1.3)'
+
     }, '>');
 
-    tl.to(resultRoot.position, {
+    timeline.to(resultRoot.position, {
+
         y: CUP_SPOT.y,
-        duration: .2 * d
+
+        duration: .2 * duration
+
     }, '<');
 
-    /* 3. KAN KOMT OMHOOG */
+    /* PHASE 3 — LIFT JUG */
 
-    tl.call(() => {
+    timeline.call(() => {
+
         pouring = true;
-        blendStatus.textContent = 'POURING YOUR MIX...';
+
+        blendStatus.textContent =
+            'POURING YOUR MIX...';
+
     });
 
-    tl.to(jugPivot.position, {
+    timeline.to(jugPivot.position, {
+
         y: .35,
-        duration: .65 * d,
+
+        duration: .65 * duration,
+
         ease: 'power2.inOut'
+
     }, '>');
 
-    /* 4. KAN KANTELT NAAR RECHTS */
+    /* PHASE 4 — TILT RIGHT */
 
-    tl.to(jugPivot.rotation, {
+    timeline.to(jugPivot.rotation, {
+
         z: -.82,
-        duration: .7 * d,
+
+        duration: .7 * duration,
+
         ease: 'power2.inOut'
+
     }, '>');
 
-    /* 5. SCHENKEN */
+    /* PHASE 5 — POUR */
 
-    tl.call(() => {
+    timeline.call(() => {
 
         lid.visible = false;
+
         lidKnob.visible = false;
 
         juiceStream.visible = true;
+
         streamProgress.value = 0;
+
     });
 
-    tl.to(streamProgress, {
+    timeline.to(streamProgress, {
+
         value: 1,
-        duration: .2 * d,
+
+        duration: .2 * duration,
+
         ease: 'power1.out'
+
     }, '>');
 
-    tl.to(liquid.scale, {
+    timeline.to(liquid.scale, {
+
         y: .03,
-        duration: 1.25 * d,
+
+        duration: 1.25 * duration,
+
         ease: 'none'
+
     }, '>');
 
-    tl.to(liquid.position, {
+    timeline.to(liquid.position, {
+
         y: .145,
-        duration: 1.25 * d,
+
+        duration: 1.25 * duration,
+
         ease: 'none'
+
     }, '<');
 
-    tl.to(resultLiquid.scale, {
+    timeline.to(resultLiquid.scale, {
+
         y: 1.65,
-        duration: 1.25 * d,
+
+        duration: 1.25 * duration,
+
         ease: 'none'
+
     }, '<');
 
-    tl.to(resultLiquid.position, {
+    timeline.to(resultLiquid.position, {
+
         y: -.255,
-        duration: 1.25 * d,
+
+        duration: 1.25 * duration,
+
         ease: 'none'
+
     }, '<');
 
-    /* 6. STRAAL STOPT */
+    /* STOP POURING */
 
-    tl.to(streamProgress, {
+    timeline.to(streamProgress, {
+
         value: 0,
-        duration: .25 * d,
+
+        duration: .25 * duration,
+
         ease: 'power2.in'
+
     }, '>');
 
-    tl.call(() => {
+    timeline.call(() => {
 
         juiceStream.visible = false;
 
         lid.visible = true;
+
         lidKnob.visible = true;
 
         resultCup.children[1].visible = true;
+
         resultCup.children[2].visible = true;
+
         resultCup.children[3].visible = true;
+
     });
 
-    /* 7. KAN TERUG */
+    /* RETURN JUG */
 
-    tl.to(jugPivot.rotation, {
+    timeline.to(jugPivot.rotation, {
+
         z: 0,
-        duration: .65 * d,
+
+        duration: .65 * duration,
+
         ease: 'power2.inOut'
+
     }, '>');
 
-    tl.to(jugPivot.position, {
+    timeline.to(jugPivot.position, {
+
         y: -1.18,
-        duration: .65 * d,
+
+        duration: .65 * duration,
+
         ease: 'power2.inOut'
+
     }, '<');
 
-    tl.to(resultRoot.scale, {
+    timeline.to(resultRoot.scale, {
+
         x: 1,
+
         y: 1,
+
         z: 1,
-        duration: .4 * d,
+
+        duration: .4 * duration,
+
         ease: 'back.out(1.5)'
+
     }, '<');
+
 });
 
 /* ==========================================
@@ -3131,134 +4750,199 @@ blendBtn.addEventListener('click', () => {
 ========================================== */
 
 const ray = new THREE.Raycaster();
+
 const pointer = new THREE.Vector2();
 
 const dragPlane = new THREE.Plane(
+
     new THREE.Vector3(0, 0, 1),
+
     -.3
+
 );
 
 const dragHit = new THREE.Vector3();
 
-function setPointer(e) {
+/* POINTER POSITION */
+
+function setPointer(event) {
 
     const rect = gameCanvas.getBoundingClientRect();
 
     pointer.set(
-        (e.clientX - rect.left) / rect.width * 2 - 1,
-        -(e.clientY - rect.top) / rect.height * 2 + 1
+
+        (event.clientX - rect.left) /
+        rect.width * 2 - 1,
+
+        -(event.clientY - rect.top) /
+        rect.height * 2 + 1
+
     );
 
-    ray.setFromCamera(pointer, gameCamera);
+    ray.setFromCamera(
+        pointer,
+        gameCamera
+    );
+
 }
+
+/* IDENTIFY FRUIT */
 
 function locateFruit(object) {
 
     while (
+
         object &&
+
         !object.userData.ingredientId
+
     ) {
+
         object = object.parent;
+
     }
 
     return object;
+
 }
 
-/* ==========================================
-   POINTER DOWN
-========================================== */
+/* POINTER DOWN */
 
-gameCanvas.addEventListener('pointerdown', e => {
+gameCanvas.addEventListener('pointerdown', event => {
 
     if (resultVisible) {
 
-        setPointer(e);
+        setPointer(event);
 
         if (
-            !ray.intersectObjects([resultRoot], true).length
+
+            !ray.intersectObjects(
+                [resultRoot],
+                true
+            ).length
+
         ) {
+
             return;
+
         }
 
         rotatingResult = true;
-        resultPointerX = e.clientX;
 
-        gameCanvas.setPointerCapture(e.pointerId);
+        resultPointerX = event.clientX;
 
+        gameCanvas.setPointerCapture(
+            event.pointerId
+        );
+
+        return;
+
+    }
+
+    if (blending) {
         return;
     }
 
-    if (blending) return;
-
-    setPointer(e);
+    setPointer(event);
 
     const hits = ray.intersectObjects(
-        draggable.map(x => x.root),
+
+        draggable.map(item => item.root),
+
         true
+
     );
 
-    if (!hits.length) return;
+    if (!hits.length) {
+        return;
+    }
 
-    const root = locateFruit(hits[0].object);
+    const root = locateFruit(
+        hits[0].object
+    );
 
-    if (!root) return;
+    if (!root) {
+        return;
+    }
 
-    const d = draggable.find(x => x.root === root);
+    const draggableItem = draggable.find(
+        item => item.root === root
+    );
 
     activeDrag = {
-        entry: d,
-        pointerId: e.pointerId
+
+        entry: draggableItem,
+
+        pointerId: event.pointerId
+
     };
 
     gsap.killTweensOf(root.position);
 
     root.scale.setScalar(1.16);
 
-    gameCanvas.setPointerCapture(e.pointerId);
-    gameCanvas.classList.add('dragging');
+    gameCanvas.setPointerCapture(
+        event.pointerId
+    );
 
-    e.preventDefault();
+    gameCanvas.classList.add(
+        'dragging'
+    );
+
+    event.preventDefault();
+
 });
 
-/* ==========================================
-   POINTER MOVE
-========================================== */
+/* POINTER MOVE */
 
-gameCanvas.addEventListener('pointermove', e => {
+gameCanvas.addEventListener('pointermove', event => {
 
     if (resultVisible) {
 
         if (rotatingResult) {
 
             resultRoot.rotation.y +=
-                (e.clientX - resultPointerX) * .012;
 
-            resultPointerX = e.clientX;
+                (event.clientX - resultPointerX)
+                * .012;
+
+            resultPointerX = event.clientX;
+
         }
 
         return;
+
     }
 
     if (!activeDrag) {
 
-        setPointer(e);
+        setPointer(event);
 
         const hits = ray.intersectObjects(
-            draggable.map(x => x.root),
+
+            draggable.map(item => item.root),
+
             true
+
         );
 
         gameCanvas.style.cursor =
+
             hits.length ? 'grab' : 'default';
 
         return;
+
     }
 
-    if (e.pointerId !== activeDrag.pointerId) {
+    if (
+        event.pointerId !== activeDrag.pointerId
+    ) {
+
         return;
+
     }
 
-    setPointer(e);
+    setPointer(event);
 
     ray.ray.intersectPlane(
         dragPlane,
@@ -3268,68 +4952,107 @@ gameCanvas.addEventListener('pointermove', e => {
     const root = activeDrag.entry.root;
 
     root.position.set(
-        Math.max(-5.3, Math.min(4.5, dragHit.x)),
-        Math.max(-2, Math.min(2.5, dragHit.y)),
+
+        Math.max(
+            -5.3,
+            Math.min(4.5, dragHit.x)
+        ),
+
+        Math.max(
+            -2,
+            Math.min(2.5, dragHit.y)
+        ),
+
         .5
+
     );
 
-    /* NIEUWE DROPZONE */
+    const overBlender =
 
-    const over =
         dragHit.x > -.05 &&
+
         dragHit.x < 2.2 &&
+
         dragHit.y > -.9 &&
+
         dragHit.y < 1.7;
 
-    blenderGlow.material.opacity = over ? 1 : 0;
+    blenderGlow.material.opacity =
 
-    e.preventDefault();
+        overBlender ? 1 : 0;
+
+    event.preventDefault();
+
 });
 
-/* ==========================================
-   END DRAG
-========================================== */
+/* END DRAG */
 
-function endDrag(e) {
+function endDrag(event) {
 
     if (resultVisible) {
 
         rotatingResult = false;
 
-        if (gameCanvas.hasPointerCapture(e.pointerId)) {
-            gameCanvas.releasePointerCapture(e.pointerId);
+        if (
+            gameCanvas.hasPointerCapture(
+                event.pointerId
+            )
+        ) {
+
+            gameCanvas.releasePointerCapture(
+                event.pointerId
+            );
+
         }
 
         return;
+
     }
 
     if (
+
         !activeDrag ||
-        e.pointerId !== activeDrag.pointerId
+
+        event.pointerId !== activeDrag.pointerId
+
     ) {
+
         return;
+
     }
 
     const { entry } = activeDrag;
 
     const root = entry.root;
 
-    /* NIEUWE DROPZONE */
-
     const dropped =
+
         root.position.x > -.05 &&
+
         root.position.x < 2.2 &&
+
         root.position.y > -.9 &&
+
         root.position.y < 1.7;
 
     activeDrag = null;
 
-    gameCanvas.classList.remove('dragging');
+    gameCanvas.classList.remove(
+        'dragging'
+    );
 
     blenderGlow.material.opacity = 0;
 
-    if (gameCanvas.hasPointerCapture(e.pointerId)) {
-        gameCanvas.releasePointerCapture(e.pointerId);
+    if (
+        gameCanvas.hasPointerCapture(
+            event.pointerId
+        )
+    ) {
+
+        gameCanvas.releasePointerCapture(
+            event.pointerId
+        );
+
     }
 
     if (dropped) {
@@ -3337,76 +5060,127 @@ function endDrag(e) {
         addIngredient(entry.id);
 
         gsap.to(root.position, {
+
             x: 1.1,
+
             y: .2,
+
             z: .5,
+
             duration: reduce ? 0 : .25,
 
             onComplete() {
-                root.position.copy(entry.home);
+
+                root.position.copy(
+                    entry.home
+                );
+
                 root.scale.setScalar(1);
+
             }
+
         });
 
     } else {
 
         gsap.to(root.position, {
+
             x: entry.home.x,
+
             y: entry.home.y,
+
             z: entry.home.z,
+
             duration: reduce ? 0 : .4,
+
             ease: 'back.out(1.5)'
+
         });
 
         gsap.to(root.scale, {
+
             x: 1,
+
             y: 1,
+
             z: 1,
+
             duration: .3
+
         });
+
     }
+
 }
 
-gameCanvas.addEventListener('pointerup', endDrag);
-gameCanvas.addEventListener('pointercancel', endDrag);
+gameCanvas.addEventListener(
+    'pointerup',
+    endDrag
+);
+
+gameCanvas.addEventListener(
+    'pointercancel',
+    endDrag
+);
 
 /* ==========================================
-   RESIZE
+   RESIZE GAME CANVAS
 ========================================== */
 
 const observer = new ResizeObserver(() => {
 
-    const w = gameStage.clientWidth;
-    const h = gameStage.clientHeight;
+    const width = gameStage.clientWidth;
 
-    if (!w || !h) return;
+    const height = gameStage.clientHeight;
 
-    gameRenderer.setSize(w, h, false);
+    if (!width || !height) {
+        return;
+    }
 
-    gameCamera.aspect = w / h;
+    gameRenderer.setSize(
+        width,
+        height,
+        false
+    );
 
-    gameCamera.position.z = w < 600 ? 18 : 13;
+    gameCamera.aspect = width / height;
+
+    gameCamera.position.z =
+        width < 600 ? 18 : 13;
 
     gameCamera.updateProjectionMatrix();
+
 });
 
 observer.observe(gameStage);
 
+/* ==========================================
+   WINDOW RESIZE
+========================================== */
+
 function resize() {
 
-    camera.aspect = innerWidth / innerHeight;
-    camera.fov = innerWidth < 650 ? 48 : 35;
+    camera.aspect =
+        innerWidth / innerHeight;
+
+    camera.fov =
+        innerWidth < 650 ? 48 : 35;
 
     camera.updateProjectionMatrix();
 
-    renderer.setSize(innerWidth, innerHeight);
+    renderer.setSize(
+        innerWidth,
+        innerHeight
+    );
 
     renderer.setPixelRatio(
         Math.min(devicePixelRatio, 2)
     );
+
 }
 
-addEventListener('resize', resize);
+window.addEventListener('resize', resize);
+
 resize();
 
 /* ==========================================
@@ -3419,85 +5193,504 @@ function frame() {
 
     requestAnimationFrame(frame);
 
-    const t = clock.getElapsedTime();
+    const time = clock.getElapsedTime();
 
     if (!reduce) {
 
         leftCup.position.y =
-            -.1 + Math.sin(t * .7) * .12;
+
+            -.1 +
+            Math.sin(time * .7) * .12;
 
         centerCup.position.y =
-            .65 + Math.sin(t * .8 + 1) * .15;
+
+            .65 +
+            Math.sin(time * .8 + 1) * .15;
 
         rightCup.position.y =
-            -.15 + Math.sin(t * .75 + 2) * .12;
+
+            -.15 +
+            Math.sin(time * .75 + 2) * .12;
 
         featureFruit.rotation.y += .004;
 
-        draggable.forEach((f, i) => {
+        draggable.forEach((item, index) => {
 
-            if (activeDrag?.entry === f) return;
+            if (
+                activeDrag?.entry === item
+            ) {
 
-            f.root.rotation.y =
-                Math.sin(t * .5 + i) * .15;
+                return;
 
-            f.root.position.y =
-                f.home.y +
-                Math.sin(t * .8 + i) * .07;
+            }
+
+            item.root.rotation.y =
+
+                Math.sin(time * .5 + index) * .15;
+
+            item.root.position.y =
+
+                item.home.y +
+
+                Math.sin(time * .8 + index) * .07;
+
         });
+
     }
 
     camera.position.x += (
+
         motion.cameraX +
+
         (reduce ? 0 : mx * .16) -
+
         camera.position.x
+
     ) * .06;
 
     camera.position.y += (
+
         (reduce ? 0 : -my * .12) -
+
         camera.position.y
+
     ) * .06;
 
     camera.position.z += (
+
         motion.cameraZ +
+
         (innerWidth < 650 ? 3 : 0) -
+
         camera.position.z
+
     ) * .06;
 
     camera.lookAt(0, 0, 0);
 
-    renderer.render(scene, camera);
+    renderer.render(
+        scene,
+        camera
+    );
 
     refreshStream();
 
-    gameRenderer.render(gameScene, gameCamera);
+    gameRenderer.render(
+        gameScene,
+        gameCamera
+    );
+
 }
 
 frame();
+
 refreshRecipe();
 
 /* ==========================================
-   LOADING
+   LOADING ANIMATION
 ========================================== */
 
 const loader = gsap.timeline({
 
     onComplete() {
 
-        document.querySelector('#loader').remove();
+        document.querySelector(
+            '#loader'
+        ).remove();
+
         ScrollTrigger.refresh();
+
     }
+
 });
 
 loader.to('#loadFill', {
+
     width: '100%',
+
     duration: reduce ? 0 : .65
+
 });
 
 loader.to('#loader', {
+
     yPercent: -100,
+
     duration: reduce ? 0 : .7,
+
     ease: 'power4.inOut'
+
+});
+
+/* ==========================================
+   NEW: ORDER REQUEST SYSTEM
+========================================== */
+
+const orderDialog =
+    document.querySelector('#orderDialog');
+
+const orderProductName =
+    document.querySelector('#orderProductName');
+
+const orderProductInfo =
+    document.querySelector('#orderProductInfo');
+
+const orderSwatch =
+    document.querySelector('#orderSwatch');
+
+const orderQuantity =
+    document.querySelector('#orderQuantity');
+
+const orderReview =
+    document.querySelector('#orderReview');
+
+const orderFeedback =
+    document.querySelector('#orderFeedback');
+
+let selectedOrder = null;
+
+/* ==========================================
+   OPEN ORDER REQUEST
+========================================== */
+
+function openOrderRequest(order) {
+
+    if (blending || pouring) {
+        return;
+    }
+
+    selectedOrder = {
+
+        type: order.type,
+
+        name: order.name,
+
+        color: order.color,
+
+        ingredients: [
+            ...(order.ingredients || [])
+        ]
+
+    };
+
+    orderProductName.textContent =
+        selectedOrder.name;
+
+    orderProductInfo.textContent =
+
+        selectedOrder.type === 'custom'
+
+            ? selectedOrder.ingredients
+
+                .map(id =>
+                    findIngredient(id).name
+                )
+
+                .join(' + ')
+
+            : 'ORIGINELE FRUIT LAB FLAVOUR';
+
+    orderSwatch.style.backgroundColor =
+        selectedOrder.color;
+
+    orderQuantity.value = '1';
+
+    orderFeedback.textContent = '';
+
+    updateOrderReview();
+
+    if (!orderDialog.open) {
+
+        orderDialog.showModal();
+
+    }
+
+}
+
+/* ==========================================
+   VALIDATE QUANTITY
+========================================== */
+
+function validOrderQuantity() {
+
+    const quantity = Number(
+        orderQuantity.value
+    );
+
+    return (
+
+        Number.isInteger(quantity) &&
+
+        quantity >= 1 &&
+
+        quantity <= 12
+
+    )
+
+        ? quantity
+
+        : null;
+
+}
+
+/* ==========================================
+   BUILD ORDER TEXT
+========================================== */
+
+function orderText() {
+
+    if (!selectedOrder) {
+        return '';
+    }
+
+    const quantity = validOrderQuantity();
+
+    if (!quantity) {
+        return '';
+    }
+
+    const counts = new Map();
+
+    for (
+        const id of selectedOrder.ingredients
+    ) {
+
+        counts.set(
+
+            id,
+
+            (counts.get(id) || 0) + 1
+
+        );
+
+    }
+
+    const ingredients =
+
+        selectedOrder.type === 'custom'
+
+            ? [...counts]
+
+                .map(([id, count]) =>
+
+                    `${count} x ${findIngredient(id).name}`
+
+                )
+
+                .join(', ')
+
+            : 'Standaard smaak';
+
+    return [
+
+        'FRUIT LAB — VRIJBLIJVENDE BESTELAANVRAAG',
+
+        '',
+
+        `Product: ${selectedOrder.name}`,
+
+        `Type: ${
+            selectedOrder.type === 'custom'
+                ? 'Eigen mix'
+                : 'Standaard flavour'
+        }`,
+
+        `Aantal: ${quantity} beker(s)`,
+
+        `Kleur: ${selectedOrder.color.toUpperCase()}`,
+
+        `Ingrediënten: ${ingredients}`,
+
+        '',
+
+        'Ik ontvang graag meer informatie over de mogelijkheden, prijs en eventuele levering.',
+
+        'Dit is nog geen definitieve bestelling.'
+
+    ].join('\n');
+
+}
+
+/* ==========================================
+   UPDATE ORDER PREVIEW
+========================================== */
+
+function updateOrderReview() {
+
+    const summary = orderText();
+
+    orderReview.textContent =
+
+        summary ||
+
+        'Kies een geldig aantal van 1 t/m 12.';
+
+}
+
+orderQuantity.addEventListener(
+    'input',
+    updateOrderReview
+);
+
+orderQuantity.addEventListener(
+    'change',
+    updateOrderReview
+);
+
+/* ==========================================
+   ORDER STANDARD FLAVOUR
+========================================== */
+
+document.querySelector(
+    '#orderFlavourBtn'
+).addEventListener('click', () => {
+
+    const flavour =
+        FLAVOURS[activeFlavour];
+
+    openOrderRequest({
+
+        type: 'standard',
+
+        name: flavour.name,
+
+        color: flavour.primary
+
+    });
+
+});
+
+/* ==========================================
+   ORDER CUSTOM MIX
+========================================== */
+
+document.querySelector(
+    '#orderCustomBtn'
+).addEventListener('click', () => {
+
+    if (
+        !resultVisible ||
+        recipe.length === 0
+    ) {
+
+        return;
+
+    }
+
+    openOrderRequest({
+
+        type: 'custom',
+
+        name: 'YOUR OWN MIX',
+
+        color: averageColors(recipe),
+
+        ingredients: recipe
+
+    });
+
+});
+
+/* ==========================================
+   CLOSE ORDER
+========================================== */
+
+document.querySelector(
+    '#closeOrder'
+).addEventListener('click', () => {
+
+    orderDialog.close();
+
+});
+
+document.querySelector(
+    '#orderForm'
+).addEventListener('submit', event => {
+
+    event.preventDefault();
+
+});
+
+/* ==========================================
+   COPY ORDER REQUEST
+========================================== */
+
+document.querySelector(
+    '#copyOrder'
+).addEventListener('click', async () => {
+
+    const summary = orderText();
+
+    if (!summary) {
+
+        orderFeedback.textContent =
+
+            'Vul eerst een geldig aantal in (1 t/m 12).';
+
+        return;
+
+    }
+
+    try {
+
+        await navigator.clipboard.writeText(
+            summary
+        );
+
+        orderFeedback.textContent =
+
+            'Aanvraag gekopieerd. Je kunt deze zelf versturen.';
+
+    } catch (error) {
+
+        orderFeedback.textContent =
+
+            'Kopiëren is niet beschikbaar. Selecteer de tekst hierboven en kopieer die handmatig.';
+
+    }
+
+});
+
+/* ==========================================
+   EMAIL ORDER REQUEST
+========================================== */
+
+document.querySelector(
+    '#emailOrder'
+).addEventListener('click', () => {
+
+    const summary = orderText();
+
+    if (!summary) {
+
+        orderFeedback.textContent =
+
+            'Vul eerst een geldig aantal in (1 t/m 12).';
+
+        return;
+
+    }
+
+    const subject =
+
+        `FRUIT LAB — aanvraag ${selectedOrder.name}`;
+
+    const emailUrl =
+
+        'mailto:?subject=' +
+
+        encodeURIComponent(subject) +
+
+        '&body=' +
+
+        encodeURIComponent(summary);
+
+    orderFeedback.textContent =
+
+        'Er opent een e-mailconcept. Vul zelf de ontvanger in en verstuur het bericht.';
+
+    window.location.href = emailUrl;
+
 });
 
 </script>
