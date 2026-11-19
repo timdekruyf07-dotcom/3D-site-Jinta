@@ -2,2327 +2,1986 @@
 <html lang="nl">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>THE BOTTLE CLUB — Digital Playground</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- GOOGLE FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>FRUIT LAB — Interactive 3D Experience</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <style>
+<style>
 
-        /* ========================================
-           GENERAL SETTINGS
-        ======================================== */
+/* ==========================================
+   GLOBAL
+========================================== */
 
-        :root {
-            --bg: #29143c;
-            --accent: #f8e635;
-            --text: #fff7ed;
-            --muted: #c5b4ca;
-        }
+:root {
+    --dark: #21112d;
+    --cream: #f1f0e8;
+    --yellow: #ffc629;
+    --orange: #ff6338;
+    --purple: #6935a8;
+    --ink: #21112d;
+}
 
-        * {
-            box-sizing: border-box;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        html {
-            scroll-behavior: smooth;
-        }
+html {
+    scroll-behavior: smooth;
+}
 
-        body {
-            margin: 0;
-            background: #1d1029;
-            color: var(--text);
-            font-family: 'DM Sans', sans-serif;
-            overflow-x: hidden;
-        }
+body {
+    margin: 0;
+    overflow-x: hidden;
+    background: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+}
 
-        button,
-        a {
-            font: inherit;
-        }
+button,
+a {
+    font: inherit;
+}
 
-        button {
-            cursor: pointer;
-        }
+button {
+    cursor: pointer;
+}
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+a {
+    color: inherit;
+    text-decoration: none;
+}
 
+::selection {
+    background: var(--orange);
+    color: white;
+}
 
-        /* ========================================
-           ANNOUNCEMENT BAR
-        ======================================== */
+/* ==========================================
+   LOADING SCREEN
+========================================== */
 
-        .announcement {
-            height: 32px;
-            background: var(--accent);
-            color: #1b1530;
+.loader {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 
-            font: 600 10px 'DM Mono', monospace;
-            letter-spacing: .17em;
-            text-align: center;
-        }
+    background: #180c25;
+    color: white;
+}
 
+.loader-logo {
+    font: clamp(55px, 12vw, 160px)/0.9
+          'Archivo Black', sans-serif;
 
-        /* ========================================
-           MAIN WEBSITE SHELL
-        ======================================== */
+    letter-spacing: -0.09em;
+}
 
-        .shell {
-            background: var(--bg);
-            min-height: 100svh;
+.loader-text {
+    margin-top: 25px;
 
-            transition: background .8s;
+    font: 12px 'DM Mono', monospace;
+    letter-spacing: 0.2em;
+}
 
-            position: relative;
-            isolation: isolate;
-            overflow: hidden;
-        }
+.loader-line {
+    width: 200px;
+    height: 3px;
 
-        .shell::after {
-            content: "";
+    background: #ffffff30;
 
-            position: absolute;
-            inset: auto -20% -20% -20%;
+    margin-top: 25px;
+    overflow: hidden;
+}
 
-            height: 55%;
+.loader-progress {
+    height: 100%;
+    width: 0%;
 
-            background: radial-gradient(
-                ellipse,
-                rgba(0, 0, 0, .32),
-                transparent 60%
-            );
+    background: var(--yellow);
+}
 
-            pointer-events: none;
-            z-index: -1;
-        }
+/* ==========================================
+   FIXED 3D CANVAS
+========================================== */
 
+#webgl {
+    position: fixed;
 
-        /* ========================================
-           NAVIGATION
-        ======================================== */
+    top: 0;
+    left: 0;
 
-        .nav {
-            height: 90px;
+    width: 100%;
+    height: 100%;
 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+    z-index: 5;
 
-            gap: 18px;
+    pointer-events: none;
+}
 
-            padding: 0 clamp(18px, 5vw, 86px);
+/* ==========================================
+   NAVIGATION
+========================================== */
 
-            position: relative;
-            z-index: 5;
-        }
+.navigation {
+    position: fixed;
 
-        .logo {
-            font-family: 'Archivo Black', sans-serif;
-            letter-spacing: -.09em;
+    top: 0;
+    left: 0;
 
-            font-size: clamp(23px, 3vw, 36px);
-            line-height: .8;
-        }
+    width: 100%;
 
-        .logo small {
-            display: block;
+    padding: 28px 5vw;
 
-            font: 500 9px 'DM Mono', monospace;
-            letter-spacing: .21em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-            margin-top: 10px;
-        }
+    z-index: 50;
 
-        .navlinks {
-            display: flex;
-            gap: 34px;
-            align-items: center;
+    color: white;
 
-            font: 500 12px 'DM Mono', monospace;
-            letter-spacing: .06em;
-        }
+    mix-blend-mode: difference;
+}
 
-        .navlinks a:hover {
-            text-decoration: underline;
-            text-underline-offset: 6px;
-        }
+.brand {
+    font: 30px 'Archivo Black', sans-serif;
 
-        .pill {
-            border: 1px solid currentColor;
-            border-radius: 100px;
+    letter-spacing: -0.09em;
+}
 
-            padding: 11px 18px;
+.nav-right {
+    display: flex;
+    gap: 35px;
+    align-items: center;
 
-            background: transparent;
-            color: inherit;
+    font: 12px 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+}
 
-            font: 600 11px 'DM Mono', monospace;
-            letter-spacing: .06em;
-        }
+.nav-right a {
+    transition: opacity 0.3s;
+}
 
+.nav-right a:hover {
+    opacity: 0.5;
+}
 
-        /* ========================================
-           HERO SECTION
-        ======================================== */
+.menu-button {
+    width: 44px;
+    height: 44px;
 
-        .hero {
-            position: relative;
+    border: 1px solid white;
+    border-radius: 50%;
 
-            min-height: calc(100svh - 122px);
+    background: transparent;
+    color: white;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    font-size: 20px;
+}
 
-            padding: 25px 5vw 100px;
-        }
+/* ==========================================
+   SCROLL PROGRESS
+========================================== */
 
-        .giant {
-            font: clamp(96px, 20.5vw, 350px)/.75
-                  'Archivo Black', sans-serif;
+.progress {
+    position: fixed;
 
-            letter-spacing: -.095em;
-            white-space: nowrap;
+    top: 0;
+    left: 0;
 
-            position: absolute;
+    width: 100%;
+    height: 4px;
 
-            left: 50%;
-            top: 45%;
+    background: transparent;
 
-            transform: translate(-50%, -50%);
+    z-index: 100;
+}
 
-            opacity: .98;
+.progress-bar {
+    width: 0;
+    height: 100%;
 
-            pointer-events: none;
-            z-index: 0;
-        }
+    background: var(--orange);
+}
 
+/* ==========================================
+   SECTIONS
+========================================== */
 
-        /* ========================================
-           THREE.JS CANVAS
-        ======================================== */
+.scene-section {
+    position: relative;
 
-        .canvas-wrap {
-            position: relative;
+    width: 100%;
 
-            width: min(55vw, 760px);
-            height: min(70vh, 690px);
+    min-height: 100vh;
+    min-height: 100svh;
 
-            z-index: 1;
+    overflow: hidden;
 
-            touch-action: pan-y;
-        }
+    isolation: isolate;
+}
 
-        #scene {
-            display: block;
+.scene-section .content {
+    position: relative;
 
-            width: 100%;
-            height: 100%;
+    z-index: 10;
 
-            cursor: grab;
-        }
+    width: 100%;
+    height: 100%;
 
-        #scene:active {
-            cursor: grabbing;
-        }
+    pointer-events: none;
+}
 
+.scene-section .content a,
+.scene-section .content button {
+    pointer-events: auto;
+}
 
-        /* ========================================
-           PRODUCT INFORMATION
-        ======================================== */
+/* ==========================================
+   SECTION 1 — FRUIT
+========================================== */
 
-        .hero-info {
-            position: absolute;
+#fruit {
+    min-height: 120vh;
 
-            left: clamp(18px, 5vw, 86px);
-            bottom: 9%;
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            #452553 0%,
+            #251330 55%,
+            #150b21 100%
+        );
 
-            z-index: 2;
+    color: white;
+}
 
-            max-width: 260px;
-        }
+.hero-small {
+    position: absolute;
 
-        .overline {
-            font: 500 11px 'DM Mono', monospace;
+    top: 23%;
+    left: 5vw;
 
-            letter-spacing: .15em;
-            text-transform: uppercase;
-        }
+    font: 12px 'DM Mono', monospace;
 
-        .hero-info h2 {
-            font: clamp(30px, 4.3vw, 64px)/.94
-                  'Archivo Black', sans-serif;
+    letter-spacing: 0.12em;
+}
 
-            letter-spacing: -.055em;
-            text-transform: uppercase;
+.hero-title {
+    position: absolute;
 
-            margin: 15px 0;
-        }
+    top: 45%;
+    left: 50%;
 
-        .hero-info p {
-            font-size: 13px;
-            line-height: 1.55;
+    width: max-content;
 
-            max-width: 210px;
+    transform: translate(-50%, -50%);
 
-            color: var(--muted);
+    margin: 0;
 
-            margin: 0;
-        }
+    font: clamp(135px, 30vw, 520px)/0.7
+          'Archivo Black', sans-serif;
 
+    letter-spacing: -0.11em;
 
-        /* ========================================
-           RIGHT SIDE INFORMATION
-        ======================================== */
+    text-transform: uppercase;
 
-        .right-info {
-            position: absolute;
+    color: white;
 
-            right: clamp(18px, 5vw, 86px);
-            bottom: 11%;
+    z-index: 1;
+}
 
-            z-index: 2;
+.hero-subtitle {
+    position: absolute;
 
-            text-align: right;
-        }
+    bottom: 14%;
+    left: 5vw;
 
-        .edition {
-            font: 500 12px 'DM Mono', monospace;
-            line-height: 1.8;
-        }
+    max-width: 260px;
 
-        .round-stamp {
-            display: grid;
-            place-items: center;
+    font: 12px/1.7 'DM Mono', monospace;
 
-            border: 1px solid currentColor;
-            border-radius: 50%;
+    letter-spacing: 0.08em;
+}
 
-            height: 90px;
-            width: 90px;
+.hero-number {
+    position: absolute;
 
-            margin-left: auto;
-            margin-top: 17px;
+    right: 5vw;
+    bottom: 14%;
 
-            transform: rotate(16deg);
+    font: 12px 'DM Mono', monospace;
+}
 
-            font: 700 12px/1.15 'DM Mono', monospace;
+.scroll-indicator {
+    position: absolute;
 
-            text-align: center;
-        }
+    bottom: 5%;
+    left: 50%;
 
+    transform: translateX(-50%);
 
-        /* ========================================
-           PRODUCT NAVIGATION
-        ======================================== */
+    font: 11px 'DM Mono', monospace;
 
-        .controls {
-            position: absolute;
+    letter-spacing: 0.15em;
 
-            z-index: 4;
+    animation: floatText 2s infinite ease-in-out;
+}
 
-            bottom: 24px;
-            left: 50%;
-
-            transform: translateX(-50%);
-
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .arrow {
-            border: 1px solid #ffffff80;
-
-            background: #ffffff14;
-            color: #fff;
-
-            width: 47px;
-            height: 47px;
-
-            border-radius: 50%;
-
-            font-size: 25px;
-        }
-
-        .arrow:hover {
-            background: #fff;
-            color: #1b1530;
-        }
-
-        .counter {
-            min-width: 80px;
-
-            text-align: center;
-
-            font: 500 13px 'DM Mono', monospace;
-        }
-
-        .scroll {
-            position: absolute;
-
-            bottom: 23px;
-            left: clamp(18px, 5vw, 86px);
-
-            font: 10px 'DM Mono', monospace;
-            letter-spacing: .12em;
-        }
-
-
-        /* ========================================
-           MARQUEE STRIP
-        ======================================== */
-
-        .strip {
-            background: #f8e635;
-            color: #21102a;
-
-            white-space: nowrap;
-            overflow: hidden;
-
-            padding: 15px 0;
-
-            font: 800 16px 'DM Mono', monospace;
-            letter-spacing: .03em;
-        }
-
-        .strip span {
-            display: inline-block;
-
-            animation: marquee 24s linear infinite;
-        }
-
-        @keyframes marquee {
-            to {
-                transform: translateX(-50%);
-            }
-        }
-
-
-        /* ========================================
-           COLLECTION SECTION
-        ======================================== */
-
-        .section {
-            background: #efe9dc;
-            color: #21102a;
-
-            padding: 90px clamp(20px, 6vw, 100px);
-        }
-
-        .section-head {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            align-items: end;
-
-            margin-bottom: 35px;
-        }
-
-        .section h2 {
-            font: clamp(44px, 8vw, 118px)/.85
-                  'Archivo Black', sans-serif;
-
-            letter-spacing: -.075em;
-
-            margin: 16px 0;
-        }
-
-        .smallcopy {
-            max-width: 220px;
-
-            font-size: 13px;
-            line-height: 1.6;
-        }
-
-
-        /* ========================================
-           PRODUCT CARDS
-        ======================================== */
-
-        .grid {
-            display: grid;
-
-            grid-template-columns: repeat(3, 1fr);
-
-            gap: 15px;
-        }
-
-        .card {
-            border: 0;
-            padding: 0;
-
-            min-height: 340px;
-
-            position: relative;
-            overflow: hidden;
-
-            text-align: left;
-
-            color: #fff;
-
-            isolation: isolate;
-
-            transition: transform .25s;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-        }
-
-        .card-bg {
-            position: absolute;
-            inset: 0;
-
-            z-index: -2;
-        }
-
-        .card::after {
-            content: "";
-
-            position: absolute;
-
-            width: 230px;
-            height: 230px;
-
-            border-radius: 50%;
-
-            background: #ffffff25;
-
-            top: 26%;
-            left: 50%;
-
-            transform: translateX(-50%);
-
-            z-index: -1;
-        }
-
-        .card-content {
-            position: absolute;
-            inset: 18px;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card-num {
-            font: 12px 'DM Mono', monospace;
-        }
-
-        .card-art {
-            font: 120px/1 'Archivo Black', sans-serif;
-
-            text-align: center;
-
-            transform: rotate(-10deg);
-
-            filter: drop-shadow(8px 16px 1px #0003);
-        }
-
-        .card-title {
-            font: clamp(22px, 2.5vw, 38px)/1
-                  'Archivo Black', sans-serif;
-
-            letter-spacing: -.05em;
-            text-transform: uppercase;
-        }
-
-        .card-tag {
-            font: 10px 'DM Mono', monospace;
-
-            margin-top: 8px;
-        }
-
-
-        /* ========================================
-           FOOTER
-        ======================================== */
-
-        .footer {
-            background: #1d1029;
-            color: #fff;
-
-            padding: 70px clamp(20px, 6vw, 100px);
-        }
-
-        .footer strong {
-            font: clamp(38px, 8vw, 110px)/.9
-                  'Archivo Black', sans-serif;
-
-            letter-spacing: -.07em;
-        }
-
-        .footerline {
-            display: flex;
-            justify-content: space-between;
-
-            gap: 20px;
-
-            margin-top: 45px;
-
-            border-top: 1px solid #ffffff55;
-            padding-top: 22px;
-
-            font: 11px 'DM Mono', monospace;
-        }
-
-
-        /* ========================================
-           SMALL DETAILS
-        ======================================== */
-
-        .floating-note {
-            position: absolute;
-
-            left: 50%;
-            top: 15%;
-
-            transform: translateX(-50%);
-
-            font: 11px 'DM Mono', monospace;
-
-            opacity: .8;
-
-            z-index: 3;
-        }
-
-        .dot {
-            display: inline-block;
-
-            width: 7px;
-            height: 7px;
-
-            border-radius: 50%;
-
-            background: #83ff9c;
-
-            margin-right: 6px;
-        }
-
-        .sr-only {
-            position: absolute;
-
-            width: 1px;
-            height: 1px;
-
-            overflow: hidden;
-
-            clip: rect(0, 0, 0, 0);
-        }
-
-
-        /* ========================================
-           TABLET RESPONSIVE
-        ======================================== */
-
-        @media (max-width: 800px) {
-
-            .nav {
-                height: 72px;
-            }
-
-            .navlinks a:not(:last-child) {
-                display: none;
-            }
-
-            .hero {
-                min-height: 800px;
-            }
-
-            .giant {
-                font-size: 25vw;
-                top: 36%;
-            }
-
-            .canvas-wrap {
-                width: 94vw;
-                height: 540px;
-
-                margin-top: -80px;
-            }
-
-            .hero-info {
-                bottom: 108px;
-            }
-
-            .right-info {
-                bottom: 130px;
-            }
-
-            .round-stamp {
-                width: 66px;
-                height: 66px;
-
-                font-size: 9px;
-            }
-
-            .controls {
-                bottom: 30px;
-            }
-
-            .scroll {
-                display: none;
-            }
-
-            .grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .card {
-                min-height: 280px;
-            }
-
-            .section-head {
-                align-items: start;
-                flex-direction: column;
-            }
-
-        }
-
-
-        /* ========================================
-           MOBILE RESPONSIVE
-        ======================================== */
-
-        @media (max-width: 520px) {
-
-            .hero {
-                min-height: 725px;
-            }
-
-            .canvas-wrap {
-                height: 470px;
-            }
-
-            .hero-info {
-                bottom: 110px;
-            }
-
-            .hero-info h2 {
-                font-size: 30px;
-            }
-
-            .hero-info p {
-                font-size: 11px;
-            }
-
-            .right-info {
-                bottom: 130px;
-            }
-
-            .edition {
-                font-size: 10px;
-            }
-
-            .grid {
-                grid-template-columns: 1fr;
-            }
-
-            .card {
-                min-height: 320px;
-            }
-
-            .section {
-                padding-top: 65px;
-            }
-
-            .footerline {
-                flex-direction: column;
-            }
-
-        }
-
-
-        /* ========================================
-           REDUCED MOTION
-        ======================================== */
-
-        @media (prefers-reduced-motion: reduce) {
-
-            *,
-            *::before,
-            *::after {
-                animation-duration: .01ms !important;
-                transition-duration: .01ms !important;
-                scroll-behavior: auto !important;
-            }
-
-        }
-
-    </style>
-
-
-    <!-- THREE.JS + GSAP IMPORTS -->
-
-    <script type="importmap">
-    {
-        "imports": {
-            "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
-            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/",
-            "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/+esm"
-        }
+@keyframes floatText {
+    0%, 100% {
+        transform: translate(-50%, 0);
     }
-    </script>
+
+    50% {
+        transform: translate(-50%, 10px);
+    }
+}
+
+/* ==========================================
+   SECTION 2 — STRAWBERRY
+========================================== */
+
+#strawberry {
+    min-height: 130vh;
+
+    background: var(--cream);
+
+    color: var(--ink);
+}
+
+.strawberry-top {
+    position: absolute;
+
+    top: 12%;
+    left: 5vw;
+
+    font: 12px 'DM Mono', monospace;
+
+    letter-spacing: 0.12em;
+}
+
+.strawberry-title {
+    position: absolute;
+
+    top: 26%;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: max-content;
+
+    margin: 0;
+
+    font: clamp(68px, 13vw, 220px)/0.85
+          'Archivo Black', sans-serif;
+
+    letter-spacing: -0.085em;
+
+    text-transform: uppercase;
+}
+
+.strawberry-title .outline {
+    color: transparent;
+
+    -webkit-text-stroke: 2px var(--ink);
+}
+
+.strawberry-message {
+    position: absolute;
+
+    bottom: 17%;
+    left: 5vw;
+
+    font: clamp(22px, 3.6vw, 65px)/1.1
+          'Archivo Black', sans-serif;
+
+    letter-spacing: -0.06em;
+
+    text-transform: uppercase;
+}
+
+.strawberry-number {
+    position: absolute;
+
+    right: 5vw;
+    bottom: 17%;
+
+    font: 12px 'DM Mono', monospace;
+}
+
+/* ==========================================
+   SECTION 3 — PLAY
+========================================== */
+
+#play {
+    min-height: 130vh;
+
+    background: var(--yellow);
+
+    color: var(--ink);
+}
+
+.play-eyebrow {
+    position: absolute;
+
+    top: 18%;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    font: 12px 'DM Mono', monospace;
+
+    letter-spacing: 0.2em;
+}
+
+.play-title {
+    position: absolute;
+
+    top: 40%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    margin: 0;
+
+    width: 90%;
+
+    text-align: center;
+
+    font: clamp(75px, 14vw, 240px)/0.82
+          'Archivo Black', sans-serif;
+
+    letter-spacing: -0.09em;
+
+    text-transform: uppercase;
+}
+
+.play-title span {
+    display: block;
+}
+
+.play-title .accent {
+    color: #fa4b30;
+}
+
+.play-buttons {
+    position: absolute;
+
+    bottom: 17%;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    border: 2px solid var(--ink);
+
+    border-radius: 100px;
+
+    padding: 15px 28px;
+
+    background: var(--cream);
+    color: var(--ink);
+
+    font: 700 12px 'DM Mono', monospace;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+
+    transition:
+        transform 0.3s,
+        background 0.3s,
+        color 0.3s;
+}
+
+.btn:hover {
+    transform: translateY(-5px);
+
+    background: var(--ink);
+    color: white;
+}
+
+.btn.dark {
+    background: var(--ink);
+    color: white;
+}
+
+.btn.dark:hover {
+    background: var(--orange);
+    border-color: var(--orange);
+}
+
+.play-number {
+    position: absolute;
+
+    bottom: 6%;
+    right: 5vw;
+
+    font: 12px 'DM Mono', monospace;
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+footer {
+    position: relative;
+
+    z-index: 20;
+
+    background: #180d23;
+    color: white;
+
+    padding: 100px 5vw 40px;
+}
+
+.footer-title {
+    margin: 0;
+
+    font: clamp(55px, 13vw, 220px)/0.85
+          'Archivo Black', sans-serif;
+
+    letter-spacing: -0.09em;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    margin-top: 90px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #ffffff50;
+
+    font: 11px 'DM Mono', monospace;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width: 900px) {
+
+    .hero-title {
+        font-size: 32vw;
+    }
+
+    .strawberry-title {
+        font-size: 13vw;
+    }
+
+    .play-title {
+        font-size: 15vw;
+    }
+
+}
+
+@media(max-width: 600px) {
+
+    .navigation {
+        padding: 20px;
+    }
+
+    .brand {
+        font-size: 25px;
+    }
+
+    .nav-right {
+        gap: 12px;
+    }
+
+    .nav-right a {
+        display: none;
+    }
+
+    .hero-small {
+        top: 20%;
+    }
+
+    .hero-title {
+        top: 44%;
+    }
+
+    .hero-subtitle {
+        bottom: 17%;
+        font-size: 10px;
+    }
+
+    .hero-number {
+        bottom: 10%;
+    }
+
+    .strawberry-title {
+        top: 22%;
+        font-size: 13vw;
+    }
+
+    .strawberry-message {
+        bottom: 20%;
+        font-size: 25px;
+    }
+
+    .play-title {
+        font-size: 16vw;
+    }
+
+    .play-buttons {
+        flex-direction: column;
+
+        width: 80%;
+
+        bottom: 14%;
+    }
+
+    .btn {
+        text-align: center;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+    }
+
+}
+
+/* ==========================================
+   REDUCED MOTION
+========================================== */
+
+@media(prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+
+}
+
+</style>
+
+<script type="importmap">
+
+{
+    "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/+esm",
+        "gsap/ScrollTrigger": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js"
+    }
+}
+
+</script>
 
 </head>
 
 <body>
 
+<!-- ==========================================
+     LOADER
+========================================== -->
 
-    <!-- ========================================
-         ANNOUNCEMENT
-    ======================================== -->
+<div class="loader" id="loader">
 
-    <div class="announcement">
-        ✦ THE DIGITAL BOTTLE SHOWCASE · CONCEPT EDITION ✦
+    <div class="loader-logo">
+        FRUIT.
     </div>
 
+    <div class="loader-text">
+        PREPARING SOMETHING FRESH
+    </div>
 
+    <div class="loader-line">
+        <div class="loader-progress" id="loaderProgress"></div>
+    </div>
 
-    <!-- ========================================
-         WEBSITE SHELL
-    ======================================== -->
+</div>
 
-    <div class="shell" id="shell">
+<!-- ==========================================
+     SCROLL PROGRESS
+========================================== -->
 
+<div class="progress">
+    <div class="progress-bar" id="progressBar"></div>
+</div>
 
-        <!-- NAVIGATION -->
+<!-- ==========================================
+     THREE.JS
+========================================== -->
 
-        <header class="nav">
+<canvas id="webgl"></canvas>
 
-            <a class="logo" href="#top">
-                BOTTLE<br>CLUB
+<!-- ==========================================
+     NAVIGATION
+========================================== -->
 
-                <small>
-                    THE GOOD STUFF / 001
-                </small>
+<header class="navigation">
+
+    <a href="#fruit" class="brand">
+        FRUIT®
+    </a>
+
+    <nav class="nav-right">
+
+        <a href="#fruit">
+            HOME
+        </a>
+
+        <a href="#strawberry">
+            FLAVOURS
+        </a>
+
+        <a href="#play">
+            EXPLORE
+        </a>
+
+        <button
+            class="menu-button"
+            id="menuButton"
+            aria-label="Volgende scène"
+        >
+            ↗
+        </button>
+
+    </nav>
+
+</header>
+
+<!-- ==========================================
+     SECTION 1
+========================================== -->
+
+<section class="scene-section" id="fruit">
+
+    <div class="content">
+
+        <div class="hero-small">
+            NOT YOUR AVERAGE FRUIT DRINK.
+        </div>
+
+        <h1 class="hero-title" id="fruitTitle">
+            FRUIT
+        </h1>
+
+        <div class="hero-subtitle">
+
+            MADE FOR THE BOLD.<br>
+            BUILT TO BE DIFFERENT.<br>
+            100% CREATIVE ENERGY.
+
+        </div>
+
+        <div class="hero-number">
+            01 / 03
+        </div>
+
+        <div class="scroll-indicator">
+            SCROLL TO EXPLORE ↓
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ==========================================
+     SECTION 2
+========================================== -->
+
+<section class="scene-section" id="strawberry">
+
+    <div class="content">
+
+        <div class="strawberry-top">
+            002 / FLAVOUR EXPERIMENTS
+        </div>
+
+        <h2 class="strawberry-title">
+
+            <span class="outline">SO</span>
+            STRAWBERRY
+
+        </h2>
+
+        <div class="strawberry-message">
+
+            WE DON'T BLEND FRUIT.<br>
+            WE SELL IT WILD.
+
+        </div>
+
+        <div class="strawberry-number">
+            KEEP SCROLLING ↓
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ==========================================
+     SECTION 3
+========================================== -->
+
+<section class="scene-section" id="play">
+
+    <div class="content">
+
+        <div class="play-eyebrow">
+            NO RULES. JUST FRUIT.
+        </div>
+
+        <h2 class="play-title">
+
+            <span>PLAY</span>
+            <span class="accent">WITH</span>
+            <span>YOUR FOOD.</span>
+
+        </h2>
+
+        <div class="play-buttons">
+
+            <a href="#fruit" class="btn">
+                EXPLORE AGAIN ↗
             </a>
 
+            <a href="#strawberry" class="btn dark">
+                DISCOVER FLAVOURS →
+            </a>
 
-            <nav class="navlinks">
+        </div>
 
-                <a href="#collection">
-                    COLLECTION
-                </a>
-
-                <a href="#about">
-                    OUR WORLD
-                </a>
-
-                <a class="pill" href="#collection">
-                    EXPLORE ↗
-                </a>
-
-            </nav>
-
-        </header>
-
-
-
-        <!-- ========================================
-             HERO
-        ======================================== -->
-
-        <main id="top">
-
-            <section
-                class="hero"
-                aria-label="Interactieve 3D-drankverpakkingen"
-            >
-
-                <span class="floating-note">
-
-                    <span class="dot"></span>
-
-                    LIVE 3D EXPERIENCE
-
-                </span>
-
-
-
-                <!-- GIANT BACKGROUND WORD -->
-
-                <div class="giant" id="giant">
-                    FRESH
-                </div>
-
-
-
-                <!-- 3D CANVAS -->
-
-                <div class="canvas-wrap">
-
-                    <canvas
-                        id="scene"
-                        aria-label="Draaibare 3D-fles"
-                    ></canvas>
-
-                </div>
-
-
-
-                <!-- PRODUCT INFORMATION -->
-
-                <div class="hero-info">
-
-                    <div class="overline" id="tag">
-                        001 / THE ORIGINAL
-                    </div>
-
-                    <h2 id="product-name">
-                        PURPLE<br>POP
-                    </h2>
-
-                    <p id="desc">
-                        Een kleurrijk concept in een opvallende fles.
-                    </p>
-
-                </div>
-
-
-
-                <!-- RIGHT INFORMATION -->
-
-                <div class="right-info">
-
-                    <div class="edition">
-
-                        100% CREATIVE<br>
-                        0% ALCOHOL<br>
-                        VISUAL CONCEPT
-
-                    </div>
-
-
-                    <div class="round-stamp">
-
-                        GOOD<br>
-                        DESIGN<br>
-                        INSIDE ✳
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- PRODUCT NAVIGATION -->
-
-                <div class="controls">
-
-                    <button
-                        class="arrow"
-                        id="prev"
-                        aria-label="Vorig product"
-                    >
-                        ←
-                    </button>
-
-
-                    <span class="counter" id="counter">
-                        01 / 06
-                    </span>
-
-
-                    <button
-                        class="arrow"
-                        id="next"
-                        aria-label="Volgend product"
-                    >
-                        →
-                    </button>
-
-                </div>
-
-
-
-                <span class="scroll">
-                    ↓ SCROLL TO EXPLORE
-                </span>
-
-
-            </section>
-
-        </main>
+        <div class="play-number">
+            03 / 03
+        </div>
 
     </div>
 
+</section>
 
+<!-- ==========================================
+     FOOTER
+========================================== -->
 
-    <!-- ========================================
-         MOVING TEXT STRIP
-    ======================================== -->
+<footer>
 
-    <div class="strip" aria-hidden="true">
+    <p class="footer-title">
+        STAY<br>
+        FRESH.
+    </p>
+
+    <div class="footer-bottom">
 
         <span>
-
-            ★ BIG FLAVOUR
-            ★ BIG COLOUR
-            ★ LITTLE RULES
-            ★ MADE TO STAND OUT
-
-            ★ BIG FLAVOUR
-            ★ BIG COLOUR
-            ★ LITTLE RULES
-            ★ MADE TO STAND OUT
-
-            ★
-
+            © 2026 FRUIT LAB — CONCEPT EXPERIENCE
         </span>
+
+        <span>
+            MADE WITH THREE.JS + GSAP
+        </span>
+
+        <a href="#fruit">
+            BACK TO TOP ↑
+        </a>
 
     </div>
 
+</footer>
 
+<!-- ==========================================
+     JAVASCRIPT
+========================================== -->
 
-    <!-- ========================================
-         COLLECTION
-    ======================================== -->
+<script type="module">
 
-    <section class="section" id="collection">
+import * as THREE from 'three';
 
-        <div class="section-head">
+import gsap from 'gsap';
 
-            <div>
+import ScrollTrigger from 'gsap/ScrollTrigger';
 
-                <span class="overline">
-                    [ 06 ORIGINAL DESIGNS ]
-                </span>
+gsap.registerPlugin(ScrollTrigger);
 
-                <h2>
-                    THE<br>LINEUP.
-                </h2>
+/* ==========================================
+   SETTINGS
+========================================== */
 
-            </div>
+const reducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+).matches;
 
+const canvas = document.querySelector('#webgl');
 
-            <p class="smallcopy">
+const renderer = new THREE.WebGLRenderer({
 
-                Zes uitgesproken conceptflessen.
+    canvas: canvas,
+    antialias: true,
+    alpha: true
 
-                Klik op een kaart om de fles in 3D te bekijken.
+});
 
-                Voorlopig een visuele showcase, geen webshop.
+renderer.setPixelRatio(
+    Math.min(window.devicePixelRatio, 2)
+);
 
-            </p>
+renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+);
 
-        </div>
+renderer.outputColorSpace = THREE.SRGBColorSpace;
 
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
 
+renderer.toneMappingExposure = 1.2;
 
-        <!-- PRODUCT CARDS GENERATED BY JAVASCRIPT -->
+/* ==========================================
+   SCENE
+========================================== */
 
-        <div class="grid" id="cards"></div>
+const scene = new THREE.Scene();
 
-    </section>
+const camera = new THREE.PerspectiveCamera(
 
+    35,
 
+    window.innerWidth / window.innerHeight,
 
-    <!-- ========================================
-         FOOTER
-    ======================================== -->
+    0.1,
 
-    <footer class="footer" id="about">
+    100
 
-        <span class="overline">
-            A CREATIVE EXPERIMENT
-        </span>
+);
 
-        <br>
+camera.position.set(0, 0, 11);
 
-        <strong>
+scene.add(camera);
 
-            STAY<br>
-            DIFFERENT.
+/* ==========================================
+   LIGHTING
+========================================== */
 
-        </strong>
+const ambientLight = new THREE.AmbientLight(
 
+    0xffffff,
 
-        <div class="footerline">
+    2.4
 
-            <span>
-                © 2026 BOTTLE CLUB / CONCEPT WEBSITE
-            </span>
+);
 
-            <span>
-                DESIGNED TO BE DIFFERENT ✳
-            </span>
+scene.add(ambientLight);
 
-            <a href="#top">
-                BACK TO TOP ↑
-            </a>
+const keyLight = new THREE.DirectionalLight(
 
-        </div>
+    0xffffff,
 
-    </footer>
+    3.5
 
+);
 
+keyLight.position.set(4, 6, 7);
 
-    <!-- ========================================
-         JAVASCRIPT
-    ======================================== -->
+scene.add(keyLight);
 
-    <script type="module">
+const rimLight = new THREE.DirectionalLight(
 
-        import * as THREE from 'three';
-        import gsap from 'gsap';
+    0xffc3ec,
 
+    2.2
 
+);
 
-        /* ========================================
-           PRODUCT DATA
-        ======================================== */
+rimLight.position.set(-5, 2, -3);
 
-        const ITEMS = [
+scene.add(rimLight);
 
-            {
-                name: 'PURPLE POP',
-                words: 'PURPLE<br>POP',
+/* ==========================================
+   MATERIAL HELPER
+========================================== */
 
-                tag: '001 / THE ORIGINAL',
+function material(color, roughness = 0.32) {
 
-                desc: 'Dieppaars, uitgesproken en onmogelijk te missen.',
+    return new THREE.MeshPhysicalMaterial({
 
-                bg: '#29143c',
-                accent: '#e7fc3b',
+        color: color,
 
-                glass: '#802dc2',
-                label: '#f7eeff',
-                ink: '#301143',
+        metalness: 0.05,
 
-                big: 'FRESH',
+        roughness: roughness,
 
-                symbol: '✳'
-            },
+        clearcoat: 0.8,
 
-            {
-                name: 'CITRUS RIOT',
-                words: 'CITRUS<br>RIOT',
+        clearcoatRoughness: 0.15
 
-                tag: '002 / THE ZESTY ONE',
+    });
 
-                desc: 'Een explosie van citrus en knallende kleur.',
+}
 
-                bg: '#f4ae11',
-                accent: '#5126a7',
+/* ==========================================
+   CREATE DRINK CUP
+========================================== */
 
-                glass: '#eec12b',
-                label: '#fff2c5',
-                ink: '#4f238e',
+function createCup(color, labelText) {
 
-                big: 'ZEST',
+    const group = new THREE.Group();
 
-                symbol: '✺'
-            },
+    const cupMaterial = material(color);
 
-            {
-                name: 'BERRY BLAST',
-                words: 'BERRY<br>BLAST',
+    /* CUP BODY */
 
-                tag: '003 / THE BOLD ONE',
+    const cup = new THREE.Mesh(
 
-                desc: 'Zoet, brutaal en vol creatieve energie.',
+        new THREE.CylinderGeometry(
 
-                bg: '#e43e75',
-                accent: '#fff0a1',
+            0.62,
+            0.43,
+            2.3,
+            64
 
-                glass: '#c02664',
-                label: '#ffd7e7',
-                ink: '#801339',
+        ),
 
-                big: 'BOLD',
+        cupMaterial
 
-                symbol: '✿'
-            },
+    );
 
-            {
-                name: 'MINT MODE',
-                words: 'MINT<br>MODE',
+    group.add(cup);
 
-                tag: '004 / THE COOL ONE',
+    /* LID */
 
-                desc: 'Frisgroen design met een eigen karakter.',
+    const lid = new THREE.Mesh(
 
-                bg: '#176f64',
-                accent: '#e8f7bb',
+        new THREE.CylinderGeometry(
 
-                glass: '#38b9a2',
-                label: '#e8ffd5',
-                ink: '#115b51',
+            0.66,
+            0.66,
+            0.13,
+            64
 
-                big: 'COOL',
+        ),
 
-                symbol: '❋'
-            },
+        material('#f7eadf')
 
-            {
-                name: 'PEACH PLEASE',
-                words: 'PEACH<br>PLEASE',
+    );
 
-                tag: '005 / THE SUNNY ONE',
+    lid.position.y = 1.18;
 
-                desc: 'Zacht fruitig, grafisch en vol persoonlijkheid.',
+    group.add(lid);
 
-                bg: '#f26b4f',
-                accent: '#ffe6bd',
+    /* DOME */
 
-                glass: '#f89b72',
-                label: '#fff0db',
-                ink: '#a63e32',
+    const dome = new THREE.Mesh(
 
-                big: 'WOW',
+        new THREE.SphereGeometry(
 
-                symbol: '✸'
-            },
+            0.59,
+            48,
+            24,
+            0,
+            Math.PI * 2,
+            0,
+            Math.PI / 2
 
-            {
-                name: 'BLUE HOUR',
-                words: 'BLUE<br>HOUR',
+        ),
 
-                tag: '006 / THE DREAMY ONE',
+        new THREE.MeshPhysicalMaterial({
 
-                desc: 'Koele tonen en een verrassend futuristisch etiket.',
-
-                bg: '#233eab',
-                accent: '#a2eeef',
-
-                glass: '#498ddd',
-                label: '#dceaff',
-                ink: '#213c92',
-
-                big: 'BLUE',
-
-                symbol: '✦'
-            }
-
-        ];
-
-
-
-        /* ========================================
-           MOTION SETTINGS
-        ======================================== */
-
-        const reduce = matchMedia(
-            '(prefers-reduced-motion: reduce)'
-        ).matches;
-
-
-
-        /* ========================================
-           THREE.JS RENDERER
-        ======================================== */
-
-        const canvas = document.querySelector('#scene');
-
-        const renderer = new THREE.WebGLRenderer({
-
-            canvas: canvas,
-
-            antialias: true,
-
-            alpha: true
-
-        });
-
-
-        renderer.setPixelRatio(
-            Math.min(devicePixelRatio, 2)
-        );
-
-
-        renderer.outputColorSpace =
-            THREE.SRGBColorSpace;
-
-
-        renderer.toneMapping =
-            THREE.ACESFilmicToneMapping;
-
-
-        renderer.toneMappingExposure = 1.35;
-
-
-
-        /* ========================================
-           THREE.JS SCENE
-        ======================================== */
-
-        const scene = new THREE.Scene();
-
-
-        const camera = new THREE.PerspectiveCamera(
-
-            35,
-            1,
-            0.1,
-            100
-
-        );
-
-
-        camera.position.set(0, 0.25, 9.4);
-
-        camera.lookAt(0, 0, 0);
-
-
-
-        /* ========================================
-           LIGHTING
-        ======================================== */
-
-        scene.add(
-
-            new THREE.HemisphereLight(
-
-                0xffffff,
-
-                0x38243d,
-
-                3
-
-            )
-
-        );
-
-
-        const key = new THREE.DirectionalLight(
-
-            0xffffff,
-
-            4
-
-        );
-
-
-        key.position.set(3, 6, 7);
-
-        scene.add(key);
-
-
-
-        const rim = new THREE.DirectionalLight(
-
-            0x99ddff,
-
-            3
-
-        );
-
-
-        rim.position.set(-4, 3, -4);
-
-        scene.add(rim);
-
-
-
-        /* ========================================
-           BOTTLE GROUP
-        ======================================== */
-
-        const group = new THREE.Group();
-
-        scene.add(group);
-
-
-
-        /* ========================================
-           BOTTLE MATERIALS
-        ======================================== */
-
-        const bottleMat = new THREE.MeshPhysicalMaterial({
-
-            color: 0x7633a8,
-
-            metalness: 0.04,
-
-            roughness: 0.16,
-
-            clearcoat: 1,
-
-            clearcoatRoughness: 0.08,
+            color: '#ffffff',
 
             transparent: true,
 
-            opacity: 0.96
+            opacity: 0.42,
 
-        });
+            roughness: 0.08,
 
+            metalness: 0.0,
 
+            side: THREE.DoubleSide
 
-        const capMat = new THREE.MeshStandardMaterial({
+        })
 
-            color: 0xe6d6b7,
+    );
 
-            metalness: 0.65,
+    dome.position.y = 1.22;
 
-            roughness: 0.26
+    group.add(dome);
 
-        });
+    /* STRAW */
 
+    const straw = new THREE.Mesh(
 
+        new THREE.CylinderGeometry(
 
-        /* ========================================
-           BOTTLE GEOMETRY
-        ======================================== */
+            0.055,
+            0.055,
+            1.8,
+            16
 
-        const pts = [
+        ),
 
-            [0, -2.12],
+        material('#f9f5e7')
 
-            [0.46, -2.12],
+    );
 
-            [0.65, -2.04],
+    straw.position.set(
 
-            [0.69, -1.9],
+        0.13,
+        2.05,
+        0
 
-            [0.71, -1.5],
+    );
 
-            [0.71, 0.78],
+    straw.rotation.z = -0.15;
 
-            [0.67, 1.02],
+    group.add(straw);
 
-            [0.49, 1.2],
+    /* CREATE LABEL TEXTURE */
 
-            [0.30, 1.43],
+    const labelCanvas = document.createElement('canvas');
 
-            [0.29, 1.67],
+    labelCanvas.width = 1024;
+    labelCanvas.height = 1024;
 
-            [0.31, 1.76],
+    const ctx = labelCanvas.getContext('2d');
 
-            [0.31, 1.87],
+    ctx.fillStyle = '#ffffff';
 
-            [0, 1.87]
+    ctx.fillRect(
+        0,
+        0,
+        1024,
+        1024
+    );
 
-        ].map(
+    ctx.fillStyle = '#24132f';
 
-            ([x, y]) => new THREE.Vector2(x, y)
+    ctx.textAlign = 'center';
 
-        );
+    ctx.font = 'bold 60px Arial';
 
+    ctx.fillText(
+        'FRUIT LAB',
+        512,
+        170
+    );
 
+    ctx.font = '900 150px Arial';
 
-        const body = new THREE.Mesh(
+    ctx.fillText(
+        labelText,
+        512,
+        530
+    );
 
-            new THREE.LatheGeometry(pts, 72),
+    ctx.font = 'bold 43px monospace';
 
-            bottleMat
+    ctx.fillText(
+        '100% FRESH IDEAS',
+        512,
+        780
+    );
 
-        );
+    ctx.fillRect(
+        120,
+        825,
+        784,
+        8
+    );
 
+    const texture = new THREE.CanvasTexture(labelCanvas);
 
-        group.add(body);
+    texture.colorSpace = THREE.SRGBColorSpace;
 
+    /* CURVED LABEL */
 
+    const label = new THREE.Mesh(
 
-        /* ========================================
-           LIQUID INSIDE BOTTLE
-        ======================================== */
+        new THREE.CylinderGeometry(
 
-        const liquid = new THREE.Mesh(
-
-            new THREE.CylinderGeometry(
-
-                0.60,
-                0.61,
-                2.1,
-                64
-
-            ),
-
-            new THREE.MeshStandardMaterial({
-
-                color: 0x8e39c0,
-
-                roughness: 0.3,
-
-                transparent: true,
-
-                opacity: 0.65
-
-            })
-
-        );
-
-
-        liquid.position.y = -0.91;
-
-        group.add(liquid);
-
-
-
-        /* ========================================
-           BOTTLE CAP
-        ======================================== */
-
-        const cap = new THREE.Mesh(
-
-            new THREE.CylinderGeometry(
-
-                0.34,
-                0.34,
-                0.4,
-                48
-
-            ),
-
-            capMat
-
-        );
-
-
-        cap.position.y = 1.91;
-
-        group.add(cap);
-
-
-
-        const capTop = new THREE.Mesh(
-
-            new THREE.CylinderGeometry(
-
-                0.355,
-                0.355,
-                0.06,
-                48
-
-            ),
-
-            capMat
-
-        );
-
-
-        capTop.position.y = 2.13;
-
-        group.add(capTop);
-
-
-
-        /* ========================================
-           NECK RING
-        ======================================== */
-
-        const ring = new THREE.Mesh(
-
-            new THREE.TorusGeometry(
-
-                0.31,
-                0.024,
-                8,
-                48
-
-            ),
-
-            new THREE.MeshStandardMaterial({
-
-                color: 0xffffff,
-
-                metalness: 0.85,
-
-                roughness: 0.18
-
-            })
-
-        );
-
-
-        ring.rotation.x = Math.PI / 2;
-
-        ring.position.y = 1.7;
-
-        group.add(ring);
-
-
-
-        /* ========================================
-           CREATE PRODUCT LABEL
-        ======================================== */
-
-        function makeLabel(item) {
-
-            const c = document.createElement('canvas');
-
-            c.width = 1024;
-            c.height = 1024;
-
-
-            const g = c.getContext('2d');
-
-
-
-            // LABEL BACKGROUND
-
-            g.fillStyle = item.label;
-
-            g.fillRect(0, 0, 1024, 1024);
-
-
-
-            // TEXT COLOR
-
-            g.fillStyle = item.ink;
-
-            g.textAlign = 'center';
-
-
-
-            // TOP TEXT
-
-            g.font = 'bold 30px monospace';
-
-            g.fillText(
-
-                'BOTTLE CLUB  /  ORIGINALS',
-
-                512,
-                88
-
-            );
-
-
-
-            // DIVIDER
-
-            g.fillRect(
-
-                80,
-                114,
-                864,
-                4
-
-            );
-
-
-
-            // LARGE SYMBOL
-
-            g.font = 'bold 245px Arial';
-
-            g.fillText(
-
-                item.symbol,
-
-                512,
-                435
-
-            );
-
-
-
-            // PRODUCT NAME
-
-            g.font = '900 116px Arial Black, Arial';
-
-
-            const name = item.name.split(' ');
-
-
-            name.forEach((word, i) => {
-
-                g.fillText(
-
-                    word,
-
-                    512,
-
-                    610 + i * 118
-
-                );
-
-            });
-
-
-
-            // BOTTOM INFORMATION
-
-            g.font = 'bold 29px monospace';
-
-            g.fillText(
-
-                'ZERO ALCOHOL · FULL COLOUR',
-
-                512,
-                895
-
-            );
-
-
-
-            // BOTTOM DIVIDER
-
-            g.fillRect(
-
-                80,
-                918,
-                864,
-                4
-
-            );
-
-
-
-            // CREATE TEXTURE
-
-            const texture = new THREE.CanvasTexture(c);
-
-
-            texture.colorSpace =
-                THREE.SRGBColorSpace;
-
-
-            texture.anisotropy = 8;
-
-
-            return texture;
-
-        }
-
-
-
-        /* ========================================
-           CURVED BOTTLE LABEL
-        ======================================== */
-
-        const labelGeo = new THREE.CylinderGeometry(
-
-            0.725,
-
-            0.725,
-
-            2.12,
-
-            96,
-
+            0.625,
+            0.435,
+            1.45,
+            64,
             1,
-
             true,
+            -Math.PI * 0.48,
+            Math.PI * 0.96
 
-            -Math.PI * 0.84,
+        ),
 
-            Math.PI * 1.68
+        new THREE.MeshStandardMaterial({
 
-        );
+            map: texture,
 
+            roughness: 0.65,
 
+            side: THREE.DoubleSide
 
-        const label = new THREE.Mesh(
+        })
 
-            labelGeo,
+    );
 
-            new THREE.MeshStandardMaterial({
+    label.position.y = -0.12;
 
-                map: makeLabel(ITEMS[0]),
+    group.add(label);
 
-                roughness: 0.6,
+    return group;
 
-                side: THREE.DoubleSide
+}
 
-            })
+/* ==========================================
+   CREATE FRUIT
+========================================== */
 
-        );
+function createFruit(color, radius = 0.4) {
 
+    const group = new THREE.Group();
 
-        label.position.y = -0.26;
+    const fruit = new THREE.Mesh(
 
-        group.add(label);
+        new THREE.SphereGeometry(
 
+            radius,
+            40,
+            32
 
+        ),
 
-        /* ========================================
-           PRODUCT STATE
-        ======================================== */
+        material(color)
 
-        let index = 0;
+    );
 
-        let busy = false;
+    group.add(fruit);
 
-        let drag = false;
+    /* LEAF */
 
-        let lastX = 0;
+    const leaf = new THREE.Mesh(
 
+        new THREE.ConeGeometry(
 
+            radius * 0.35,
+            radius * 0.4,
+            5
 
-        /* ========================================
-           CHANGE PRODUCT
-        ======================================== */
+        ),
 
-        function show(i) {
+        material('#328947')
 
-            if (busy) return;
+    );
 
+    leaf.position.y = radius;
 
-            busy = true;
+    leaf.rotation.z = 0.3;
 
+    group.add(leaf);
 
-            index = (i + ITEMS.length) % ITEMS.length;
+    return group;
 
+}
 
-            const item = ITEMS[index];
+/* ==========================================
+   CREATE ALL PRODUCTS
+========================================== */
 
+const cups = new THREE.Group();
 
+scene.add(cups);
 
-            /* TEXT ANIMATIONS */
+const orangeCup = createCup(
+    '#ff9d20',
+    'MANGO'
+);
 
-            const targets = [
+const purpleCup = createCup(
+    '#8442b7',
+    'BERRY'
+);
 
-                '#product-name',
+const mintCup = createCup(
+    '#8ad4c0',
+    'MINT'
+);
 
-                '#desc',
+orangeCup.position.set(-2.5, 0.4, 0);
 
-                '#tag',
+purpleCup.position.set(0, 1.1, 1);
 
-                '#counter',
+mintCup.position.set(2.5, 0.3, 0);
 
-                '#giant'
+orangeCup.rotation.z = 0.18;
 
-            ];
+purpleCup.rotation.z = -0.12;
 
+mintCup.rotation.z = -0.18;
 
+cups.add(
+    orangeCup,
+    purpleCup,
+    mintCup
+);
 
-            gsap.to(targets, {
+/* ==========================================
+   STRAWBERRY SCENE
+========================================== */
 
-                opacity: 0,
+const strawberryGroup = new THREE.Group();
 
-                y: 10,
+scene.add(strawberryGroup);
 
-                duration: reduce ? 0 : 0.2,
+const strawberry = createFruit(
+    '#e93658',
+    0.85
+);
 
+strawberry.scale.set(
+    1,
+    1.25,
+    1
+);
 
-                onComplete: () => {
+strawberryGroup.add(strawberry);
 
+strawberryGroup.position.set(
+    0,
+    0,
+    0
+);
 
-                    document.querySelector(
-                        '#product-name'
-                    ).innerHTML = item.words;
+strawberryGroup.scale.setScalar(0);
 
+/* ==========================================
+   FLOATING FRUIT
+========================================== */
 
+const fruitGroup = new THREE.Group();
 
-                    document.querySelector(
-                        '#desc'
-                    ).textContent = item.desc;
+scene.add(fruitGroup);
 
+const fruitColors = [
 
+    '#f35c3d',
+    '#fa9d21',
+    '#9c3dcd',
+    '#5fbf7e',
+    '#f8e36a',
+    '#e92e61'
 
-                    document.querySelector(
-                        '#tag'
-                    ).textContent = item.tag;
+];
 
+const floatingFruits = [];
 
+for(let i = 0; i < 16; i++) {
 
-                    document.querySelector(
-                        '#counter'
-                    ).textContent =
+    const fruit = createFruit(
 
-                        `${String(index + 1).padStart(2, '0')} / 06`;
+        fruitColors[i % fruitColors.length],
 
+        0.12 + Math.random() * 0.18
 
+    );
 
-                    document.querySelector(
-                        '#giant'
-                    ).textContent = item.big;
+    fruit.position.set(
 
+        (Math.random() - 0.5) * 13,
 
+        (Math.random() - 0.5) * 8,
 
-                    gsap.to(targets, {
+        -1 + Math.random() * 3
 
-                        opacity: 1,
+    );
 
-                        y: 0,
+    fruit.userData = {
 
-                        duration: reduce ? 0 : 0.35
+        speed: 0.2 + Math.random() * 0.5,
 
-                    });
+        offset: Math.random() * Math.PI * 2,
 
-                }
+        baseY: fruit.position.y
 
-            });
+    };
 
+    fruitGroup.add(fruit);
 
+    floatingFruits.push(fruit);
 
-            /* BACKGROUND COLOR */
+}
 
-            gsap.to('#shell', {
+fruitGroup.scale.setScalar(0);
 
-                backgroundColor: item.bg,
+/* ==========================================
+   SCROLL ANIMATION TIMELINE
+========================================== */
 
-                duration: reduce ? 0 : 0.65
+const scrollTimeline = gsap.timeline({
 
-            });
+    scrollTrigger: {
 
+        trigger: '#fruit',
 
+        start: 'top top',
 
-            /* ACCENT COLOR */
+        endTrigger: '#play',
 
-            document.documentElement.style.setProperty(
+        end: 'bottom bottom',
 
-                '--accent',
+        scrub: reducedMotion ? false : 1.5
 
-                item.accent
+    }
 
-            );
+});
 
+/* FIRST TRANSITION */
 
+scrollTimeline.to(
 
-            /* BOTTLE COLOR */
+    cups.rotation,
 
-            const glassColor = new THREE.Color(
-                item.glass
-            );
+    {
 
+        y: Math.PI * 1.4,
 
-            gsap.to(bottleMat.color, {
+        duration: 2
 
-                r: glassColor.r,
+    },
 
-                g: glassColor.g,
+    0
 
-                b: glassColor.b,
+);
 
-                duration: reduce ? 0 : 0.6
+scrollTimeline.to(
 
-            });
+    cups.position,
 
+    {
 
+        y: -5,
 
-            /* LIQUID COLOR */
+        duration: 2
 
-            gsap.to(liquid.material.color, {
+    },
 
-                r: glassColor.r,
+    0
 
-                g: glassColor.g,
+);
 
-                b: glassColor.b,
+scrollTimeline.to(
 
-                duration: reduce ? 0 : 0.6
+    cups.scale,
 
-            });
+    {
 
+        x: 0.3,
+        y: 0.3,
+        z: 0.3,
 
+        duration: 2
 
-            /* CHANGE LABEL */
+    },
 
-            const oldTexture = label.material.map;
+    0
 
+);
 
-            label.material.map = makeLabel(item);
+scrollTimeline.to(
 
+    strawberryGroup.scale,
 
-            label.material.needsUpdate = true;
+    {
 
+        x: 1,
+        y: 1,
+        z: 1,
 
-            oldTexture.dispose();
+        duration: 1.5
 
+    },
 
+    1
 
-            /* BOTTLE SCALE ANIMATION */
+);
 
-            gsap.fromTo(
+scrollTimeline.fromTo(
 
-                group.scale,
+    strawberryGroup.rotation,
 
-                {
+    {
 
-                    x: 0.83,
+        y: -Math.PI
 
-                    y: 0.83,
+    },
 
-                    z: 0.83
+    {
 
-                },
+        y: Math.PI,
 
-                {
+        duration: 2
 
-                    x: 1,
+    },
 
-                    y: 1,
+    1
 
-                    z: 1,
+);
 
-                    duration: reduce ? 0 : 0.7,
+/* SECOND TRANSITION */
 
-                    ease: 'back.out(1.5)'
+scrollTimeline.to(
 
-                }
+    strawberryGroup.position,
 
-            );
+    {
 
+        x: -5,
+        y: 3,
 
+        duration: 2
 
-            /* BOTTLE ROTATION */
+    },
 
-            gsap.to(group.rotation, {
+    3
 
-                y: group.rotation.y + Math.PI * 2,
+);
 
-                duration: reduce ? 0 : 1.1,
+scrollTimeline.to(
 
-                ease: 'power2.inOut',
+    strawberryGroup.scale,
 
-                onComplete: () => {
+    {
 
-                    busy = false;
+        x: 0.2,
+        y: 0.2,
+        z: 0.2,
 
-                }
+        duration: 2
 
-            });
+    },
+
+    3
+
+);
+
+scrollTimeline.to(
+
+    fruitGroup.scale,
+
+    {
+
+        x: 1,
+        y: 1,
+        z: 1,
+
+        duration: 2
+
+    },
+
+    3
+
+);
+
+scrollTimeline.to(
+
+    fruitGroup.rotation,
+
+    {
+
+        y: Math.PI * 0.6,
+
+        duration: 2
+
+    },
+
+    3
+
+);
+
+/* ==========================================
+   TEXT SCROLL ANIMATIONS
+========================================== */
+
+gsap.to('#fruitTitle', {
+
+    scale: 1.35,
+
+    opacity: 0,
+
+    y: -140,
+
+    ease: 'none',
+
+    scrollTrigger: {
+
+        trigger: '#fruit',
+
+        start: 'top top',
+
+        end: 'bottom top',
+
+        scrub: true
+
+    }
+
+});
+
+gsap.from('.strawberry-title', {
+
+    x: 250,
+
+    opacity: 0,
+
+    ease: 'power2.out',
+
+    scrollTrigger: {
+
+        trigger: '#strawberry',
+
+        start: 'top 80%',
+
+        end: 'top 20%',
+
+        scrub: true
+
+    }
+
+});
+
+gsap.from('.strawberry-message', {
+
+    y: 120,
+
+    opacity: 0,
+
+    ease: 'power2.out',
+
+    scrollTrigger: {
+
+        trigger: '#strawberry',
+
+        start: 'top 60%',
+
+        end: 'center center',
+
+        scrub: true
+
+    }
+
+});
+
+gsap.from('.play-title', {
+
+    scale: 0.5,
+
+    opacity: 0,
+
+    rotation: -8,
+
+    ease: 'power2.out',
+
+    scrollTrigger: {
+
+        trigger: '#play',
+
+        start: 'top 80%',
+
+        end: 'center center',
+
+        scrub: true
+
+    }
+
+});
+
+gsap.from('.play-buttons', {
+
+    y: 80,
+
+    opacity: 0,
+
+    scrollTrigger: {
+
+        trigger: '#play',
+
+        start: 'top 40%',
+
+        end: 'center center',
+
+        scrub: true
+
+    }
+
+});
+
+/* ==========================================
+   PARALLAX MOVEMENT
+========================================== */
+
+const mouse = {
+
+    x: 0,
+
+    y: 0
+
+};
+
+window.addEventListener(
+
+    'pointermove',
+
+    (event) => {
+
+        mouse.x =
+            (event.clientX / window.innerWidth) * 2 - 1;
+
+        mouse.y =
+            (event.clientY / window.innerHeight) * 2 - 1;
+
+    }
+
+);
+
+/* ==========================================
+   SCROLL PROGRESS
+========================================== */
+
+gsap.to('#progressBar', {
+
+    width: '100%',
+
+    ease: 'none',
+
+    scrollTrigger: {
+
+        trigger: 'body',
+
+        start: 'top top',
+
+        end: 'bottom bottom',
+
+        scrub: true
+
+    }
+
+});
+
+/* ==========================================
+   NAVIGATION BUTTON
+========================================== */
+
+document.querySelector('#menuButton').addEventListener(
+
+    'click',
+
+    () => {
+
+        const scrollY = window.scrollY;
+
+        const strawberryY =
+            document.querySelector('#strawberry').offsetTop;
+
+        const playY =
+            document.querySelector('#play').offsetTop;
+
+        let target = '#strawberry';
+
+        if(scrollY >= strawberryY - 100) {
+
+            target = '#play';
 
         }
 
+        if(scrollY >= playY - 100) {
 
+            target = '#fruit';
 
-        /* ========================================
-           NEXT / PREVIOUS BUTTONS
-        ======================================== */
+        }
 
-        document.querySelector('#prev').onclick = () => {
+        document.querySelector(target).scrollIntoView({
 
-            show(index - 1);
-
-        };
-
-
-        document.querySelector('#next').onclick = () => {
-
-            show(index + 1);
-
-        };
-
-
-
-        /* ========================================
-           GENERATE PRODUCT CARDS
-        ======================================== */
-
-        document.querySelector('#cards').innerHTML =
-
-            ITEMS.map((item, i) => `
-
-                <button
-                    class="card"
-                    data-i="${i}"
-                    aria-label="Bekijk ${item.name}"
-                >
-
-                    <span
-                        class="card-bg"
-                        style="background:${item.bg}"
-                    ></span>
-
-
-                    <span class="card-content">
-
-
-                        <span class="card-num">
-
-                            ${String(i + 1).padStart(2, '0')} / 06 ↗
-
-                        </span>
-
-
-
-                        <span
-                            class="card-art"
-                            style="color:${item.accent}"
-                        >
-
-                            ${item.symbol}
-
-                        </span>
-
-
-
-                        <span>
-
-                            <span class="card-title">
-
-                                ${item.name}
-
-                            </span>
-
-                            <br>
-
-                            <span class="card-tag">
-
-                                EXPLORE THIS DESIGN →
-
-                            </span>
-
-                        </span>
-
-
-                    </span>
-
-                </button>
-
-            `).join('');
-
-
-
-        /* ========================================
-           PRODUCT CARD CLICK
-        ======================================== */
-
-        document.querySelector('#cards').addEventListener(
-
-            'click',
-
-            event => {
-
-
-                const button = event.target.closest(
-                    '[data-i]'
-                );
-
-
-                if (button) {
-
-
-                    show(
-                        Number(button.dataset.i)
-                    );
-
-
-                    document.querySelector(
-                        '#top'
-                    ).scrollIntoView({
-
-                        behavior: reduce
-                            ? 'auto'
-                            : 'smooth'
-
-                    });
-
-                }
-
-            }
-
-        );
-
-
-
-        /* ========================================
-           DRAG TO ROTATE
-        ======================================== */
-
-        canvas.addEventListener(
-
-            'pointerdown',
-
-            event => {
-
-                drag = true;
-
-                lastX = event.clientX;
-
-                canvas.setPointerCapture(
-                    event.pointerId
-                );
-
-            }
-
-        );
-
-
-
-        canvas.addEventListener(
-
-            'pointermove',
-
-            event => {
-
-                if (drag) {
-
-
-                    group.rotation.y +=
-
-                        (event.clientX - lastX) * 0.011;
-
-
-                    lastX = event.clientX;
-
-                }
-
-            }
-
-        );
-
-
-
-        canvas.addEventListener(
-
-            'pointerup',
-
-            () => {
-
-                drag = false;
-
-            }
-
-        );
-
-
-
-        canvas.addEventListener(
-
-            'pointercancel',
-
-            () => {
-
-                drag = false;
-
-            }
-
-        );
-
-
-
-        /* ========================================
-           KEYBOARD NAVIGATION
-        ======================================== */
-
-        document.addEventListener(
-
-            'keydown',
-
-            event => {
-
-
-                if (event.key === 'ArrowRight') {
-
-                    show(index + 1);
-
-                }
-
-
-                if (event.key === 'ArrowLeft') {
-
-                    show(index - 1);
-
-                }
-
-            }
-
-        );
-
-
-
-        /* ========================================
-           RESPONSIVE THREE.JS
-        ======================================== */
-
-        const resizeObserver = new ResizeObserver(() => {
-
-
-            const width = canvas.clientWidth;
-
-            const height = canvas.clientHeight;
-
-
-
-            if (!width || !height) return;
-
-
-
-            renderer.setSize(
-
-                width,
-
-                height,
-
-                false
-
-            );
-
-
-
-            camera.aspect = width / height;
-
-
-
-            camera.position.z =
-
-                width < 430 ? 12 : 9.4;
-
-
-
-            camera.updateProjectionMatrix();
+            behavior: reducedMotion ? 'auto' : 'smooth'
 
         });
 
+    }
 
+);
 
-        resizeObserver.observe(canvas);
+/* ==========================================
+   RESPONSIVE CAMERA
+========================================== */
 
+function resize() {
 
+    const width = window.innerWidth;
 
-        /* ========================================
-           ANIMATION LOOP
-        ======================================== */
+    const height = window.innerHeight;
 
-        let time = 0;
+    camera.aspect = width / height;
 
+    camera.position.z = width < 650 ? 15 : 11;
 
+    camera.updateProjectionMatrix();
 
-        function animate() {
+    renderer.setSize(
+        width,
+        height
+    );
 
+    renderer.setPixelRatio(
+        Math.min(window.devicePixelRatio, 2)
+    );
 
-            requestAnimationFrame(animate);
+}
 
+window.addEventListener(
+    'resize',
+    resize
+);
 
+resize();
 
-            if (!reduce && !drag) {
+/* ==========================================
+   ANIMATION LOOP
+========================================== */
 
+const clock = new THREE.Clock();
 
-                time += 0.012;
+function animate() {
 
+    requestAnimationFrame(animate);
 
+    const time = clock.getElapsedTime();
 
-                group.rotation.y += 0.002;
+    if(!reducedMotion) {
 
+        orangeCup.rotation.y =
+            Math.sin(time * 0.5) * 0.3;
 
+        purpleCup.rotation.y =
+            Math.sin(time * 0.6 + 1) * 0.35;
 
-                group.position.y =
+        mintCup.rotation.y =
+            Math.sin(time * 0.55 + 2) * 0.3;
 
-                    Math.sin(time) * 0.075;
+        orangeCup.position.y =
+            0.4 + Math.sin(time * 0.9) * 0.12;
 
-            }
+        purpleCup.position.y =
+            1.1 + Math.sin(time * 0.8 + 1) * 0.18;
 
+        mintCup.position.y =
+            0.3 + Math.sin(time * 0.85 + 2) * 0.15;
 
+        strawberry.rotation.y += 0.004;
 
-            renderer.render(
+        floatingFruits.forEach((fruit) => {
 
-                scene,
+            fruit.rotation.x += 0.003;
 
-                camera
+            fruit.rotation.y += 0.004;
 
-            );
+            fruit.position.y =
+                fruit.userData.baseY +
+                Math.sin(
+                    time * fruit.userData.speed +
+                    fruit.userData.offset
+                ) * 0.3;
 
-        }
+        });
 
+        camera.position.x +=
+            (mouse.x * 0.25 - camera.position.x) * 0.02;
 
+        camera.position.y +=
+            (-mouse.y * 0.18 - camera.position.y) * 0.02;
 
-        /* ========================================
-           START WEBSITE
-        ======================================== */
+    }
 
-        animate();
+    camera.lookAt(0, 0, 0);
 
-    </script>
+    renderer.render(
+        scene,
+        camera
+    );
+
+}
+
+animate();
+
+/* ==========================================
+   LOADING ANIMATION
+========================================== */
+
+const loaderTimeline = gsap.timeline({
+
+    onComplete: () => {
+
+        document.querySelector('#loader').remove();
+
+        ScrollTrigger.refresh();
+
+    }
+
+});
+
+loaderTimeline.to('#loaderProgress', {
+
+    width: '100%',
+
+    duration: reducedMotion ? 0 : 1.1,
+
+    ease: 'power2.inOut'
+
+});
+
+loaderTimeline.to('#loader', {
+
+    yPercent: -100,
+
+    duration: reducedMotion ? 0 : 0.8,
+
+    ease: 'power4.inOut'
+
+});
+
+loaderTimeline.from('.hero-title', {
+
+    y: 140,
+
+    opacity: 0,
+
+    duration: reducedMotion ? 0 : 1,
+
+    ease: 'power4.out'
+
+}, '-=0.4');
+
+loaderTimeline.from(cups.scale, {
+
+    x: 0,
+    y: 0,
+    z: 0,
+
+    duration: reducedMotion ? 0 : 1.3,
+
+    ease: 'back.out(1.5)'
+
+}, '-=0.9');
+
+</script>
 
 </body>
+
 </html>
