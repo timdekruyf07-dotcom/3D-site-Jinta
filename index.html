@@ -2,20 +2,28 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#24112f">
-<title>FRUIT LAB® — A Juicy 3D Experience</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>FRUIT LAB® — Interactive Flavour Experience</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Mono:wght@400;500;700&family=DM+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+
+/* ==========================================
+   GLOBAL SETTINGS
+========================================== */
+
 :root {
     --dark: #24112f;
-    --cream: #f3f1e9;
+    --cream: #f8e8e8;
     --yellow: #ffc629;
-    --orange: #f05a36;
+    --accent: #f04464;
+    --ink: #24112f;
+    --hero-bg: #291436;
 }
 
 * {
@@ -29,6 +37,7 @@ html {
 body {
     margin: 0;
     background: var(--dark);
+    color: var(--ink);
     font-family: 'DM Sans', sans-serif;
     overflow-x: hidden;
 }
@@ -39,45 +48,102 @@ a {
 }
 
 button {
-    font: inherit;
     cursor: pointer;
+    font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 5px;
+}
+
+::selection {
+    background: #f04464;
+    color: white;
 }
 
 /* ==========================================
-   WEBGL CANVAS
+   LOADING SCREEN
+========================================== */
+
+.loader {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: #180c21;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader h1 {
+    margin: 0;
+
+    font: clamp(65px, 13vw, 190px)/.85
+          'Archivo Black', sans-serif;
+
+    letter-spacing: -.1em;
+}
+
+.loader p {
+    font: 11px 'DM Mono', monospace;
+    letter-spacing: .15em;
+    margin-top: 30px;
+}
+
+.loader-track {
+    width: 220px;
+    height: 4px;
+    margin-top: 20px;
+    background: #ffffff35;
+    overflow: hidden;
+}
+
+.loader-fill {
+    width: 0;
+    height: 100%;
+    background: #ffc629;
+}
+
+/* ==========================================
+   WEBGL
 ========================================== */
 
 #webgl {
     position: fixed;
     inset: 0;
+    z-index: 5;
+
     width: 100%;
     height: 100%;
-    z-index: 4;
+
     pointer-events: none;
 }
 
 /* ==========================================
-   NAVIGATION
+   HEADER
 ========================================== */
 
-.topbar {
+.header {
     position: fixed;
-    z-index: 40;
+    z-index: 50;
+
     top: 0;
     left: 0;
     right: 0;
-    padding: 24px 5vw;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    mix-blend-mode: difference;
-    color: white;
-    pointer-events: none;
-}
 
-.topbar a,
-.topbar button {
-    pointer-events: auto;
+    padding: 25px 5vw;
+
+    color: white;
+    mix-blend-mode: difference;
 }
 
 .logo {
@@ -87,8 +153,9 @@ button {
 
 .nav {
     display: flex;
-    gap: 28px;
     align-items: center;
+    gap: 30px;
+
     font: 11px 'DM Mono', monospace;
     letter-spacing: .09em;
 }
@@ -99,33 +166,36 @@ button {
 }
 
 .nav button {
+    width: 43px;
+    height: 43px;
+
     border: 1px solid white;
+    border-radius: 50%;
+
     background: transparent;
     color: white;
-    border-radius: 50%;
-    width: 42px;
-    height: 42px;
-    font-size: 22px;
+    font-size: 23px;
 }
 
 /* ==========================================
-   SCROLL PROGRESS
+   PROGRESS
 ========================================== */
 
 .progress {
     position: fixed;
+    z-index: 80;
+
     top: 0;
     left: 0;
-    z-index: 60;
+
     width: 100%;
     height: 4px;
 }
 
-.progress span {
-    display: block;
-    width: 0%;
+.progress-fill {
+    width: 0;
     height: 100%;
-    background: #f05a36;
+    background: #ff6244;
 }
 
 /* ==========================================
@@ -134,183 +204,353 @@ button {
 
 .section {
     position: relative;
-    min-height: 135svh;
-    overflow: hidden;
+    height: 145svh;
     isolation: isolate;
 }
 
-.section .content {
+.content {
     position: sticky;
     top: 0;
+
+    width: 100%;
     height: 100svh;
+
     overflow: hidden;
     pointer-events: none;
 }
 
-.section .content a {
+.content button,
+.content a {
     pointer-events: auto;
-}
-
-#hero {
-    background: radial-gradient(
-        circle at 50% 45%,
-        #51305c 0%,
-        #291436 50%,
-        #160b22 100%
-    );
-    color: white;
-}
-
-#berry {
-    background: var(--cream);
-    color: #251329;
-}
-
-#play {
-    background: var(--yellow);
-    color: #251329;
-}
-
-.eyebrow {
-    position: absolute;
-    top: 17%;
-    left: 5vw;
-    font: 11px 'DM Mono', monospace;
-    letter-spacing: .13em;
-}
-
-.huge {
-    position: absolute;
-    margin: 0;
-    letter-spacing: -.105em;
-    font-family: 'Archivo Black', sans-serif;
-    line-height: .78;
-    text-transform: uppercase;
-    white-space: nowrap;
 }
 
 /* ==========================================
    HERO
 ========================================== */
 
-.hero-word {
-    left: 50%;
-    top: 43%;
-    transform: translate(-50%, -50%);
-    font-size: clamp(130px, 31vw, 520px);
-    z-index: 1;
+#hero {
+    background-color: #291436;
+    background-image: radial-gradient(
+        ellipse at center,
+        #ffffff12,
+        #00000045
+    );
+    color: white;
 }
 
-.hero-bottom {
+.eyebrow {
     position: absolute;
-    bottom: 13%;
+
+    top: 17%;
     left: 5vw;
-    font: 12px/1.7 'DM Mono', monospace;
-    letter-spacing: .08em;
-}
 
-.section-no {
-    position: absolute;
-    right: 5vw;
-    bottom: 13%;
-    font: 12px 'DM Mono', monospace;
-}
-
-.scroll-note {
-    position: absolute;
-    left: 50%;
-    bottom: 5%;
-    transform: translateX(-50%);
     font: 11px 'DM Mono', monospace;
     letter-spacing: .14em;
 }
 
-/* ==========================================
-   STRAWBERRY
-========================================== */
+.hero-title {
+    position: absolute;
 
-.berry-word {
-    font-size: clamp(70px, 13.4vw, 230px);
+    top: 43%;
     left: 50%;
-    top: 30%;
+
     transform: translate(-50%, -50%);
+
+    margin: 0;
+
+    font: clamp(130px, 31vw, 520px)/.75
+          'Archivo Black', sans-serif;
+
+    letter-spacing: -.105em;
+    white-space: nowrap;
+
     z-index: 1;
 }
 
-.berry-word span {
-    -webkit-text-stroke: 2px #251329;
-    color: transparent;
-}
-
-.berry-caption {
+.hero-copy {
     position: absolute;
+    bottom: 14%;
     left: 5vw;
-    bottom: 13%;
-    font: clamp(24px, 4vw, 62px)/1.02
-          'Archivo Black', sans-serif;
-    letter-spacing: -.07em;
+
+    font: 12px/1.8 'DM Mono', monospace;
+    letter-spacing: .07em;
 }
 
-.berry-small {
+.scene-number {
     position: absolute;
     right: 5vw;
     bottom: 14%;
-    font: 12px 'DM Mono', monospace;
+
+    font: 11px 'DM Mono', monospace;
+}
+
+.scroll-note {
+    position: absolute;
+
+    bottom: 5%;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    font: 11px 'DM Mono', monospace;
+    letter-spacing: .15em;
+    white-space: nowrap;
 }
 
 /* ==========================================
-   PLAY WITH YOUR FOOD
+   FLAVOURS SECTION
 ========================================== */
 
-.play-word {
-    top: 42%;
+#flavours {
+    background: #f8e8e8;
+    color: #24112f;
+}
+
+.flavour-top {
+    position: absolute;
+    top: 15%;
+    left: 5vw;
+
+    font: 11px 'DM Mono', monospace;
+    letter-spacing: .14em;
+}
+
+.flavour-title {
+    position: absolute;
+
+    top: 29%;
     left: 50%;
+
     transform: translate(-50%, -50%);
+
+    margin: 0;
+
+    font: clamp(64px, 12vw, 200px)/.88
+          'Archivo Black', sans-serif;
+
+    letter-spacing: -.09em;
     text-align: center;
-    font-size: clamp(70px, 13vw, 205px);
+    white-space: nowrap;
+
     z-index: 1;
 }
 
-.play-word span {
+.flavour-title span {
+    color: transparent;
+    -webkit-text-stroke: 2px #24112f;
+}
+
+.flavour-description {
+    position: absolute;
+
+    left: 5vw;
+    bottom: 15%;
+
+    max-width: 260px;
+}
+
+.flavour-description h3 {
+    margin: 0 0 12px;
+
+    font: clamp(24px, 3vw, 45px)/1
+          'Archivo Black', sans-serif;
+
+    letter-spacing: -.06em;
+}
+
+.flavour-description p {
+    font: 12px/1.7 'DM Mono', monospace;
+    margin: 0;
+}
+
+/* ==========================================
+   FLAVOUR SELECTOR
+========================================== */
+
+.flavour-selector {
+    position: absolute;
+
+    right: 5vw;
+    bottom: 13%;
+
+    width: min(410px, 40vw);
+
+    padding: 18px;
+
+    border: 2px solid #24112f;
+
+    background: #ffffffd9;
+    backdrop-filter: blur(12px);
+
+    box-shadow: 8px 8px 0 #24112f;
+
+    pointer-events: auto;
+    z-index: 15;
+}
+
+.selector-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+
+    border-bottom: 2px solid #24112f;
+
+    font: 700 11px 'DM Mono', monospace;
+}
+
+.selector-heading span:last-child {
+    font-weight: 400;
+}
+
+.flavour-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.flavour-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    min-height: 82px;
+    padding: 10px 4px;
+
+    border: 2px solid transparent;
+
+    background: #24112f0c;
+    color: #24112f;
+
+    transition:
+        transform .25s,
+        border-color .25s,
+        background .25s;
+}
+
+.flavour-option:hover {
+    transform: translateY(-4px);
+    background: #ffffff;
+}
+
+.flavour-option.active {
+    border-color: #24112f;
+    background: white;
+}
+
+.flavour-option .swatch {
+    display: block;
+
+    width: 32px;
+    height: 32px;
+
+    border: 2px solid #24112f;
+
+    border-radius: 50%;
+
+    box-shadow: inset -5px -5px 0 #00000015;
+}
+
+.flavour-option .option-name {
+    font: 700 9px 'DM Mono', monospace;
+    text-align: center;
+}
+
+.selector-footer {
+    margin-top: 12px;
+
+    font: 10px 'DM Mono', monospace;
+    text-align: center;
+}
+
+/* ==========================================
+   PLAY SECTION
+========================================== */
+
+#play {
+    background: #ffc629;
+    color: #24112f;
+}
+
+.play-eyebrow {
+    position: absolute;
+
+    top: 17%;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    font: 11px 'DM Mono', monospace;
+    letter-spacing: .17em;
+    white-space: nowrap;
+}
+
+.play-title {
+    position: absolute;
+
+    top: 42%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    margin: 0;
+
+    width: 95%;
+
+    font: clamp(72px, 13vw, 215px)/.83
+          'Archivo Black', sans-serif;
+
+    letter-spacing: -.09em;
+    text-align: center;
+}
+
+.play-title span {
     display: block;
 }
 
-.play-word em {
+.play-title em {
     font-style: normal;
-    color: #ed4c35;
-}
-
-.play-note {
-    top: 17%;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
+    color: #f04464;
 }
 
 .play-actions {
     position: absolute;
-    bottom: 14%;
+
+    bottom: 15%;
     left: 50%;
+
     transform: translateX(-50%);
+
     display: flex;
     gap: 12px;
 }
 
 .pill {
-    display: inline-block;
-    border: 2px solid #24112f;
-    border-radius: 40px;
     padding: 15px 24px;
-    background: #f3f1e9;
+
+    border: 2px solid #24112f;
+    border-radius: 50px;
+
+    background: #fff;
     color: #24112f;
+
     font: 700 11px 'DM Mono', monospace;
     white-space: nowrap;
-    transition: transform .2s, background .2s;
+
+    transition:
+        transform .25s,
+        background .25s;
 }
 
 .pill:hover {
-    transform: translateY(-4px);
-    background: #fff;
+    transform: translateY(-5px);
 }
 
 .pill.dark {
@@ -319,22 +559,26 @@ button {
 }
 
 /* ==========================================
-   TICKER
+   MOVING TICKER
 ========================================== */
 
 .ticker {
     position: relative;
-    z-index: 10;
-    background: #ec5637;
-    color: white;
-    padding: 14px 0;
+    z-index: 15;
+
     overflow: hidden;
+
+    padding: 15px 0;
+
+    background: #f04464;
+    color: white;
+
     white-space: nowrap;
-    font: 900 18px 'Archivo Black', sans-serif;
-    letter-spacing: .04em;
+
+    font: 18px 'Archivo Black', sans-serif;
 }
 
-.ticker-inner {
+.ticker-track {
     display: inline-block;
     animation: marquee 22s linear infinite;
 }
@@ -351,202 +595,231 @@ button {
 
 footer {
     position: relative;
-    z-index: 10;
+    z-index: 20;
+
+    padding: 90px 5vw 30px;
+
     background: #180c21;
     color: white;
-    padding: 85px 5vw 32px;
 }
 
 footer h2 {
-    font: clamp(60px, 14vw, 220px)/.82
-          'Archivo Black', sans-serif;
-    letter-spacing: -.1em;
     margin: 0;
+
+    font: clamp(60px, 14vw, 220px)/.85
+          'Archivo Black', sans-serif;
+
+    letter-spacing: -.1em;
 }
 
-footer .foot {
+.footer-bottom {
     display: flex;
     justify-content: space-between;
     gap: 20px;
-    border-top: 1px solid #ffffff55;
+
+    margin-top: 90px;
     padding-top: 20px;
-    margin-top: 85px;
+
+    border-top: 1px solid #ffffff50;
+
     font: 11px 'DM Mono', monospace;
 }
 
 /* ==========================================
-   LOADER
+   MOBILE
 ========================================== */
 
-.loader {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    background: #180c21;
-    color: white;
-    display: grid;
-    place-content: center;
-    text-align: center;
+@media (max-width: 900px) {
+
+    .flavour-title {
+        font-size: 12vw;
+    }
+
+    .flavour-selector {
+        width: 340px;
+    }
+
 }
 
-.loader strong {
-    font: clamp(64px, 13vw, 170px)/1
-          'Archivo Black', sans-serif;
-    letter-spacing: -.09em;
-}
+@media (max-width: 650px) {
 
-.loader small {
-    font: 11px 'DM Mono', monospace;
-    letter-spacing: .15em;
-    margin-top: 14px;
-}
-
-.loader-track {
-    height: 3px;
-    background: #ffffff30;
-    margin-top: 28px;
-}
-
-.loader-track span {
-    display: block;
-    height: 100%;
-    width: 0;
-    background: #ffc629;
-}
-
-/* ==========================================
-   RESPONSIVE
-========================================== */
-
-@media (max-width: 700px) {
-    .topbar {
+    .header {
         padding: 20px;
+    }
+
+    .logo {
+        font-size: 26px;
+    }
+
+    .nav {
+        gap: 12px;
     }
 
     .nav a {
         display: none;
     }
 
-    .hero-word {
+    .hero-title {
         font-size: 32vw;
     }
 
-    .eyebrow {
-        top: 19%;
-        font-size: 10px;
-    }
-
-    .hero-bottom {
+    .hero-copy {
         font-size: 10px;
         bottom: 15%;
     }
 
-    .berry-word {
+    .flavour-top {
+        top: 17%;
+    }
+
+    .flavour-title {
+        top: 25%;
         font-size: 13vw;
-        top: 26%;
     }
 
-    .berry-caption {
-        font-size: 26px;
-        bottom: 16%;
+    .flavour-description {
+        top: 54%;
+        bottom: auto;
+        left: 5vw;
+        right: 5vw;
+        max-width: none;
+        text-align: center;
     }
 
-    .play-word {
+    .flavour-description h3 {
+        font-size: 24px;
+    }
+
+    .flavour-description p {
+        font-size: 11px;
+    }
+
+    .flavour-selector {
+        left: 50%;
+        right: auto;
+        bottom: 7%;
+
+        transform: translateX(-50%);
+
+        width: 90%;
+
+        padding: 12px;
+        box-shadow: 5px 5px 0 #24112f;
+    }
+
+    .flavour-option {
+        min-height: 62px;
+        padding: 6px 2px;
+    }
+
+    .flavour-option .swatch {
+        width: 24px;
+        height: 24px;
+    }
+
+    .flavour-option .option-name {
+        font-size: 8px;
+    }
+
+    .selector-heading {
+        font-size: 10px;
+        margin-bottom: 8px;
+    }
+
+    .selector-footer {
+        font-size: 9px;
+    }
+
+    .play-title {
         font-size: 16vw;
         top: 38%;
     }
 
     .play-actions {
-        bottom: 13%;
         flex-direction: column;
         width: 80%;
+        bottom: 14%;
         text-align: center;
     }
 
-    .pill {
-        padding: 13px 17px;
+    .play-eyebrow {
+        top: 20%;
+        font-size: 10px;
     }
 
-    .section-no {
-        bottom: 8%;
-    }
-
-    footer .foot {
+    .footer-bottom {
         flex-direction: column;
     }
 
-    .scroll-note {
-        white-space: nowrap;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     html {
         scroll-behavior: auto;
     }
 
-    .ticker-inner {
+    .ticker-track {
         animation: none;
     }
 
     *,
-    *:before,
-    *:after {
+    *::before,
+    *::after {
         transition-duration: .01ms !important;
     }
+
 }
+
 </style>
 
 <!-- GSAP -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 
 <!-- SCROLLTRIGGER -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
 </head>
 
 <body>
 
 <!-- ==========================================
-     LOADING SCREEN
+     LOADER
 ========================================== -->
 
 <div class="loader" id="loader">
 
-    <strong>FRUIT.</strong>
+    <h1>FRUIT.</h1>
 
-    <small>LOADING THE GOOD STUFF</small>
+    <p>PREPARING THE FLAVOURS...</p>
 
     <div class="loader-track">
-        <span id="loadbar"></span>
+        <div class="loader-fill" id="loadFill"></div>
     </div>
 
 </div>
 
 <!-- ==========================================
-     PROGRESS BAR
+     SCROLL PROGRESS
 ========================================== -->
 
 <div class="progress">
-    <span id="progressbar"></span>
+    <div class="progress-fill" id="progressFill"></div>
 </div>
 
 <!-- ==========================================
-     THREE.JS CANVAS
+     WEBGL
 ========================================== -->
 
-<canvas
-    id="webgl"
-    aria-label="Geanimeerde 3D-productpresentatie">
-</canvas>
+<canvas id="webgl"></canvas>
 
 <!-- ==========================================
-     NAVIGATION
+     HEADER
 ========================================== -->
 
-<header class="topbar">
+<header class="header">
 
-    <a class="logo" href="#hero">
+    <a href="#hero" class="logo">
         FRUIT®
     </a>
 
@@ -554,7 +827,7 @@ footer .foot {
 
         <a href="#hero">HOME</a>
 
-        <a href="#berry">FLAVOURS</a>
+        <a href="#flavours">FLAVOURS</a>
 
         <a href="#play">PLAY</a>
 
@@ -571,7 +844,7 @@ footer .foot {
 <main>
 
 <!-- ==========================================
-     SCENE 1
+     HERO
 ========================================== -->
 
 <section class="section" id="hero">
@@ -579,25 +852,25 @@ footer .foot {
     <div class="content">
 
         <div class="eyebrow">
-            NO ORDINARY JUICE / 001
+            THE GOOD STUFF / 001
         </div>
 
-        <h1 class="huge hero-word">
+        <h1 class="hero-title" id="heroTitle">
             FRUIT
         </h1>
 
-        <p class="hero-bottom">
-            MADE FOR THE BOLD.<br>
-            FULL OF GOOD ENERGY.<br>
+        <div class="hero-copy">
+            SIX FLAVOURS.<br>
+            ONE CRAZY EXPERIENCE.<br>
             ZERO BORING DESIGN.
-        </p>
+        </div>
 
-        <div class="section-no">
-            01 — 03
+        <div class="scene-number">
+            01 / 03
         </div>
 
         <div class="scroll-note">
-            SCROLL FOR MORE ↓
+            SCROLL TO EXPLORE ↓
         </div>
 
     </div>
@@ -605,28 +878,54 @@ footer .foot {
 </section>
 
 <!-- ==========================================
-     SCENE 2
+     FLAVOURS
 ========================================== -->
 
-<section class="section" id="berry">
+<section class="section" id="flavours">
 
     <div class="content">
 
-        <div class="eyebrow">
-            FRESHLY PICKED / 002
+        <div class="flavour-top">
+            PICK YOUR FLAVOUR / 002
         </div>
 
-        <h2 class="huge berry-word">
+        <h2 class="flavour-title" id="flavourTitle">
             <span>SO</span> STRAWBERRY
         </h2>
 
-        <p class="berry-caption">
-            WE DON'T BLEND IN.<br>
-            WE STAND OUT.
-        </p>
+        <div class="flavour-description">
 
-        <div class="berry-small">
-            02 — 03 / KEEP GOING ↓
+            <h3 id="flavourName">
+                STRAWBERRY<br>RUSH
+            </h3>
+
+            <p id="flavourDescription">
+                Big berry energy.<br>
+                Sweet design. Bold personality.
+            </p>
+
+        </div>
+
+        <!-- INTERACTIVE FLAVOUR SELECTOR -->
+
+        <div class="flavour-selector">
+
+            <div class="selector-heading">
+                <span>✳ CHOOSE YOUR FLAVOUR</span>
+                <span id="flavourCount">01 / 06</span>
+            </div>
+
+            <div
+                class="flavour-grid"
+                id="flavourGrid"
+                role="group"
+                aria-label="Kies een smaak">
+            </div>
+
+            <div class="selector-footer">
+                CLICK A FLAVOUR TO CHANGE THE WORLD ↗
+            </div>
+
         </div>
 
     </div>
@@ -634,23 +933,23 @@ footer .foot {
 </section>
 
 <!-- ==========================================
-     SCENE 3
+     PLAY
 ========================================== -->
 
 <section class="section" id="play">
 
     <div class="content">
 
-        <div class="eyebrow play-note">
+        <div class="play-eyebrow">
             NO RULES. ALL FLAVOUR.
         </div>
 
-        <h2 class="huge play-word">
+        <h2 class="play-title">
 
             <span>PLAY</span>
 
             <span>
-                <em>WITH</em>
+                <em id="playAccent">WITH</em>
             </span>
 
             <span>YOUR FOOD.</span>
@@ -659,18 +958,18 @@ footer .foot {
 
         <div class="play-actions">
 
-            <a class="pill" href="#hero">
-                START AGAIN ↗
+            <a class="pill" href="#flavours">
+                CHANGE FLAVOUR ↗
             </a>
 
-            <a class="pill dark" href="#berry">
-                SEE THE FLAVOURS →
+            <a class="pill dark" href="#hero">
+                START AGAIN →
             </a>
 
         </div>
 
-        <div class="section-no">
-            03 — 03
+        <div class="scene-number">
+            03 / 03
         </div>
 
     </div>
@@ -680,22 +979,22 @@ footer .foot {
 </main>
 
 <!-- ==========================================
-     MOVING TICKER
+     TICKER
 ========================================== -->
 
-<div class="ticker" aria-hidden="true">
+<div class="ticker" id="ticker">
 
-    <div class="ticker-inner">
+    <div class="ticker-track">
 
-        ✳ FRESH THINKING
+        ✳ SIX FLAVOURS
         ✳ BIG FRUIT ENERGY
         ✳ NO BORING BITS
-        ✳ ALWAYS IN SEASON
+        ✳ PICK YOUR FAVOURITE
 
-        ✳ FRESH THINKING
+        ✳ SIX FLAVOURS
         ✳ BIG FRUIT ENERGY
         ✳ NO BORING BITS
-        ✳ ALWAYS IN SEASON ✳
+        ✳ PICK YOUR FAVOURITE
 
     </div>
 
@@ -712,14 +1011,14 @@ footer .foot {
         JUICY.
     </h2>
 
-    <div class="foot">
+    <div class="footer-bottom">
 
         <span>
             © 2026 FRUIT LAB — DESIGN CONCEPT
         </span>
 
         <span>
-            THREE.JS / GSAP / WEBGL
+            SIX FLAVOURS / ONE EXPERIENCE
         </span>
 
         <a href="#hero">
@@ -731,7 +1030,7 @@ footer .foot {
 </footer>
 
 <!-- ==========================================
-     THREE.JS + GSAP JAVASCRIPT
+     JAVASCRIPT
 ========================================== -->
 
 <script type="module">
@@ -740,18 +1039,171 @@ import * as THREE from
 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
 
 /* ==========================================
-   INITIALIZE GSAP
+   GSAP
 ========================================== */
 
 const gsap = window.gsap;
-
 const ScrollTrigger = window.ScrollTrigger;
 
 gsap.registerPlugin(ScrollTrigger);
 
-const reduce = matchMedia(
+const reduce = window.matchMedia(
     '(prefers-reduced-motion: reduce)'
 ).matches;
+
+/* ==========================================
+   SIX FLAVOURS
+========================================== */
+
+const FLAVOURS = [
+
+    {
+        id: 'strawberry',
+
+        name: 'STRAWBERRY RUSH',
+        short: 'STRAWBERRY',
+
+        description:
+            'Big berry energy. Sweet design. Bold personality.',
+
+        hero: '#291436',
+        background: '#f8e8e8',
+        play: '#ffc629',
+
+        primary: '#ed3157',
+        secondary: '#ff7b97',
+        accent: '#f04464',
+
+        label: '#fff0f3',
+        ink: '#7c1535',
+
+        emoji: '🍓'
+    },
+
+    {
+        id: 'mango',
+
+        name: 'MANGO MADNESS',
+        short: 'MANGO',
+
+        description:
+            'Tropical vibes. Sunshine colours. Maximum energy.',
+
+        hero: '#522218',
+        background: '#fff0cf',
+        play: '#ff9f20',
+
+        primary: '#ff9a1f',
+        secondary: '#ffd05a',
+        accent: '#f05020',
+
+        label: '#fff1cb',
+        ink: '#77331b',
+
+        emoji: '🥭'
+    },
+
+    {
+        id: 'blueberry',
+
+        name: 'BLUEBERRY BLAST',
+        short: 'BLUEBERRY',
+
+        description:
+            'Deep blue dreams. A colourful creative explosion.',
+
+        hero: '#161b59',
+        background: '#e5e3fa',
+        play: '#8d9cff',
+
+        primary: '#4549c8',
+        secondary: '#8a78e5',
+        accent: '#5538cf',
+
+        label: '#eeeeff',
+        ink: '#20266c',
+
+        emoji: '🫐'
+    },
+
+    {
+        id: 'lime',
+
+        name: 'LIME LIGHTNING',
+        short: 'LIME',
+
+        description:
+            'Fresh green energy. Sharp ideas. Electric design.',
+
+        hero: '#153b2b',
+        background: '#e8f7df',
+        play: '#c9ec47',
+
+        primary: '#8ecf30',
+        secondary: '#d4f56e',
+        accent: '#417d24',
+
+        label: '#f4ffe7',
+        ink: '#275326',
+
+        emoji: '🍋'
+    },
+
+    {
+        id: 'peach',
+
+        name: 'PEACH PARADISE',
+        short: 'PEACH',
+
+        description:
+            'Soft colours. Summer feelings. Seriously good vibes.',
+
+        hero: '#63372f',
+        background: '#ffe3d5',
+        play: '#ffb89c',
+
+        primary: '#ff8b6a',
+        secondary: '#ffd19c',
+        accent: '#e74f47',
+
+        label: '#fff0e4',
+        ink: '#854036',
+
+        emoji: '🍑'
+    },
+
+    {
+        id: 'grape',
+
+        name: 'GRAPE GALAXY',
+        short: 'GRAPE',
+
+        description:
+            'A little mysterious. Very colourful. Out of this world.',
+
+        hero: '#28113e',
+        background: '#e9def4',
+        play: '#b695e5',
+
+        primary: '#803bc0',
+        secondary: '#bb79ec',
+        accent: '#6523a8',
+
+        label: '#f3e9ff',
+        ink: '#502070',
+
+        emoji: '🍇'
+    }
+
+];
+
+/* ==========================================
+   INITIAL STATE
+========================================== */
+
+let activeFlavour = 0;
+
+const initial = FLAVOURS[0];
 
 /* ==========================================
    THREE.JS RENDERER
@@ -786,30 +1238,30 @@ renderer.outputColorSpace =
 renderer.toneMapping =
     THREE.ACESFilmicToneMapping;
 
-renderer.toneMappingExposure = 1.45;
+renderer.toneMappingExposure = 1.4;
 
 /* ==========================================
-   SCENE & CAMERA
+   SCENE
 ========================================== */
 
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(
 
-    34,
+    35,
 
     innerWidth / innerHeight,
 
     0.1,
 
-    80
+    100
 
 );
 
 camera.position.set(0, 0, 12);
 
 /* ==========================================
-   LIGHTING
+   LIGHTS
 ========================================== */
 
 scene.add(
@@ -818,55 +1270,55 @@ scene.add(
 
         '#ffffff',
 
-        '#5d294b',
+        '#533a60',
 
-        2.8
+        2.7
 
     )
 
 );
 
-const key = new THREE.DirectionalLight(
+const keyLight = new THREE.DirectionalLight(
 
     '#ffffff',
 
-    4.3
+    4
 
 );
 
-key.position.set(3, 6, 7);
+keyLight.position.set(4, 6, 8);
 
-scene.add(key);
+scene.add(keyLight);
 
-const rim = new THREE.DirectionalLight(
+const rimLight = new THREE.DirectionalLight(
 
-    '#fca3e0',
+    '#ffb8d8',
 
-    2.8
+    2.5
 
 );
 
-rim.position.set(-5, 2, -4);
+rimLight.position.set(-5, 3, -4);
 
-scene.add(rim);
+scene.add(rimLight);
 
-const fill = new THREE.DirectionalLight(
+const fillLight = new THREE.DirectionalLight(
 
-    '#fff4ac',
+    '#fff4b0',
 
     1.5
 
 );
 
-fill.position.set(-2, -3, 5);
+fillLight.position.set(-3, -2, 5);
 
-scene.add(fill);
+scene.add(fillLight);
 
 /* ==========================================
-   MATERIAL HELPER
+   MATERIAL HELPERS
 ========================================== */
 
-function mat(color, roughness = .36) {
+function makeMaterial(color, roughness = .32) {
 
     return new THREE.MeshPhysicalMaterial({
 
@@ -876,97 +1328,127 @@ function mat(color, roughness = .36) {
 
         metalness: .02,
 
-        clearcoat: .65,
+        clearcoat: .8,
 
-        clearcoatRoughness: .19
+        clearcoatRoughness: .13
 
     });
 
 }
 
-function mesh(geo, material) {
+function createMesh(geometry, material) {
 
     return new THREE.Mesh(
-        geo,
+        geometry,
         material
     );
 
 }
 
 /* ==========================================
-   GENERATE PRODUCT LABEL
+   SMOOTH MATERIAL COLOUR CHANGE
 ========================================== */
 
-function labelTexture(name, bg, ink) {
+function animateMaterial(material, color) {
 
-    const c = document.createElement('canvas');
+    const target = new THREE.Color(color);
 
-    c.width = 1024;
-    c.height = 1024;
+    gsap.to(material.color, {
 
-    const x = c.getContext('2d');
+        r: target.r,
+        g: target.g,
+        b: target.b,
 
-    x.fillStyle = bg;
+        duration: reduce ? 0 : .7,
 
-    x.fillRect(
+        ease: 'power2.inOut',
+
+        overwrite: true
+
+    });
+
+}
+
+/* ==========================================
+   CREATE LABEL TEXTURE
+========================================== */
+
+function makeLabelTexture(flavour) {
+
+    const canvas = document.createElement('canvas');
+
+    canvas.width = 1024;
+    canvas.height = 1024;
+
+    const ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = flavour.label;
+
+    ctx.fillRect(
         0,
         0,
         1024,
         1024
     );
 
-    x.fillStyle = ink;
+    ctx.fillStyle = flavour.ink;
 
-    x.textAlign = 'center';
+    ctx.textAlign = 'center';
 
-    x.fillRect(
+    ctx.fillRect(
         80,
         95,
         864,
-        9
+        8
     );
 
-    x.font = 'bold 46px Arial';
+    ctx.font = '900 55px Arial';
 
-    x.fillText(
+    ctx.fillText(
         'FRUIT LAB®',
         512,
         75
     );
 
-    x.font = '900 158px Arial Black,Arial';
+    ctx.font = '900 155px Arial Black, Arial';
 
-    x.fillText(
-        name,
+    const words = flavour.name.split(' ');
+
+    ctx.fillText(
+        words[0],
         512,
-        490,
+        460,
         900
     );
 
-    x.font = '900 240px Arial Black,Arial';
+    ctx.fillText(
+        words[1] || '',
+        512,
+        610,
+        900
+    );
 
-    x.fillText(
+    ctx.fillStyle = flavour.accent;
+
+    ctx.font = '900 230px Arial';
+
+    ctx.fillText(
         '✳',
         512,
-        750
+        835
     );
 
-    x.font = 'bold 36px monospace';
+    ctx.fillStyle = flavour.ink;
 
-    x.fillText(
-        'GOOD VIBES ONLY / 00% BORING',
+    ctx.font = 'bold 31px monospace';
+
+    ctx.fillText(
+        'ALL FLAVOUR / ZERO BORING',
         512,
-        870
+        920
     );
 
-    x.fillRect(
-        80,
-        900,
-        864,
-        7
-    );
-
-    const texture = new THREE.CanvasTexture(c);
+    const texture = new THREE.CanvasTexture(canvas);
 
     texture.colorSpace =
         THREE.SRGBColorSpace;
@@ -978,57 +1460,59 @@ function labelTexture(name, bg, ink) {
 }
 
 /* ==========================================
-   CREATE DETAILED 3D CUP
+   CREATE 3D DRINK CUP
 ========================================== */
 
-function makeCup(name, color, labelColor, ink) {
+function createCup(flavour) {
 
-    const g = new THREE.Group();
+    const group = new THREE.Group();
 
-    /* CUP BODY */
+    const cupMaterial = makeMaterial(
+        flavour.primary,
+        .27
+    );
 
-    const cup = mesh(
+    const body = createMesh(
 
         new THREE.CylinderGeometry(
 
             .73,
             .51,
-            2.42,
-            64,
-            1
+            2.4,
+            64
 
         ),
 
-        mat(color, .24)
+        cupMaterial
 
     );
 
-    g.add(cup);
+    group.add(body);
 
     /* CUP BASE */
 
-    const base = mesh(
+    const base = createMesh(
 
         new THREE.CylinderGeometry(
 
-            .535,
-            .535,
+            .54,
+            .54,
             .08,
             64
 
         ),
 
-        mat('#eee6e0', .4)
+        makeMaterial('#f5e9dc')
 
     );
 
     base.position.y = -1.22;
 
-    g.add(base);
+    group.add(base);
 
     /* LID */
 
-    const lid = mesh(
+    const lid = createMesh(
 
         new THREE.CylinderGeometry(
 
@@ -1039,17 +1523,17 @@ function makeCup(name, color, labelColor, ink) {
 
         ),
 
-        mat('#fff5e9', .28)
+        makeMaterial('#fff5e9')
 
     );
 
-    lid.position.y = 1.22;
+    lid.position.y = 1.23;
 
-    g.add(lid);
+    group.add(lid);
 
     /* LID RING */
 
-    const lidRing = mesh(
+    const ring = createMesh(
 
         new THREE.TorusGeometry(
 
@@ -1060,19 +1544,19 @@ function makeCup(name, color, labelColor, ink) {
 
         ),
 
-        mat('#ffffff', .25)
+        makeMaterial('#ffffff')
 
     );
 
-    lidRing.rotation.x = Math.PI / 2;
+    ring.rotation.x = Math.PI / 2;
 
-    lidRing.position.y = 1.27;
+    ring.position.y = 1.28;
 
-    g.add(lidRing);
+    group.add(ring);
 
     /* TRANSPARENT DOME */
 
-    const dome = mesh(
+    const dome = createMesh(
 
         new THREE.SphereGeometry(
 
@@ -1094,9 +1578,7 @@ function makeCup(name, color, labelColor, ink) {
 
             opacity: .3,
 
-            roughness: .06,
-
-            metalness: 0,
+            roughness: .08,
 
             side: THREE.DoubleSide,
 
@@ -1108,11 +1590,11 @@ function makeCup(name, color, labelColor, ink) {
 
     dome.position.y = 1.31;
 
-    g.add(dome);
+    group.add(dome);
 
     /* STRAW */
 
-    const straw = mesh(
+    const straw = createMesh(
 
         new THREE.CylinderGeometry(
 
@@ -1123,7 +1605,7 @@ function makeCup(name, color, labelColor, ink) {
 
         ),
 
-        mat('#fce6ad', .3)
+        makeMaterial('#fff0bc')
 
     );
 
@@ -1135,11 +1617,21 @@ function makeCup(name, color, labelColor, ink) {
 
     straw.rotation.z = -.12;
 
-    g.add(straw);
+    group.add(straw);
 
-    /* CURVED LABEL */
+    /* LABEL */
 
-    const wrap = mesh(
+    const labelMaterial = new THREE.MeshStandardMaterial({
+
+        map: makeLabelTexture(flavour),
+
+        roughness: .55,
+
+        side: THREE.DoubleSide
+
+    });
+
+    const label = createMesh(
 
         new THREE.CylinderGeometry(
 
@@ -1154,51 +1646,71 @@ function makeCup(name, color, labelColor, ink) {
 
         ),
 
-        new THREE.MeshStandardMaterial({
-
-            map: labelTexture(
-                name,
-                labelColor,
-                ink
-            ),
-
-            roughness: .55,
-
-            side: THREE.DoubleSide
-
-        })
+        labelMaterial
 
     );
 
-    wrap.position.y = -.14;
+    label.position.y = -.14;
 
-    g.add(wrap);
+    group.add(label);
 
-    return g;
+    group.userData = {
+
+        cupMaterial,
+        labelMaterial
+
+    };
+
+    return group;
 
 }
 
 /* ==========================================
-   CREATE DETAILED STRAWBERRY
+   UPDATE CUP
 ========================================== */
 
-function makeStrawberry() {
+function updateCup(cup, flavour) {
 
-    const g = new THREE.Group();
+    animateMaterial(
+        cup.userData.cupMaterial,
+        flavour.primary
+    );
 
-    /* MAIN FRUIT BODY */
+    const material = cup.userData.labelMaterial;
 
-    const berry = mesh(
+    const oldTexture = material.map;
+
+    material.map = makeLabelTexture(flavour);
+
+    material.needsUpdate = true;
+
+    if (oldTexture) {
+        oldTexture.dispose();
+    }
+
+}
+
+/* ==========================================
+   CREATE STRAWBERRY
+========================================== */
+
+function createStrawberry(flavour) {
+
+    const group = new THREE.Group();
+
+    const bodyMaterial = makeMaterial(
+        flavour.primary
+    );
+
+    const berry = createMesh(
 
         new THREE.SphereGeometry(
-
             1,
             48,
             32
-
         ),
 
-        mat('#ec3150', .32)
+        bodyMaterial
 
     );
 
@@ -1208,131 +1720,121 @@ function makeStrawberry() {
         .78
     );
 
-    g.add(berry);
+    group.add(berry);
 
-    /* STRAWBERRY SEEDS */
+    /* SEEDS */
 
-    const seedGeo = new THREE.SphereGeometry(
-
-        .045,
+    const seedGeometry = new THREE.SphereGeometry(
+        .04,
         8,
         6
-
     );
 
-    const seedMat = mat(
-        '#ffcf7c',
-        .5
-    );
+    const seedMaterial = makeMaterial('#ffd78b');
 
-    for (let row = 0; row < 8; row++) {
+    for (let row = 1; row < 9; row++) {
 
         for (let col = 0; col < 13; col++) {
 
             const theta =
-                (row + .65) / 9 * Math.PI;
+                row / 10 * Math.PI;
 
             const phi =
-                (col / 13) * Math.PI * 2 +
-                (row % 2) * .24;
+                col / 13 * Math.PI * 2 +
+                row * .19;
 
-            const px =
+            const x =
                 Math.sin(theta) *
                 Math.cos(phi) *
-                .864;
+                .865;
 
-            const py =
+            const y =
                 Math.cos(theta) *
-                1.066;
+                1.065;
 
-            const pz =
+            const z =
                 Math.sin(theta) *
                 Math.sin(phi) *
-                .784;
+                .785;
 
-            if (py > .89 || py < -.94) {
+            if (y > .9 || y < -.96) {
                 continue;
             }
 
-            const seed = mesh(
-                seedGeo,
-                seedMat
+            const seed = createMesh(
+                seedGeometry,
+                seedMaterial
             );
 
-            seed.position.set(
-                px,
-                py,
-                pz
-            );
+            seed.position.set(x, y, z);
 
             seed.scale.set(
                 .65,
-                1.18,
+                1.15,
                 .5
             );
 
             seed.lookAt(
-                px * 2,
-                py * 2,
-                pz * 2
+                x * 2,
+                y * 2,
+                z * 2
             );
 
-            g.add(seed);
+            group.add(seed);
 
         }
 
     }
 
-    /* GREEN LEAVES */
+    /* LEAVES */
 
-    const green = mat(
-        '#25773f',
-        .55
+    const leafMaterial = makeMaterial(
+        '#287c42',
+        .5
     );
 
     for (let i = 0; i < 6; i++) {
 
-        const a = i / 6 * Math.PI * 2;
+        const angle =
+            i / 6 * Math.PI * 2;
 
-        const leaf = mesh(
+        const leaf = createMesh(
 
             new THREE.ConeGeometry(
 
-                .19,
-                .66,
+                .2,
+                .7,
                 5
 
             ),
 
-            green
+            leafMaterial
 
         );
-
-        leaf.rotation.z = Math.PI / 2;
-
-        leaf.rotation.y = a;
 
         leaf.position.set(
 
-            Math.cos(a) * .32,
+            Math.cos(angle) * .32,
 
             1.02,
 
-            Math.sin(a) * .32
+            Math.sin(angle) * .32
 
         );
 
-        leaf.rotation.x = Math.sin(a) * .65;
+        leaf.rotation.z =
+            Math.cos(angle) * .7;
 
-        leaf.rotation.z = Math.cos(a) * .65;
+        leaf.rotation.x =
+            Math.sin(angle) * .7;
 
-        g.add(leaf);
+        group.add(leaf);
 
     }
 
     /* STEM */
 
-    const stem = mesh(
+    const stem = createMesh(
 
         new THREE.CylinderGeometry(
 
@@ -1343,386 +1845,332 @@ function makeStrawberry() {
 
         ),
 
-        green
+        leafMaterial
 
     );
 
     stem.position.y = 1.22;
 
-    g.add(stem);
+    group.add(stem);
 
-    return g;
+    group.userData.bodyMaterial =
+        bodyMaterial;
 
-}
-
-/* ==========================================
-   CREATE 3D CITRUS SLICE
-========================================== */
-
-function makeCitrus(color) {
-
-    const g = new THREE.Group();
-
-    /* OUTER RIND */
-
-    const rind = mesh(
-
-        new THREE.CylinderGeometry(
-
-            .74,
-            .74,
-            .18,
-            48
-
-        ),
-
-        mat(color, .4)
-
-    );
-
-    rind.rotation.x = Math.PI / 2;
-
-    g.add(rind);
-
-    /* WHITE PITH */
-
-    const pith = mesh(
-
-        new THREE.CylinderGeometry(
-
-            .65,
-            .65,
-            .19,
-            48
-
-        ),
-
-        mat('#fff2c5', .5)
-
-    );
-
-    pith.rotation.x = Math.PI / 2;
-
-    g.add(pith);
-
-    /* FRUIT SEGMENTS */
-
-    for (let i = 0; i < 9; i++) {
-
-        const shape = new THREE.Shape();
-
-        const a =
-            i * 2 * Math.PI / 9 + .045;
-
-        const b =
-            (i + 1) * 2 * Math.PI / 9 - .045;
-
-        shape.moveTo(0, 0);
-
-        shape.lineTo(
-
-            .58 * Math.cos(a),
-
-            .58 * Math.sin(a)
-
-        );
-
-        shape.absarc(
-
-            0,
-            0,
-            .58,
-            a,
-            b,
-            false
-
-        );
-
-        shape.closePath();
-
-        const wedge = mesh(
-
-            new THREE.ShapeGeometry(shape),
-
-            new THREE.MeshBasicMaterial({
-
-                color: i % 2 === 0
-                    ? '#ffa32d'
-                    : '#ffbc51',
-
-                side: THREE.DoubleSide
-
-            })
-
-        );
-
-        wedge.position.z = .106;
-
-        g.add(wedge);
-
-    }
-
-    return g;
+    return group;
 
 }
 
 /* ==========================================
-   CREATE SPLASH PARTICLES
+   CREATE CITRUS SLICE
 ========================================== */
 
-function makeSplash() {
+function createCitrus(flavour) {
 
-    const g = new THREE.Group();
+    const group = new THREE.Group();
 
-    const splashMat =
-        new THREE.MeshPhysicalMaterial({
+    const outerMaterial = makeMaterial(
+        flavour.primary
+    );
 
-            color: '#ed4260',
+    const outer = createMesh(
 
-            roughness: .2,
+        new THREE.CylinderGeometry(
 
-            clearcoat: 1
+            .7,
+            .7,
+            .15,
+            48
 
-        });
+        ),
 
-    for (let i = 0; i < 13; i++) {
+        outerMaterial
 
-        const a = i * 2.399;
+    );
 
-        const z =
-            Math.sin(i * 1.6) * .6;
+    outer.rotation.x = Math.PI / 2;
 
-        const drop = mesh(
+    group.add(outer);
 
-            new THREE.SphereGeometry(
+    const innerMaterial = makeMaterial(
+        flavour.secondary
+    );
 
-                .11 + (i % 3) * .035,
+    const inner = createMesh(
 
-                16,
-                12
+        new THREE.CylinderGeometry(
 
+            .59,
+            .59,
+            .17,
+            48
+
+        ),
+
+        innerMaterial
+
+    );
+
+    inner.rotation.x = Math.PI / 2;
+
+    group.add(inner);
+
+    /* SEGMENT LINES */
+
+    const lineMaterial = new THREE.LineBasicMaterial({
+
+        color: '#ffffff',
+
+        transparent: true,
+
+        opacity: .85
+
+    });
+
+    for (let i = 0; i < 10; i++) {
+
+        const angle =
+            i / 10 * Math.PI * 2;
+
+        const points = [
+
+            new THREE.Vector3(
+                0,
+                0,
+                .1
             ),
 
-            splashMat
+            new THREE.Vector3(
+
+                Math.cos(angle) * .59,
+
+                Math.sin(angle) * .59,
+
+                .1
+
+            )
+
+        ];
+
+        const line = new THREE.Line(
+
+            new THREE.BufferGeometry().setFromPoints(
+                points
+            ),
+
+            lineMaterial
 
         );
 
-        drop.position.set(
-
-            Math.cos(a) * (1 + i * .09),
-
-            Math.sin(a) * (1 + i * .08),
-
-            z
-
-        );
-
-        drop.scale.set(
-            .8,
-            1.5,
-            .9
-        );
-
-        g.add(drop);
+        group.add(line);
 
     }
 
-    return g;
+    group.userData.bodyMaterial =
+        outerMaterial;
+
+    group.userData.innerMaterial =
+        innerMaterial;
+
+    return group;
 
 }
 
 /* ==========================================
-   SCENE 1 — THREE CUPS
+   HERO CUPS
 ========================================== */
 
-const cups = new THREE.Group();
+const heroGroup = new THREE.Group();
 
-scene.add(cups);
+scene.add(heroGroup);
 
-const cupA = makeCup(
-
-    'MANGO',
-
-    '#ffab1e',
-
-    '#fff0b5',
-
-    '#332038'
-
+const heroLeft = createCup(
+    FLAVOURS[1]
 );
 
-const cupB = makeCup(
-
-    'BERRY',
-
-    '#8d4dca',
-
-    '#f5e7ff',
-
-    '#43215c'
-
+const heroCenter = createCup(
+    FLAVOURS[0]
 );
 
-const cupC = makeCup(
-
-    'MINT',
-
-    '#80cdb6',
-
-    '#e9ffe5',
-
-    '#245c4d'
-
+const heroRight = createCup(
+    FLAVOURS[3]
 );
 
-cupA.position.set(
+heroLeft.position.set(
     -2.55,
     -.1,
     -.2
 );
 
-cupA.rotation.z = .18;
+heroLeft.rotation.z = .18;
 
-cupA.rotation.y = -.25;
-
-cupB.position.set(
+heroCenter.position.set(
     0,
-    .68,
-    .65
+    .65,
+    .7
 );
 
-cupB.rotation.z = -.11;
+heroCenter.rotation.z = -.12;
 
-cupC.position.set(
+heroRight.position.set(
     2.55,
     -.15,
     -.4
 );
 
-cupC.rotation.z = -.22;
+heroRight.rotation.z = -.2;
 
-cupC.rotation.y = .28;
-
-cups.add(
-    cupA,
-    cupB,
-    cupC
+heroGroup.add(
+    heroLeft,
+    heroCenter,
+    heroRight
 );
 
 /* ==========================================
-   SCENE 2 — STRAWBERRY WORLD
+   FLAVOUR WORLD
 ========================================== */
 
-const berryGroup = new THREE.Group();
+const flavourGroup = new THREE.Group();
 
-scene.add(berryGroup);
+scene.add(flavourGroup);
 
-berryGroup.add(
-    makeStrawberry()
+const mainFruit = createStrawberry(
+    initial
 );
 
-const miniCup = makeCup(
+flavourGroup.add(mainFruit);
 
-    'BERRY',
-
-    '#8d4dca',
-
-    '#f5e7ff',
-
-    '#43215c'
-
+const miniCup = createCup(
+    initial
 );
 
 miniCup.scale.setScalar(.47);
 
 miniCup.position.set(
-    0,
-    .3,
+    .7,
+    -.2,
     1.5
 );
 
-berryGroup.add(miniCup);
+miniCup.rotation.z = -.2;
 
-const splash = makeSplash();
+flavourGroup.add(miniCup);
 
-splash.position.z = -.3;
+/* SPLASH PARTICLES */
 
-berryGroup.add(splash);
-
-berryGroup.scale.setScalar(0);
-
-berryGroup.position.set(
-    0,
-    -1,
-    0
+const splashMaterial = makeMaterial(
+    initial.secondary
 );
 
+const splashGroup = new THREE.Group();
+
+for (let i = 0; i < 16; i++) {
+
+    const angle = i * 2.399;
+
+    const drop = createMesh(
+
+        new THREE.SphereGeometry(
+
+            .10 + (i % 3) * .035,
+            16,
+            12
+
+        ),
+
+        splashMaterial
+
+    );
+
+    drop.position.set(
+
+        Math.cos(angle) * (1 + i * .09),
+
+        Math.sin(angle) * (1 + i * .08),
+
+        Math.sin(i * 1.6) * .5
+
+    );
+
+    drop.scale.set(
+        .8,
+        1.4,
+        .9
+    );
+
+    splashGroup.add(drop);
+
+}
+
+flavourGroup.add(splashGroup);
+
+flavourGroup.scale.setScalar(0);
+
+flavourGroup.position.y = -1;
+
 /* ==========================================
-   SCENE 3 — FLOATING FRUIT WORLD
+   PLAY WORLD
 ========================================== */
 
 const playGroup = new THREE.Group();
 
 scene.add(playGroup);
 
-const palette = [
+const decorations = [];
 
-    '#ff5e2f',
+for (let i = 0; i < 18; i++) {
 
-    '#ffba29',
+    const angle = i * 2.399;
 
-    '#e94264',
-
-    '#79c7a0',
-
-    '#ac4dd1'
-
-];
-
-const fruitObjects = [];
-
-for (let i = 0; i < 17; i++) {
-
-    const a = i * 2.399;
-
-    const rad =
-        2.1 + (i % 4) * .65;
+    const radius =
+        2.1 + (i % 4) * .7;
 
     let object;
 
+    let type;
+
     if (i % 3 === 0) {
 
-        object = makeCitrus(
-            palette[i % 5]
-        );
+        object = createCitrus(initial);
+
+        type = 'citrus';
 
     } else if (i % 3 === 1) {
 
-        object = makeStrawberry();
+        object = createStrawberry(initial);
+
+        type = 'berry';
 
     } else {
 
-        object = mesh(
+        const colorMaterial = makeMaterial(
+            initial.secondary
+        );
+
+        object = createMesh(
 
             new THREE.IcosahedronGeometry(
 
-                .35 + (i % 3) * .1,
-
+                .4,
                 1
 
             ),
 
-            mat(palette[i % 5])
+            colorMaterial
 
         );
+
+        object.userData.bodyMaterial =
+            colorMaterial;
+
+        type = 'gem';
 
     }
 
     object.position.set(
 
-        Math.cos(a) * rad,
+        Math.cos(angle) * radius,
 
-        Math.sin(a) * rad * .66,
+        Math.sin(angle) * radius * .68,
 
         Math.sin(i * 1.7) * 1.5 - 1
 
@@ -1740,27 +2188,31 @@ for (let i = 0; i < 17; i++) {
 
     object.scale.multiplyScalar(
 
-        i % 3 === 1
+        type === 'berry'
             ? .38
-            : i % 3 === 0
-                ? .65
+            : type === 'citrus'
+                ? .7
                 : 1
 
     );
 
-    object.userData = {
+    object.userData.baseY =
+        object.position.y;
 
-        baseY: object.position.y,
+    object.userData.offset =
+        i * .6;
 
-        offset: i * .6,
+    object.userData.speed =
+        .6 + (i % 3) * .2;
 
-        speed: .6 + (i % 3) * .2
+    decorations.push({
 
-    };
+        object,
+        type
+
+    });
 
     playGroup.add(object);
-
-    fruitObjects.push(object);
 
 }
 
@@ -1769,24 +2221,475 @@ playGroup.scale.setScalar(0);
 playGroup.position.y = -1;
 
 /* ==========================================
-   CAMERA ANIMATION STATE
+   BUILD FLAVOUR SELECTOR
+========================================== */
+
+const flavourGrid = document.querySelector(
+    '#flavourGrid'
+);
+
+flavourGrid.innerHTML = FLAVOURS.map(
+
+    (flavour, index) => `
+
+        <button
+
+            class="flavour-option ${index === 0 ? 'active' : ''}"
+
+            data-flavour="${index}"
+
+            aria-label="Selecteer ${flavour.name}"
+
+            aria-pressed="${index === 0}"
+
+        >
+
+            <span
+
+                class="swatch"
+
+                style="background:${flavour.primary}"
+
+            ></span>
+
+            <span class="option-name">
+
+                ${flavour.short}
+
+            </span>
+
+        </button>
+
+    `
+
+).join('');
+
+/* ==========================================
+   UPDATE COLOUR THEME
+========================================== */
+
+function updateTheme(flavour) {
+
+    const duration = reduce ? 0 : .8;
+
+    gsap.to('#hero', {
+
+        backgroundColor: flavour.hero,
+
+        duration,
+
+        ease: 'power2.inOut',
+
+        overwrite: true
+
+    });
+
+    gsap.to('#flavours', {
+
+        backgroundColor: flavour.background,
+
+        duration,
+
+        ease: 'power2.inOut',
+
+        overwrite: true
+
+    });
+
+    gsap.to('#play', {
+
+        backgroundColor: flavour.play,
+
+        duration,
+
+        ease: 'power2.inOut',
+
+        overwrite: true
+
+    });
+
+    gsap.to('#ticker', {
+
+        backgroundColor: flavour.accent,
+
+        duration,
+
+        ease: 'power2.inOut',
+
+        overwrite: true
+
+    });
+
+    gsap.to('#playAccent', {
+
+        color: flavour.accent,
+
+        duration,
+
+        ease: 'power2.inOut',
+
+        overwrite: true
+
+    });
+
+}
+
+/* ==========================================
+   UPDATE 3D OBJECT COLOURS
+========================================== */
+
+function update3D(flavour) {
+
+    /* MAIN CUP */
+
+    updateCup(
+        heroCenter,
+        flavour
+    );
+
+    /* SIDE CUPS */
+
+    const previousIndex =
+        (activeFlavour + FLAVOURS.length - 1)
+        % FLAVOURS.length;
+
+    const nextIndex =
+        (activeFlavour + 1)
+        % FLAVOURS.length;
+
+    updateCup(
+        heroLeft,
+        FLAVOURS[previousIndex]
+    );
+
+    updateCup(
+        heroRight,
+        FLAVOURS[nextIndex]
+    );
+
+    /* MINI CUP */
+
+    updateCup(
+        miniCup,
+        flavour
+    );
+
+    /* MAIN FRUIT */
+
+    animateMaterial(
+        mainFruit.userData.bodyMaterial,
+        flavour.primary
+    );
+
+    /* SPLASH */
+
+    animateMaterial(
+        splashMaterial,
+        flavour.secondary
+    );
+
+    /* DECORATIONS */
+
+    decorations.forEach(({object, type}, i) => {
+
+        const alternate =
+            i % 2 === 0
+                ? flavour.primary
+                : flavour.secondary;
+
+        if (object.userData.bodyMaterial) {
+
+            animateMaterial(
+                object.userData.bodyMaterial,
+                alternate
+            );
+
+        }
+
+        if (
+            type === 'citrus' &&
+            object.userData.innerMaterial
+        ) {
+
+            animateMaterial(
+                object.userData.innerMaterial,
+                flavour.secondary
+            );
+
+        }
+
+    });
+
+}
+
+/* ==========================================
+   FLAVOUR CHANGE ANIMATION
+========================================== */
+
+function animateFlavourChange() {
+
+    if (reduce) {
+        return;
+    }
+
+    /* HERO CUPS */
+
+    gsap.fromTo(
+
+        heroCenter.scale,
+
+        {
+            x: .75,
+            y: .75,
+            z: .75
+        },
+
+        {
+            x: 1,
+            y: 1,
+            z: 1,
+
+            duration: .65,
+
+            ease: 'back.out(1.8)',
+
+            overwrite: true
+        }
+
+    );
+
+    gsap.to(heroCenter.rotation, {
+
+        y: heroCenter.rotation.y + Math.PI * 2,
+
+        duration: 1,
+
+        ease: 'power3.inOut',
+
+        overwrite: true
+
+    });
+
+    /* MAIN FRUIT ROTATION */
+
+    gsap.to(mainFruit.rotation, {
+
+        y: mainFruit.rotation.y + Math.PI * 2,
+
+        duration: 1,
+
+        ease: 'power3.inOut',
+
+        overwrite: true
+
+    });
+
+    /* MINI CUP */
+
+    gsap.fromTo(
+
+        miniCup.rotation,
+
+        {
+            z: -.7
+        },
+
+        {
+            z: -.2,
+
+            duration: .8,
+
+            ease: 'back.out(2)',
+
+            overwrite: true
+        }
+
+    );
+
+    /* SPLASH BURST */
+
+    gsap.fromTo(
+
+        splashGroup.scale,
+
+        {
+            x: .5,
+            y: .5,
+            z: .5
+        },
+
+        {
+            x: 1,
+            y: 1,
+            z: 1,
+
+            duration: .7,
+
+            ease: 'back.out(2)',
+
+            overwrite: true
+        }
+
+    );
+
+}
+
+/* ==========================================
+   SELECT FLAVOUR
+========================================== */
+
+function selectFlavour(index) {
+
+    activeFlavour =
+        (index + FLAVOURS.length)
+        % FLAVOURS.length;
+
+    const flavour =
+        FLAVOURS[activeFlavour];
+
+    /* UPDATE BUTTONS */
+
+    document.querySelectorAll(
+        '.flavour-option'
+    ).forEach(button => {
+
+        const selected =
+            Number(button.dataset.flavour)
+            === activeFlavour;
+
+        button.classList.toggle(
+            'active',
+            selected
+        );
+
+        button.setAttribute(
+            'aria-pressed',
+            String(selected)
+        );
+
+    });
+
+    /* ANIMATE TEXT OUT */
+
+    const textTargets = [
+
+        '#flavourTitle',
+
+        '#flavourName',
+
+        '#flavourDescription'
+
+    ];
+
+    gsap.to(textTargets, {
+
+        opacity: 0,
+
+        y: 12,
+
+        duration: reduce ? 0 : .2,
+
+        overwrite: true,
+
+        onComplete() {
+
+            document.querySelector(
+                '#flavourTitle'
+            ).innerHTML =
+
+                `<span>SO</span> ${flavour.short}`;
+
+            document.querySelector(
+                '#flavourName'
+            ).textContent =
+                flavour.name;
+
+            document.querySelector(
+                '#flavourDescription'
+            ).textContent =
+                flavour.description;
+
+            document.querySelector(
+                '#flavourCount'
+            ).textContent =
+
+                `${String(activeFlavour + 1).padStart(2, '0')} / 06`;
+
+            gsap.to(textTargets, {
+
+                opacity: 1,
+
+                y: 0,
+
+                duration: reduce ? 0 : .4,
+
+                ease: 'power2.out',
+
+                overwrite: true
+
+            });
+
+        }
+
+    });
+
+    /* UPDATE ENVIRONMENT */
+
+    updateTheme(flavour);
+
+    /* UPDATE 3D */
+
+    update3D(flavour);
+
+    /* PLAY ANIMATION */
+
+    animateFlavourChange();
+
+}
+
+/* ==========================================
+   SELECTOR CLICK
+========================================== */
+
+flavourGrid.addEventListener(
+
+    'click',
+
+    event => {
+
+        const button = event.target.closest(
+            '[data-flavour]'
+        );
+
+        if (!button) {
+            return;
+        }
+
+        selectFlavour(
+            Number(button.dataset.flavour)
+        );
+
+    }
+
+);
+
+/* ==========================================
+   CAMERA STATE
 ========================================== */
 
 const motion = {
 
     cameraX: 0,
 
-    cameraY: 0,
-
     cameraZ: 12
 
 };
 
 /* ==========================================
-   SCROLLTRIGGER HELPER
+   SCROLL ANIMATION HELPER
 ========================================== */
 
-function sectionTimeline(trigger) {
+function createScrollTimeline(trigger) {
 
     return gsap.timeline({
 
@@ -1809,14 +2712,17 @@ function sectionTimeline(trigger) {
 }
 
 /* ==========================================
-   TRANSITION 1 — FRUIT TO STRAWBERRY
+   TRANSITION 1
+   HERO -> FLAVOURS
 ========================================== */
 
-const t1 = sectionTimeline('#hero');
+const t1 = createScrollTimeline(
+    '#hero'
+);
 
-/* CUPS MOVE AWAY */
+/* HERO CUPS EXIT */
 
-t1.to(cups.position, {
+t1.to(heroGroup.position, {
 
     y: -4.5,
 
@@ -1828,13 +2734,21 @@ t1.to(cups.position, {
 
 }, 0);
 
-/* CUP ROTATION */
-
-t1.to(cups.rotation, {
+t1.to(heroGroup.rotation, {
 
     y: 2.4,
 
-    z: .15,
+    duration: 1,
+
+    ease: 'none'
+
+}, 0);
+
+t1.to(heroGroup.scale, {
+
+    x: .2,
+    y: .2,
+    z: .2,
 
     duration: 1,
 
@@ -1842,87 +2756,37 @@ t1.to(cups.rotation, {
 
 }, 0);
 
-/* CUP SCALE */
+/* FLAVOUR WORLD ENTERS */
 
-t1.to(cups.scale, {
-
-    x: .3,
-
-    y: .3,
-
-    z: .3,
-
-    duration: 1,
-
-    ease: 'none'
-
-}, 0);
-
-/* STRAWBERRY APPEARS */
-
-t1.to(berryGroup.scale, {
+t1.to(flavourGroup.scale, {
 
     x: 1,
-
     y: 1,
-
     z: 1,
 
-    duration: .72,
+    duration: .75,
 
     ease: 'none'
 
-}, .3);
+}, .25);
 
-/* STRAWBERRY MOVES UP */
-
-t1.to(berryGroup.position, {
+t1.to(flavourGroup.position, {
 
     y: 0,
 
-    duration: .72,
+    duration: .75,
 
     ease: 'none'
 
-}, .3);
+}, .25);
 
-/* STRAWBERRY ROTATES */
-
-t1.fromTo(
-
-    berryGroup.rotation,
-
-    {
-
-        y: -2,
-
-        z: -.25
-
-    },
-
-    {
-
-        y: .4,
-
-        z: .1,
-
-        duration: .9,
-
-        ease: 'none'
-
-    },
-
-    .2
-
-);
-
-/* CAMERA MOVES CLOSER */
+/* CAMERA PUSH */
 
 t1.to(motion, {
 
     cameraZ: 9.4,
 
-    cameraX: .25,
+    cameraX: .2,
 
     duration: 1,
 
@@ -1930,59 +2794,32 @@ t1.to(motion, {
 
 }, 0);
 
-/* HERO TEXT DISAPPEARS */
+/* HERO TITLE */
 
-t1.to('.hero-word', {
+t1.to('#heroTitle', {
 
     opacity: 0,
 
     scale: 1.4,
 
-    duration: .6,
+    duration: .65,
 
     ease: 'none'
 
 }, 0);
 
-/* STRAWBERRY TEXT ENTERS */
-
-t1.fromTo(
-
-    '.berry-word',
-
-    {
-
-        opacity: 0,
-
-        y: 150
-
-    },
-
-    {
-
-        opacity: 1,
-
-        y: 0,
-
-        duration: .7,
-
-        ease: 'none'
-
-    },
-
-    .35
-
-);
-
 /* ==========================================
-   TRANSITION 2 — STRAWBERRY TO PLAY
+   TRANSITION 2
+   FLAVOURS -> PLAY
 ========================================== */
 
-const t2 = sectionTimeline('#berry');
+const t2 = createScrollTimeline(
+    '#flavours'
+);
 
-/* STRAWBERRY EXITS */
+/* FLAVOUR WORLD EXITS */
 
-t2.to(berryGroup.position, {
+t2.to(flavourGroup.position, {
 
     x: -5,
 
@@ -1996,11 +2833,9 @@ t2.to(berryGroup.position, {
 
 }, 0);
 
-t2.to(berryGroup.rotation, {
+t2.to(flavourGroup.rotation, {
 
-    y: 4,
-
-    z: -1,
+    y: 3,
 
     duration: 1,
 
@@ -2008,13 +2843,11 @@ t2.to(berryGroup.rotation, {
 
 }, 0);
 
-t2.to(berryGroup.scale, {
+t2.to(flavourGroup.scale, {
 
-    x: .15,
-
-    y: .15,
-
-    z: .15,
+    x: .1,
+    y: .1,
+    z: .1,
 
     duration: 1,
 
@@ -2022,14 +2855,12 @@ t2.to(berryGroup.scale, {
 
 }, 0);
 
-/* FRUIT ENTERS */
+/* PLAY FRUITS ENTER */
 
 t2.to(playGroup.scale, {
 
     x: 1,
-
     y: 1,
-
     z: 1,
 
     duration: .75,
@@ -2037,8 +2868,6 @@ t2.to(playGroup.scale, {
     ease: 'none'
 
 }, .25);
-
-/* FRUIT MOVES UP */
 
 t2.to(playGroup.position, {
 
@@ -2049,8 +2878,6 @@ t2.to(playGroup.position, {
     ease: 'none'
 
 }, .25);
-
-/* FRUIT ROTATION */
 
 t2.to(playGroup.rotation, {
 
@@ -2068,7 +2895,7 @@ t2.to(motion, {
 
     cameraZ: 12.8,
 
-    cameraX: -.35,
+    cameraX: -.3,
 
     duration: 1,
 
@@ -2076,135 +2903,175 @@ t2.to(motion, {
 
 }, 0);
 
-/* STRAWBERRY TEXT EXITS */
+/* ==========================================
+   TEXT SCROLL ANIMATIONS
+========================================== */
 
-t2.to('.berry-word', {
+gsap.fromTo(
 
-    opacity: 0,
-
-    x: -250,
-
-    duration: .6,
-
-    ease: 'none'
-
-}, 0);
-
-/* PLAY TEXT ENTERS */
-
-t2.fromTo(
-
-    '.play-word',
+    '.flavour-title',
 
     {
-
         opacity: 0,
-
-        scale: .7,
-
-        rotation: -6
-
+        y: 100
     },
 
     {
-
         opacity: 1,
+        y: 0,
 
+        ease: 'none',
+
+        scrollTrigger: {
+
+            trigger: '#flavours',
+
+            start: 'top bottom',
+
+            end: 'top 35%',
+
+            scrub: true
+
+        }
+
+    }
+
+);
+
+gsap.fromTo(
+
+    '.flavour-selector',
+
+    {
+        opacity: 0,
+        y: 80
+    },
+
+    {
+        opacity: 1,
+        y: 0,
+
+        ease: 'none',
+
+        scrollTrigger: {
+
+            trigger: '#flavours',
+
+            start: 'top 85%',
+
+            end: 'top 20%',
+
+            scrub: true
+
+        }
+
+    }
+
+);
+
+gsap.fromTo(
+
+    '.play-title',
+
+    {
+        opacity: 0,
+        scale: .7,
+        rotation: -6
+    },
+
+    {
+        opacity: 1,
         scale: 1,
-
         rotation: 0,
 
-        duration: .7,
+        ease: 'none',
 
-        ease: 'none'
+        scrollTrigger: {
 
-    },
+            trigger: '#play',
 
-    .3
+            start: 'top bottom',
+
+            end: 'top 30%',
+
+            scrub: true
+
+        }
+
+    }
 
 );
 
 /* ==========================================
-   SCROLL PROGRESS BAR
+   SCROLL PROGRESS
 ========================================== */
 
 ScrollTrigger.create({
 
-    trigger: 'body',
+    trigger: document.body,
 
     start: 'top top',
 
     end: 'bottom bottom',
 
-    scrub: true,
-
-    onUpdate: self => {
+    onUpdate(self) {
 
         document.querySelector(
-            '#progressbar'
+            '#progressFill'
         ).style.width =
 
-            (self.progress * 100) + '%';
+            `${self.progress * 100}%`;
 
     }
 
 });
 
 /* ==========================================
-   LOADING ANIMATION
+   NEXT SCENE BUTTON
 ========================================== */
 
-const load = gsap.timeline({
+const sceneTargets = [
 
-    onComplete() {
+    '#hero',
 
-        document.querySelector(
-            '#loader'
-        ).remove();
+    '#flavours',
 
-        ScrollTrigger.refresh();
+    '#play'
 
+];
+
+document.querySelector(
+    '#nextScene'
+).addEventListener('click', () => {
+
+    const currentY =
+        window.scrollY + 100;
+
+    let next = sceneTargets.find(
+
+        selector =>
+
+            document.querySelector(
+                selector
+            ).offsetTop > currentY
+
+    );
+
+    if (!next) {
+        next = '#hero';
     }
 
-});
+    document.querySelector(
+        next
+    ).scrollIntoView({
 
-/* LOADER PROGRESS */
+        behavior: reduce
+            ? 'auto'
+            : 'smooth'
 
-load.to('#loadbar', {
-
-    width: '100%',
-
-    duration: reduce ? 0 : .6
-
-});
-
-/* REMOVE LOADER */
-
-load.to('#loader', {
-
-    yPercent: -100,
-
-    duration: reduce ? 0 : .8,
-
-    ease: 'power4.inOut'
+    });
 
 });
-
-/* CUP ENTRANCE */
-
-load.from(cups.scale, {
-
-    x: 0,
-
-    y: 0,
-
-    z: 0,
-
-    duration: reduce ? 0 : .8,
-
-    ease: 'back.out(1.3)'
-
-}, '-=.4');
 
 /* ==========================================
    MOUSE PARALLAX
@@ -2218,79 +3085,44 @@ const pointer = {
 
 };
 
-addEventListener('pointermove', event => {
+window.addEventListener(
 
-    pointer.x =
+    'pointermove',
 
-        event.clientX / innerWidth * 2 - 1;
+    event => {
 
-    pointer.y =
+        pointer.x =
+            event.clientX / innerWidth * 2 - 1;
 
-        event.clientY / innerHeight * 2 - 1;
+        pointer.y =
+            event.clientY / innerHeight * 2 - 1;
 
-});
-
-/* ==========================================
-   NEXT SCENE BUTTON
-========================================== */
-
-const targets = [
-
-    '#hero',
-
-    '#berry',
-
-    '#play'
-
-];
-
-document.querySelector(
-    '#nextScene'
-).addEventListener('click', () => {
-
-    const y = scrollY + innerHeight * .3;
-
-    let n = targets.findIndex(id =>
-
-        document.querySelector(
-            id
-        ).offsetTop > y
-
-    );
-
-    if (n < 0) {
-        n = 0;
     }
 
-    document.querySelector(
-        targets[n]
-    ).scrollIntoView({
-
-        behavior: reduce
-            ? 'auto'
-            : 'smooth'
-
-    });
-
-});
+);
 
 /* ==========================================
-   RESPONSIVE CAMERA
+   RESIZE
 ========================================== */
 
 function resize() {
 
-    const w = innerWidth;
+    const width = innerWidth;
 
-    const h = innerHeight;
+    const height = innerHeight;
 
-    camera.aspect = w / h;
+    camera.aspect =
+        width / height;
 
-    camera.fov = w < 650 ? 48 : 34;
+    camera.fov =
+        width < 650 ? 48 : 35;
 
     camera.updateProjectionMatrix();
 
-    renderer.setSize(w, h);
+    renderer.setSize(
+        width,
+        height
+    );
 
     renderer.setPixelRatio(
 
@@ -2303,7 +3135,7 @@ function resize() {
 
 }
 
-addEventListener(
+window.addEventListener(
     'resize',
     resize
 );
@@ -2316,37 +3148,47 @@ resize();
 
 const clock = new THREE.Clock();
 
-function frame() {
+function animate() {
 
-    requestAnimationFrame(frame);
+    requestAnimationFrame(animate);
 
     const time = clock.getElapsedTime();
 
-    /* IDLE ANIMATIONS */
-
     if (!reduce) {
 
-        cupA.rotation.y =
-            Math.sin(time * .65) * .2 - .25;
+        /* HERO FLOATING */
 
-        cupB.rotation.y =
-            Math.sin(time * .72 + 1) * .25;
+        heroLeft.position.y =
 
-        cupC.rotation.y =
-            Math.sin(time * .6 + 2) * .2 + .28;
+            -.1 + Math.sin(time * .7) * .12;
 
-        cupA.position.y =
-            -.1 + Math.sin(time * .7) * .13;
+        heroCenter.position.y =
 
-        cupB.position.y =
-            .68 + Math.sin(time * .82 + 1) * .13;
+            .65 + Math.sin(time * .8 + 1) * .15;
 
-        cupC.position.y =
-            -.15 + Math.sin(time * .77 + 2) * .13;
+        heroRight.position.y =
 
-        /* FLOATING FRUIT */
+            -.15 + Math.sin(time * .75 + 2) * .12;
 
-        fruitObjects.forEach(object => {
+        /* SIDE CUP ROTATION */
+
+        heroLeft.rotation.y =
+
+            Math.sin(time * .5) * .2;
+
+        heroRight.rotation.y =
+
+            Math.sin(time * .6 + 2) * .2;
+
+        /* MAIN FRUIT FLOATING */
+
+        mainFruit.position.y =
+
+            Math.sin(time * .8) * .08;
+
+        /* FLOATING DECORATIONS */
+
+        decorations.forEach(({object}) => {
 
             object.rotation.y += .002;
 
@@ -2403,20 +3245,55 @@ function frame() {
     camera.lookAt(0, 0, 0);
 
     renderer.render(
-
         scene,
-
         camera
-
     );
 
 }
 
 /* ==========================================
-   START
+   LOADER
 ========================================== */
 
-frame();
+const loaderTimeline = gsap.timeline({
+
+    onComplete() {
+
+        document.querySelector(
+            '#loader'
+        ).remove();
+
+        ScrollTrigger.refresh();
+
+    }
+
+});
+
+loaderTimeline.to('#loadFill', {
+
+    width: '100%',
+
+    duration: reduce ? 0 : .7,
+
+    ease: 'power2.inOut'
+
+});
+
+loaderTimeline.to('#loader', {
+
+    yPercent: -100,
+
+    duration: reduce ? 0 : .8,
+
+    ease: 'power4.inOut'
+
+});
+
+/* ==========================================
+   INITIALIZE
+========================================== */
+
+animate();
 
 </script>
 
