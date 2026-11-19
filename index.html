@@ -1,0 +1,2328 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>THE BOTTLE CLUB — Digital Playground</title>
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* ========================================
+           GENERAL SETTINGS
+        ======================================== */
+
+        :root {
+            --bg: #29143c;
+            --accent: #f8e635;
+            --text: #fff7ed;
+            --muted: #c5b4ca;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: #1d1029;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        button,
+        a {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+
+        /* ========================================
+           ANNOUNCEMENT BAR
+        ======================================== */
+
+        .announcement {
+            height: 32px;
+            background: var(--accent);
+            color: #1b1530;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font: 600 10px 'DM Mono', monospace;
+            letter-spacing: .17em;
+            text-align: center;
+        }
+
+
+        /* ========================================
+           MAIN WEBSITE SHELL
+        ======================================== */
+
+        .shell {
+            background: var(--bg);
+            min-height: 100svh;
+
+            transition: background .8s;
+
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+        }
+
+        .shell::after {
+            content: "";
+
+            position: absolute;
+            inset: auto -20% -20% -20%;
+
+            height: 55%;
+
+            background: radial-gradient(
+                ellipse,
+                rgba(0, 0, 0, .32),
+                transparent 60%
+            );
+
+            pointer-events: none;
+            z-index: -1;
+        }
+
+
+        /* ========================================
+           NAVIGATION
+        ======================================== */
+
+        .nav {
+            height: 90px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 18px;
+
+            padding: 0 clamp(18px, 5vw, 86px);
+
+            position: relative;
+            z-index: 5;
+        }
+
+        .logo {
+            font-family: 'Archivo Black', sans-serif;
+            letter-spacing: -.09em;
+
+            font-size: clamp(23px, 3vw, 36px);
+            line-height: .8;
+        }
+
+        .logo small {
+            display: block;
+
+            font: 500 9px 'DM Mono', monospace;
+            letter-spacing: .21em;
+
+            margin-top: 10px;
+        }
+
+        .navlinks {
+            display: flex;
+            gap: 34px;
+            align-items: center;
+
+            font: 500 12px 'DM Mono', monospace;
+            letter-spacing: .06em;
+        }
+
+        .navlinks a:hover {
+            text-decoration: underline;
+            text-underline-offset: 6px;
+        }
+
+        .pill {
+            border: 1px solid currentColor;
+            border-radius: 100px;
+
+            padding: 11px 18px;
+
+            background: transparent;
+            color: inherit;
+
+            font: 600 11px 'DM Mono', monospace;
+            letter-spacing: .06em;
+        }
+
+
+        /* ========================================
+           HERO SECTION
+        ======================================== */
+
+        .hero {
+            position: relative;
+
+            min-height: calc(100svh - 122px);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 25px 5vw 100px;
+        }
+
+        .giant {
+            font: clamp(96px, 20.5vw, 350px)/.75
+                  'Archivo Black', sans-serif;
+
+            letter-spacing: -.095em;
+            white-space: nowrap;
+
+            position: absolute;
+
+            left: 50%;
+            top: 45%;
+
+            transform: translate(-50%, -50%);
+
+            opacity: .98;
+
+            pointer-events: none;
+            z-index: 0;
+        }
+
+
+        /* ========================================
+           THREE.JS CANVAS
+        ======================================== */
+
+        .canvas-wrap {
+            position: relative;
+
+            width: min(55vw, 760px);
+            height: min(70vh, 690px);
+
+            z-index: 1;
+
+            touch-action: pan-y;
+        }
+
+        #scene {
+            display: block;
+
+            width: 100%;
+            height: 100%;
+
+            cursor: grab;
+        }
+
+        #scene:active {
+            cursor: grabbing;
+        }
+
+
+        /* ========================================
+           PRODUCT INFORMATION
+        ======================================== */
+
+        .hero-info {
+            position: absolute;
+
+            left: clamp(18px, 5vw, 86px);
+            bottom: 9%;
+
+            z-index: 2;
+
+            max-width: 260px;
+        }
+
+        .overline {
+            font: 500 11px 'DM Mono', monospace;
+
+            letter-spacing: .15em;
+            text-transform: uppercase;
+        }
+
+        .hero-info h2 {
+            font: clamp(30px, 4.3vw, 64px)/.94
+                  'Archivo Black', sans-serif;
+
+            letter-spacing: -.055em;
+            text-transform: uppercase;
+
+            margin: 15px 0;
+        }
+
+        .hero-info p {
+            font-size: 13px;
+            line-height: 1.55;
+
+            max-width: 210px;
+
+            color: var(--muted);
+
+            margin: 0;
+        }
+
+
+        /* ========================================
+           RIGHT SIDE INFORMATION
+        ======================================== */
+
+        .right-info {
+            position: absolute;
+
+            right: clamp(18px, 5vw, 86px);
+            bottom: 11%;
+
+            z-index: 2;
+
+            text-align: right;
+        }
+
+        .edition {
+            font: 500 12px 'DM Mono', monospace;
+            line-height: 1.8;
+        }
+
+        .round-stamp {
+            display: grid;
+            place-items: center;
+
+            border: 1px solid currentColor;
+            border-radius: 50%;
+
+            height: 90px;
+            width: 90px;
+
+            margin-left: auto;
+            margin-top: 17px;
+
+            transform: rotate(16deg);
+
+            font: 700 12px/1.15 'DM Mono', monospace;
+
+            text-align: center;
+        }
+
+
+        /* ========================================
+           PRODUCT NAVIGATION
+        ======================================== */
+
+        .controls {
+            position: absolute;
+
+            z-index: 4;
+
+            bottom: 24px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .arrow {
+            border: 1px solid #ffffff80;
+
+            background: #ffffff14;
+            color: #fff;
+
+            width: 47px;
+            height: 47px;
+
+            border-radius: 50%;
+
+            font-size: 25px;
+        }
+
+        .arrow:hover {
+            background: #fff;
+            color: #1b1530;
+        }
+
+        .counter {
+            min-width: 80px;
+
+            text-align: center;
+
+            font: 500 13px 'DM Mono', monospace;
+        }
+
+        .scroll {
+            position: absolute;
+
+            bottom: 23px;
+            left: clamp(18px, 5vw, 86px);
+
+            font: 10px 'DM Mono', monospace;
+            letter-spacing: .12em;
+        }
+
+
+        /* ========================================
+           MARQUEE STRIP
+        ======================================== */
+
+        .strip {
+            background: #f8e635;
+            color: #21102a;
+
+            white-space: nowrap;
+            overflow: hidden;
+
+            padding: 15px 0;
+
+            font: 800 16px 'DM Mono', monospace;
+            letter-spacing: .03em;
+        }
+
+        .strip span {
+            display: inline-block;
+
+            animation: marquee 24s linear infinite;
+        }
+
+        @keyframes marquee {
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+
+        /* ========================================
+           COLLECTION SECTION
+        ======================================== */
+
+        .section {
+            background: #efe9dc;
+            color: #21102a;
+
+            padding: 90px clamp(20px, 6vw, 100px);
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: end;
+
+            margin-bottom: 35px;
+        }
+
+        .section h2 {
+            font: clamp(44px, 8vw, 118px)/.85
+                  'Archivo Black', sans-serif;
+
+            letter-spacing: -.075em;
+
+            margin: 16px 0;
+        }
+
+        .smallcopy {
+            max-width: 220px;
+
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+
+        /* ========================================
+           PRODUCT CARDS
+        ======================================== */
+
+        .grid {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 15px;
+        }
+
+        .card {
+            border: 0;
+            padding: 0;
+
+            min-height: 340px;
+
+            position: relative;
+            overflow: hidden;
+
+            text-align: left;
+
+            color: #fff;
+
+            isolation: isolate;
+
+            transition: transform .25s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+        }
+
+        .card-bg {
+            position: absolute;
+            inset: 0;
+
+            z-index: -2;
+        }
+
+        .card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 230px;
+            height: 230px;
+
+            border-radius: 50%;
+
+            background: #ffffff25;
+
+            top: 26%;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            z-index: -1;
+        }
+
+        .card-content {
+            position: absolute;
+            inset: 18px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-num {
+            font: 12px 'DM Mono', monospace;
+        }
+
+        .card-art {
+            font: 120px/1 'Archivo Black', sans-serif;
+
+            text-align: center;
+
+            transform: rotate(-10deg);
+
+            filter: drop-shadow(8px 16px 1px #0003);
+        }
+
+        .card-title {
+            font: clamp(22px, 2.5vw, 38px)/1
+                  'Archivo Black', sans-serif;
+
+            letter-spacing: -.05em;
+            text-transform: uppercase;
+        }
+
+        .card-tag {
+            font: 10px 'DM Mono', monospace;
+
+            margin-top: 8px;
+        }
+
+
+        /* ========================================
+           FOOTER
+        ======================================== */
+
+        .footer {
+            background: #1d1029;
+            color: #fff;
+
+            padding: 70px clamp(20px, 6vw, 100px);
+        }
+
+        .footer strong {
+            font: clamp(38px, 8vw, 110px)/.9
+                  'Archivo Black', sans-serif;
+
+            letter-spacing: -.07em;
+        }
+
+        .footerline {
+            display: flex;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-top: 45px;
+
+            border-top: 1px solid #ffffff55;
+            padding-top: 22px;
+
+            font: 11px 'DM Mono', monospace;
+        }
+
+
+        /* ========================================
+           SMALL DETAILS
+        ======================================== */
+
+        .floating-note {
+            position: absolute;
+
+            left: 50%;
+            top: 15%;
+
+            transform: translateX(-50%);
+
+            font: 11px 'DM Mono', monospace;
+
+            opacity: .8;
+
+            z-index: 3;
+        }
+
+        .dot {
+            display: inline-block;
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #83ff9c;
+
+            margin-right: 6px;
+        }
+
+        .sr-only {
+            position: absolute;
+
+            width: 1px;
+            height: 1px;
+
+            overflow: hidden;
+
+            clip: rect(0, 0, 0, 0);
+        }
+
+
+        /* ========================================
+           TABLET RESPONSIVE
+        ======================================== */
+
+        @media (max-width: 800px) {
+
+            .nav {
+                height: 72px;
+            }
+
+            .navlinks a:not(:last-child) {
+                display: none;
+            }
+
+            .hero {
+                min-height: 800px;
+            }
+
+            .giant {
+                font-size: 25vw;
+                top: 36%;
+            }
+
+            .canvas-wrap {
+                width: 94vw;
+                height: 540px;
+
+                margin-top: -80px;
+            }
+
+            .hero-info {
+                bottom: 108px;
+            }
+
+            .right-info {
+                bottom: 130px;
+            }
+
+            .round-stamp {
+                width: 66px;
+                height: 66px;
+
+                font-size: 9px;
+            }
+
+            .controls {
+                bottom: 30px;
+            }
+
+            .scroll {
+                display: none;
+            }
+
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .card {
+                min-height: 280px;
+            }
+
+            .section-head {
+                align-items: start;
+                flex-direction: column;
+            }
+
+        }
+
+
+        /* ========================================
+           MOBILE RESPONSIVE
+        ======================================== */
+
+        @media (max-width: 520px) {
+
+            .hero {
+                min-height: 725px;
+            }
+
+            .canvas-wrap {
+                height: 470px;
+            }
+
+            .hero-info {
+                bottom: 110px;
+            }
+
+            .hero-info h2 {
+                font-size: 30px;
+            }
+
+            .hero-info p {
+                font-size: 11px;
+            }
+
+            .right-info {
+                bottom: 130px;
+            }
+
+            .edition {
+                font-size: 10px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                min-height: 320px;
+            }
+
+            .section {
+                padding-top: 65px;
+            }
+
+            .footerline {
+                flex-direction: column;
+            }
+
+        }
+
+
+        /* ========================================
+           REDUCED MOTION
+        ======================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+                scroll-behavior: auto !important;
+            }
+
+        }
+
+    </style>
+
+
+    <!-- THREE.JS + GSAP IMPORTS -->
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/",
+            "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/+esm"
+        }
+    }
+    </script>
+
+</head>
+
+<body>
+
+
+    <!-- ========================================
+         ANNOUNCEMENT
+    ======================================== -->
+
+    <div class="announcement">
+        ✦ THE DIGITAL BOTTLE SHOWCASE · CONCEPT EDITION ✦
+    </div>
+
+
+
+    <!-- ========================================
+         WEBSITE SHELL
+    ======================================== -->
+
+    <div class="shell" id="shell">
+
+
+        <!-- NAVIGATION -->
+
+        <header class="nav">
+
+            <a class="logo" href="#top">
+                BOTTLE<br>CLUB
+
+                <small>
+                    THE GOOD STUFF / 001
+                </small>
+            </a>
+
+
+            <nav class="navlinks">
+
+                <a href="#collection">
+                    COLLECTION
+                </a>
+
+                <a href="#about">
+                    OUR WORLD
+                </a>
+
+                <a class="pill" href="#collection">
+                    EXPLORE ↗
+                </a>
+
+            </nav>
+
+        </header>
+
+
+
+        <!-- ========================================
+             HERO
+        ======================================== -->
+
+        <main id="top">
+
+            <section
+                class="hero"
+                aria-label="Interactieve 3D-drankverpakkingen"
+            >
+
+                <span class="floating-note">
+
+                    <span class="dot"></span>
+
+                    LIVE 3D EXPERIENCE
+
+                </span>
+
+
+
+                <!-- GIANT BACKGROUND WORD -->
+
+                <div class="giant" id="giant">
+                    FRESH
+                </div>
+
+
+
+                <!-- 3D CANVAS -->
+
+                <div class="canvas-wrap">
+
+                    <canvas
+                        id="scene"
+                        aria-label="Draaibare 3D-fles"
+                    ></canvas>
+
+                </div>
+
+
+
+                <!-- PRODUCT INFORMATION -->
+
+                <div class="hero-info">
+
+                    <div class="overline" id="tag">
+                        001 / THE ORIGINAL
+                    </div>
+
+                    <h2 id="product-name">
+                        PURPLE<br>POP
+                    </h2>
+
+                    <p id="desc">
+                        Een kleurrijk concept in een opvallende fles.
+                    </p>
+
+                </div>
+
+
+
+                <!-- RIGHT INFORMATION -->
+
+                <div class="right-info">
+
+                    <div class="edition">
+
+                        100% CREATIVE<br>
+                        0% ALCOHOL<br>
+                        VISUAL CONCEPT
+
+                    </div>
+
+
+                    <div class="round-stamp">
+
+                        GOOD<br>
+                        DESIGN<br>
+                        INSIDE ✳
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PRODUCT NAVIGATION -->
+
+                <div class="controls">
+
+                    <button
+                        class="arrow"
+                        id="prev"
+                        aria-label="Vorig product"
+                    >
+                        ←
+                    </button>
+
+
+                    <span class="counter" id="counter">
+                        01 / 06
+                    </span>
+
+
+                    <button
+                        class="arrow"
+                        id="next"
+                        aria-label="Volgend product"
+                    >
+                        →
+                    </button>
+
+                </div>
+
+
+
+                <span class="scroll">
+                    ↓ SCROLL TO EXPLORE
+                </span>
+
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- ========================================
+         MOVING TEXT STRIP
+    ======================================== -->
+
+    <div class="strip" aria-hidden="true">
+
+        <span>
+
+            ★ BIG FLAVOUR
+            ★ BIG COLOUR
+            ★ LITTLE RULES
+            ★ MADE TO STAND OUT
+
+            ★ BIG FLAVOUR
+            ★ BIG COLOUR
+            ★ LITTLE RULES
+            ★ MADE TO STAND OUT
+
+            ★
+
+        </span>
+
+    </div>
+
+
+
+    <!-- ========================================
+         COLLECTION
+    ======================================== -->
+
+    <section class="section" id="collection">
+
+        <div class="section-head">
+
+            <div>
+
+                <span class="overline">
+                    [ 06 ORIGINAL DESIGNS ]
+                </span>
+
+                <h2>
+                    THE<br>LINEUP.
+                </h2>
+
+            </div>
+
+
+            <p class="smallcopy">
+
+                Zes uitgesproken conceptflessen.
+
+                Klik op een kaart om de fles in 3D te bekijken.
+
+                Voorlopig een visuele showcase, geen webshop.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- PRODUCT CARDS GENERATED BY JAVASCRIPT -->
+
+        <div class="grid" id="cards"></div>
+
+    </section>
+
+
+
+    <!-- ========================================
+         FOOTER
+    ======================================== -->
+
+    <footer class="footer" id="about">
+
+        <span class="overline">
+            A CREATIVE EXPERIMENT
+        </span>
+
+        <br>
+
+        <strong>
+
+            STAY<br>
+            DIFFERENT.
+
+        </strong>
+
+
+        <div class="footerline">
+
+            <span>
+                © 2026 BOTTLE CLUB / CONCEPT WEBSITE
+            </span>
+
+            <span>
+                DESIGNED TO BE DIFFERENT ✳
+            </span>
+
+            <a href="#top">
+                BACK TO TOP ↑
+            </a>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- ========================================
+         JAVASCRIPT
+    ======================================== -->
+
+    <script type="module">
+
+        import * as THREE from 'three';
+        import gsap from 'gsap';
+
+
+
+        /* ========================================
+           PRODUCT DATA
+        ======================================== */
+
+        const ITEMS = [
+
+            {
+                name: 'PURPLE POP',
+                words: 'PURPLE<br>POP',
+
+                tag: '001 / THE ORIGINAL',
+
+                desc: 'Dieppaars, uitgesproken en onmogelijk te missen.',
+
+                bg: '#29143c',
+                accent: '#e7fc3b',
+
+                glass: '#802dc2',
+                label: '#f7eeff',
+                ink: '#301143',
+
+                big: 'FRESH',
+
+                symbol: '✳'
+            },
+
+            {
+                name: 'CITRUS RIOT',
+                words: 'CITRUS<br>RIOT',
+
+                tag: '002 / THE ZESTY ONE',
+
+                desc: 'Een explosie van citrus en knallende kleur.',
+
+                bg: '#f4ae11',
+                accent: '#5126a7',
+
+                glass: '#eec12b',
+                label: '#fff2c5',
+                ink: '#4f238e',
+
+                big: 'ZEST',
+
+                symbol: '✺'
+            },
+
+            {
+                name: 'BERRY BLAST',
+                words: 'BERRY<br>BLAST',
+
+                tag: '003 / THE BOLD ONE',
+
+                desc: 'Zoet, brutaal en vol creatieve energie.',
+
+                bg: '#e43e75',
+                accent: '#fff0a1',
+
+                glass: '#c02664',
+                label: '#ffd7e7',
+                ink: '#801339',
+
+                big: 'BOLD',
+
+                symbol: '✿'
+            },
+
+            {
+                name: 'MINT MODE',
+                words: 'MINT<br>MODE',
+
+                tag: '004 / THE COOL ONE',
+
+                desc: 'Frisgroen design met een eigen karakter.',
+
+                bg: '#176f64',
+                accent: '#e8f7bb',
+
+                glass: '#38b9a2',
+                label: '#e8ffd5',
+                ink: '#115b51',
+
+                big: 'COOL',
+
+                symbol: '❋'
+            },
+
+            {
+                name: 'PEACH PLEASE',
+                words: 'PEACH<br>PLEASE',
+
+                tag: '005 / THE SUNNY ONE',
+
+                desc: 'Zacht fruitig, grafisch en vol persoonlijkheid.',
+
+                bg: '#f26b4f',
+                accent: '#ffe6bd',
+
+                glass: '#f89b72',
+                label: '#fff0db',
+                ink: '#a63e32',
+
+                big: 'WOW',
+
+                symbol: '✸'
+            },
+
+            {
+                name: 'BLUE HOUR',
+                words: 'BLUE<br>HOUR',
+
+                tag: '006 / THE DREAMY ONE',
+
+                desc: 'Koele tonen en een verrassend futuristisch etiket.',
+
+                bg: '#233eab',
+                accent: '#a2eeef',
+
+                glass: '#498ddd',
+                label: '#dceaff',
+                ink: '#213c92',
+
+                big: 'BLUE',
+
+                symbol: '✦'
+            }
+
+        ];
+
+
+
+        /* ========================================
+           MOTION SETTINGS
+        ======================================== */
+
+        const reduce = matchMedia(
+            '(prefers-reduced-motion: reduce)'
+        ).matches;
+
+
+
+        /* ========================================
+           THREE.JS RENDERER
+        ======================================== */
+
+        const canvas = document.querySelector('#scene');
+
+        const renderer = new THREE.WebGLRenderer({
+
+            canvas: canvas,
+
+            antialias: true,
+
+            alpha: true
+
+        });
+
+
+        renderer.setPixelRatio(
+            Math.min(devicePixelRatio, 2)
+        );
+
+
+        renderer.outputColorSpace =
+            THREE.SRGBColorSpace;
+
+
+        renderer.toneMapping =
+            THREE.ACESFilmicToneMapping;
+
+
+        renderer.toneMappingExposure = 1.35;
+
+
+
+        /* ========================================
+           THREE.JS SCENE
+        ======================================== */
+
+        const scene = new THREE.Scene();
+
+
+        const camera = new THREE.PerspectiveCamera(
+
+            35,
+            1,
+            0.1,
+            100
+
+        );
+
+
+        camera.position.set(0, 0.25, 9.4);
+
+        camera.lookAt(0, 0, 0);
+
+
+
+        /* ========================================
+           LIGHTING
+        ======================================== */
+
+        scene.add(
+
+            new THREE.HemisphereLight(
+
+                0xffffff,
+
+                0x38243d,
+
+                3
+
+            )
+
+        );
+
+
+        const key = new THREE.DirectionalLight(
+
+            0xffffff,
+
+            4
+
+        );
+
+
+        key.position.set(3, 6, 7);
+
+        scene.add(key);
+
+
+
+        const rim = new THREE.DirectionalLight(
+
+            0x99ddff,
+
+            3
+
+        );
+
+
+        rim.position.set(-4, 3, -4);
+
+        scene.add(rim);
+
+
+
+        /* ========================================
+           BOTTLE GROUP
+        ======================================== */
+
+        const group = new THREE.Group();
+
+        scene.add(group);
+
+
+
+        /* ========================================
+           BOTTLE MATERIALS
+        ======================================== */
+
+        const bottleMat = new THREE.MeshPhysicalMaterial({
+
+            color: 0x7633a8,
+
+            metalness: 0.04,
+
+            roughness: 0.16,
+
+            clearcoat: 1,
+
+            clearcoatRoughness: 0.08,
+
+            transparent: true,
+
+            opacity: 0.96
+
+        });
+
+
+
+        const capMat = new THREE.MeshStandardMaterial({
+
+            color: 0xe6d6b7,
+
+            metalness: 0.65,
+
+            roughness: 0.26
+
+        });
+
+
+
+        /* ========================================
+           BOTTLE GEOMETRY
+        ======================================== */
+
+        const pts = [
+
+            [0, -2.12],
+
+            [0.46, -2.12],
+
+            [0.65, -2.04],
+
+            [0.69, -1.9],
+
+            [0.71, -1.5],
+
+            [0.71, 0.78],
+
+            [0.67, 1.02],
+
+            [0.49, 1.2],
+
+            [0.30, 1.43],
+
+            [0.29, 1.67],
+
+            [0.31, 1.76],
+
+            [0.31, 1.87],
+
+            [0, 1.87]
+
+        ].map(
+
+            ([x, y]) => new THREE.Vector2(x, y)
+
+        );
+
+
+
+        const body = new THREE.Mesh(
+
+            new THREE.LatheGeometry(pts, 72),
+
+            bottleMat
+
+        );
+
+
+        group.add(body);
+
+
+
+        /* ========================================
+           LIQUID INSIDE BOTTLE
+        ======================================== */
+
+        const liquid = new THREE.Mesh(
+
+            new THREE.CylinderGeometry(
+
+                0.60,
+                0.61,
+                2.1,
+                64
+
+            ),
+
+            new THREE.MeshStandardMaterial({
+
+                color: 0x8e39c0,
+
+                roughness: 0.3,
+
+                transparent: true,
+
+                opacity: 0.65
+
+            })
+
+        );
+
+
+        liquid.position.y = -0.91;
+
+        group.add(liquid);
+
+
+
+        /* ========================================
+           BOTTLE CAP
+        ======================================== */
+
+        const cap = new THREE.Mesh(
+
+            new THREE.CylinderGeometry(
+
+                0.34,
+                0.34,
+                0.4,
+                48
+
+            ),
+
+            capMat
+
+        );
+
+
+        cap.position.y = 1.91;
+
+        group.add(cap);
+
+
+
+        const capTop = new THREE.Mesh(
+
+            new THREE.CylinderGeometry(
+
+                0.355,
+                0.355,
+                0.06,
+                48
+
+            ),
+
+            capMat
+
+        );
+
+
+        capTop.position.y = 2.13;
+
+        group.add(capTop);
+
+
+
+        /* ========================================
+           NECK RING
+        ======================================== */
+
+        const ring = new THREE.Mesh(
+
+            new THREE.TorusGeometry(
+
+                0.31,
+                0.024,
+                8,
+                48
+
+            ),
+
+            new THREE.MeshStandardMaterial({
+
+                color: 0xffffff,
+
+                metalness: 0.85,
+
+                roughness: 0.18
+
+            })
+
+        );
+
+
+        ring.rotation.x = Math.PI / 2;
+
+        ring.position.y = 1.7;
+
+        group.add(ring);
+
+
+
+        /* ========================================
+           CREATE PRODUCT LABEL
+        ======================================== */
+
+        function makeLabel(item) {
+
+            const c = document.createElement('canvas');
+
+            c.width = 1024;
+            c.height = 1024;
+
+
+            const g = c.getContext('2d');
+
+
+
+            // LABEL BACKGROUND
+
+            g.fillStyle = item.label;
+
+            g.fillRect(0, 0, 1024, 1024);
+
+
+
+            // TEXT COLOR
+
+            g.fillStyle = item.ink;
+
+            g.textAlign = 'center';
+
+
+
+            // TOP TEXT
+
+            g.font = 'bold 30px monospace';
+
+            g.fillText(
+
+                'BOTTLE CLUB  /  ORIGINALS',
+
+                512,
+                88
+
+            );
+
+
+
+            // DIVIDER
+
+            g.fillRect(
+
+                80,
+                114,
+                864,
+                4
+
+            );
+
+
+
+            // LARGE SYMBOL
+
+            g.font = 'bold 245px Arial';
+
+            g.fillText(
+
+                item.symbol,
+
+                512,
+                435
+
+            );
+
+
+
+            // PRODUCT NAME
+
+            g.font = '900 116px Arial Black, Arial';
+
+
+            const name = item.name.split(' ');
+
+
+            name.forEach((word, i) => {
+
+                g.fillText(
+
+                    word,
+
+                    512,
+
+                    610 + i * 118
+
+                );
+
+            });
+
+
+
+            // BOTTOM INFORMATION
+
+            g.font = 'bold 29px monospace';
+
+            g.fillText(
+
+                'ZERO ALCOHOL · FULL COLOUR',
+
+                512,
+                895
+
+            );
+
+
+
+            // BOTTOM DIVIDER
+
+            g.fillRect(
+
+                80,
+                918,
+                864,
+                4
+
+            );
+
+
+
+            // CREATE TEXTURE
+
+            const texture = new THREE.CanvasTexture(c);
+
+
+            texture.colorSpace =
+                THREE.SRGBColorSpace;
+
+
+            texture.anisotropy = 8;
+
+
+            return texture;
+
+        }
+
+
+
+        /* ========================================
+           CURVED BOTTLE LABEL
+        ======================================== */
+
+        const labelGeo = new THREE.CylinderGeometry(
+
+            0.725,
+
+            0.725,
+
+            2.12,
+
+            96,
+
+            1,
+
+            true,
+
+            -Math.PI * 0.84,
+
+            Math.PI * 1.68
+
+        );
+
+
+
+        const label = new THREE.Mesh(
+
+            labelGeo,
+
+            new THREE.MeshStandardMaterial({
+
+                map: makeLabel(ITEMS[0]),
+
+                roughness: 0.6,
+
+                side: THREE.DoubleSide
+
+            })
+
+        );
+
+
+        label.position.y = -0.26;
+
+        group.add(label);
+
+
+
+        /* ========================================
+           PRODUCT STATE
+        ======================================== */
+
+        let index = 0;
+
+        let busy = false;
+
+        let drag = false;
+
+        let lastX = 0;
+
+
+
+        /* ========================================
+           CHANGE PRODUCT
+        ======================================== */
+
+        function show(i) {
+
+            if (busy) return;
+
+
+            busy = true;
+
+
+            index = (i + ITEMS.length) % ITEMS.length;
+
+
+            const item = ITEMS[index];
+
+
+
+            /* TEXT ANIMATIONS */
+
+            const targets = [
+
+                '#product-name',
+
+                '#desc',
+
+                '#tag',
+
+                '#counter',
+
+                '#giant'
+
+            ];
+
+
+
+            gsap.to(targets, {
+
+                opacity: 0,
+
+                y: 10,
+
+                duration: reduce ? 0 : 0.2,
+
+
+                onComplete: () => {
+
+
+                    document.querySelector(
+                        '#product-name'
+                    ).innerHTML = item.words;
+
+
+
+                    document.querySelector(
+                        '#desc'
+                    ).textContent = item.desc;
+
+
+
+                    document.querySelector(
+                        '#tag'
+                    ).textContent = item.tag;
+
+
+
+                    document.querySelector(
+                        '#counter'
+                    ).textContent =
+
+                        `${String(index + 1).padStart(2, '0')} / 06`;
+
+
+
+                    document.querySelector(
+                        '#giant'
+                    ).textContent = item.big;
+
+
+
+                    gsap.to(targets, {
+
+                        opacity: 1,
+
+                        y: 0,
+
+                        duration: reduce ? 0 : 0.35
+
+                    });
+
+                }
+
+            });
+
+
+
+            /* BACKGROUND COLOR */
+
+            gsap.to('#shell', {
+
+                backgroundColor: item.bg,
+
+                duration: reduce ? 0 : 0.65
+
+            });
+
+
+
+            /* ACCENT COLOR */
+
+            document.documentElement.style.setProperty(
+
+                '--accent',
+
+                item.accent
+
+            );
+
+
+
+            /* BOTTLE COLOR */
+
+            const glassColor = new THREE.Color(
+                item.glass
+            );
+
+
+            gsap.to(bottleMat.color, {
+
+                r: glassColor.r,
+
+                g: glassColor.g,
+
+                b: glassColor.b,
+
+                duration: reduce ? 0 : 0.6
+
+            });
+
+
+
+            /* LIQUID COLOR */
+
+            gsap.to(liquid.material.color, {
+
+                r: glassColor.r,
+
+                g: glassColor.g,
+
+                b: glassColor.b,
+
+                duration: reduce ? 0 : 0.6
+
+            });
+
+
+
+            /* CHANGE LABEL */
+
+            const oldTexture = label.material.map;
+
+
+            label.material.map = makeLabel(item);
+
+
+            label.material.needsUpdate = true;
+
+
+            oldTexture.dispose();
+
+
+
+            /* BOTTLE SCALE ANIMATION */
+
+            gsap.fromTo(
+
+                group.scale,
+
+                {
+
+                    x: 0.83,
+
+                    y: 0.83,
+
+                    z: 0.83
+
+                },
+
+                {
+
+                    x: 1,
+
+                    y: 1,
+
+                    z: 1,
+
+                    duration: reduce ? 0 : 0.7,
+
+                    ease: 'back.out(1.5)'
+
+                }
+
+            );
+
+
+
+            /* BOTTLE ROTATION */
+
+            gsap.to(group.rotation, {
+
+                y: group.rotation.y + Math.PI * 2,
+
+                duration: reduce ? 0 : 1.1,
+
+                ease: 'power2.inOut',
+
+                onComplete: () => {
+
+                    busy = false;
+
+                }
+
+            });
+
+        }
+
+
+
+        /* ========================================
+           NEXT / PREVIOUS BUTTONS
+        ======================================== */
+
+        document.querySelector('#prev').onclick = () => {
+
+            show(index - 1);
+
+        };
+
+
+        document.querySelector('#next').onclick = () => {
+
+            show(index + 1);
+
+        };
+
+
+
+        /* ========================================
+           GENERATE PRODUCT CARDS
+        ======================================== */
+
+        document.querySelector('#cards').innerHTML =
+
+            ITEMS.map((item, i) => `
+
+                <button
+                    class="card"
+                    data-i="${i}"
+                    aria-label="Bekijk ${item.name}"
+                >
+
+                    <span
+                        class="card-bg"
+                        style="background:${item.bg}"
+                    ></span>
+
+
+                    <span class="card-content">
+
+
+                        <span class="card-num">
+
+                            ${String(i + 1).padStart(2, '0')} / 06 ↗
+
+                        </span>
+
+
+
+                        <span
+                            class="card-art"
+                            style="color:${item.accent}"
+                        >
+
+                            ${item.symbol}
+
+                        </span>
+
+
+
+                        <span>
+
+                            <span class="card-title">
+
+                                ${item.name}
+
+                            </span>
+
+                            <br>
+
+                            <span class="card-tag">
+
+                                EXPLORE THIS DESIGN →
+
+                            </span>
+
+                        </span>
+
+
+                    </span>
+
+                </button>
+
+            `).join('');
+
+
+
+        /* ========================================
+           PRODUCT CARD CLICK
+        ======================================== */
+
+        document.querySelector('#cards').addEventListener(
+
+            'click',
+
+            event => {
+
+
+                const button = event.target.closest(
+                    '[data-i]'
+                );
+
+
+                if (button) {
+
+
+                    show(
+                        Number(button.dataset.i)
+                    );
+
+
+                    document.querySelector(
+                        '#top'
+                    ).scrollIntoView({
+
+                        behavior: reduce
+                            ? 'auto'
+                            : 'smooth'
+
+                    });
+
+                }
+
+            }
+
+        );
+
+
+
+        /* ========================================
+           DRAG TO ROTATE
+        ======================================== */
+
+        canvas.addEventListener(
+
+            'pointerdown',
+
+            event => {
+
+                drag = true;
+
+                lastX = event.clientX;
+
+                canvas.setPointerCapture(
+                    event.pointerId
+                );
+
+            }
+
+        );
+
+
+
+        canvas.addEventListener(
+
+            'pointermove',
+
+            event => {
+
+                if (drag) {
+
+
+                    group.rotation.y +=
+
+                        (event.clientX - lastX) * 0.011;
+
+
+                    lastX = event.clientX;
+
+                }
+
+            }
+
+        );
+
+
+
+        canvas.addEventListener(
+
+            'pointerup',
+
+            () => {
+
+                drag = false;
+
+            }
+
+        );
+
+
+
+        canvas.addEventListener(
+
+            'pointercancel',
+
+            () => {
+
+                drag = false;
+
+            }
+
+        );
+
+
+
+        /* ========================================
+           KEYBOARD NAVIGATION
+        ======================================== */
+
+        document.addEventListener(
+
+            'keydown',
+
+            event => {
+
+
+                if (event.key === 'ArrowRight') {
+
+                    show(index + 1);
+
+                }
+
+
+                if (event.key === 'ArrowLeft') {
+
+                    show(index - 1);
+
+                }
+
+            }
+
+        );
+
+
+
+        /* ========================================
+           RESPONSIVE THREE.JS
+        ======================================== */
+
+        const resizeObserver = new ResizeObserver(() => {
+
+
+            const width = canvas.clientWidth;
+
+            const height = canvas.clientHeight;
+
+
+
+            if (!width || !height) return;
+
+
+
+            renderer.setSize(
+
+                width,
+
+                height,
+
+                false
+
+            );
+
+
+
+            camera.aspect = width / height;
+
+
+
+            camera.position.z =
+
+                width < 430 ? 12 : 9.4;
+
+
+
+            camera.updateProjectionMatrix();
+
+        });
+
+
+
+        resizeObserver.observe(canvas);
+
+
+
+        /* ========================================
+           ANIMATION LOOP
+        ======================================== */
+
+        let time = 0;
+
+
+
+        function animate() {
+
+
+            requestAnimationFrame(animate);
+
+
+
+            if (!reduce && !drag) {
+
+
+                time += 0.012;
+
+
+
+                group.rotation.y += 0.002;
+
+
+
+                group.position.y =
+
+                    Math.sin(time) * 0.075;
+
+            }
+
+
+
+            renderer.render(
+
+                scene,
+
+                camera
+
+            );
+
+        }
+
+
+
+        /* ========================================
+           START WEBSITE
+        ======================================== */
+
+        animate();
+
+    </script>
+
+</body>
+</html>
