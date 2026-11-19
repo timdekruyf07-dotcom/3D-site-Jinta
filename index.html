@@ -40,9 +40,7 @@ a:focus-visible {
     outline-offset: 3px;
 }
 
-/* ==========================================
-   WEBGL BACKGROUND
-========================================== */
+/* BACKGROUND 3D */
 
 #webgl {
     position: fixed;
@@ -53,9 +51,7 @@ a:focus-visible {
     pointer-events: none;
 }
 
-/* ==========================================
-   HEADER
-========================================== */
+/* HEADER */
 
 .header {
     position: fixed;
@@ -101,9 +97,7 @@ a:focus-visible {
     font-size: 23px;
 }
 
-/* ==========================================
-   SCROLL PROGRESS
-========================================== */
+/* PROGRESS */
 
 .progress {
     position: fixed;
@@ -121,9 +115,7 @@ a:focus-visible {
     background: #ff6244;
 }
 
-/* ==========================================
-   SECTIONS
-========================================== */
+/* SECTIONS */
 
 .section {
     position: relative;
@@ -142,9 +134,7 @@ a:focus-visible {
 .content a,
 .content button { pointer-events: auto; }
 
-/* ==========================================
-   HERO
-========================================== */
+/* HERO */
 
 #hero {
     background-color: #291436;
@@ -200,9 +190,7 @@ a:focus-visible {
     white-space: nowrap;
 }
 
-/* ==========================================
-   FLAVOURS
-========================================== */
+/* FLAVOURS */
 
 #flavours { background: #f8e8e8; }
 
@@ -251,9 +239,7 @@ a:focus-visible {
     font: 12px/1.7 'DM Mono', monospace;
 }
 
-/* ==========================================
-   FLAVOUR SELECTOR
-========================================== */
+/* FLAVOUR SELECTOR */
 
 .flavour-selector {
     position: absolute;
@@ -314,9 +300,7 @@ a:focus-visible {
     box-shadow: inset -5px -5px 0 #0002;
 }
 
-.option-name {
-    font: 700 9px 'DM Mono', monospace;
-}
+.option-name { font: 700 9px 'DM Mono', monospace; }
 
 .selector-footer {
     text-align: center;
@@ -324,9 +308,7 @@ a:focus-visible {
     font: 10px 'DM Mono', monospace;
 }
 
-/* ==========================================
-   INTERACTIVE BLENDER
-========================================== */
+/* PLAY WITH YOUR FOOD */
 
 #play {
     position: relative;
@@ -381,9 +363,7 @@ a:focus-visible {
     font: 13px/1.7 'DM Mono', monospace;
 }
 
-/* ==========================================
-   GAME LAYOUT
-========================================== */
+/* GAME */
 
 .game-layout {
     position: relative;
@@ -446,6 +426,7 @@ a:focus-visible {
 
 #blenderCanvas.result-active {
     z-index: 8;
+    pointer-events: auto;
     cursor: grab;
 }
 
@@ -463,91 +444,7 @@ a:focus-visible {
     max-width: 55%;
 }
 
-/* ==========================================
-   CUSTOM MIX RESULT
-========================================== */
-
-.cup-result {
-    position: absolute;
-    inset: 0;
-    z-index: 7;
-    pointer-events: none;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity .3s, visibility .3s;
-}
-
-.cup-result.visible {
-    opacity: 1;
-    visibility: visible;
-    z-index: 9;
-    pointer-events: none;
-}
-
-.result-header {
-    position: absolute;
-    inset: 16px 18px auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    font: 700 10px 'DM Mono', monospace;
-    letter-spacing: .05em;
-}
-
-.result-header button {
-    pointer-events: auto;
-    background: var(--ink);
-    color: white;
-    border: 0;
-    font: 20px 'DM Mono', monospace;
-    width: 42px;
-    height: 42px;
-}
-
-.result-details {
-    position: absolute;
-    left: 4%;
-    right: 4%;
-    bottom: 4%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 7px;
-    text-align: center;
-}
-
-.result-details h3 {
-    margin: 0;
-    font: clamp(22px, 3vw, 42px)/.9
-          'Archivo Black', sans-serif;
-    letter-spacing: -.05em;
-}
-
-.result-details p {
-    margin: 0;
-    font: 11px/1.4 'DM Mono', monospace;
-    max-width: 420px;
-}
-
-.result-details strong {
-    font: 700 12px 'DM Mono', monospace;
-}
-
-.result-details button {
-    pointer-events: auto;
-    border: 2px solid var(--ink);
-    background: var(--ink);
-    color: white;
-    padding: 12px 16px;
-    font: 700 11px 'DM Mono', monospace;
-}
-
-.result-instruction { opacity: .7; }
-
-/* ==========================================
-   RECIPE
-========================================== */
+/* RECIPE */
 
 .recipe {
     border: 3px solid var(--ink);
@@ -579,9 +476,7 @@ a:focus-visible {
     margin: 13px 0;
 }
 
-.recipe-label {
-    font: 700 11px 'DM Mono', monospace;
-}
+.recipe-label { font: 700 11px 'DM Mono', monospace; }
 
 .ingredients {
     list-style: none;
@@ -611,10 +506,7 @@ a:focus-visible {
     font-size: 16px;
 }
 
-.ingredients .empty {
-    opacity: .6;
-    line-height: 1.65;
-}
+.ingredients .empty { opacity: .6; line-height: 1.65; }
 
 .mix-preview {
     display: flex;
@@ -676,9 +568,7 @@ a:focus-visible {
     font: 11px/1.5 'DM Mono', monospace;
 }
 
-/* ==========================================
-   INGREDIENT SHELF
-========================================== */
+/* INGREDIENT SHELF */
 
 .ingredient-picker {
     position: relative;
@@ -743,13 +633,9 @@ a:focus-visible {
     font: 11px 'DM Mono', monospace;
 }
 
-.play-bottom a {
-    border-bottom: 1px solid currentColor;
-}
+.play-bottom a { border-bottom: 1px solid currentColor; }
 
-/* ==========================================
-   TICKER & FOOTER
-========================================== */
+/* TICKER */
 
 .ticker {
     position: relative;
@@ -770,6 +656,8 @@ a:focus-visible {
 @keyframes marquee {
     to { transform: translateX(-50%); }
 }
+
+/* FOOTER */
 
 footer {
     position: relative;
@@ -796,9 +684,7 @@ footer h2 {
     font: 11px 'DM Mono', monospace;
 }
 
-/* ==========================================
-   LOADER
-========================================== */
+/* LOADER */
 
 .loader {
     position: fixed;
@@ -838,9 +724,93 @@ footer h2 {
     background: #ffc629;
 }
 
-/* ==========================================
-   RESPONSIVE
-========================================== */
+/* RESULT PANEL */
+
+.cup-result {
+    position: absolute;
+    inset: 0;
+    z-index: 7;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s, visibility .3s;
+}
+
+.cup-result.visible {
+    opacity: 1;
+    visibility: visible;
+    z-index: 9;
+    pointer-events: none;
+    background: transparent;
+}
+
+.result-header {
+    position: absolute;
+    inset: 16px 18px auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font: 700 10px 'DM Mono', monospace;
+    letter-spacing: .05em;
+}
+
+.result-header button {
+    pointer-events: auto;
+    background: var(--ink);
+    color: white;
+    border: 0;
+    font: 20px 'DM Mono', monospace;
+    width: 42px;
+    height: 42px;
+}
+
+.result-details {
+    position: absolute;
+    left: 4%;
+    right: 4%;
+    bottom: 4%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    text-align: center;
+}
+
+.result-details h3 {
+    margin: 0;
+    font: clamp(22px, 3vw, 42px)/.9
+          'Archivo Black', sans-serif;
+    letter-spacing: -.05em;
+}
+
+.result-details p {
+    margin: 0;
+    font: 11px/1.4 'DM Mono', monospace;
+    max-width: 420px;
+}
+
+.result-details strong {
+    font: 700 12px 'DM Mono', monospace;
+}
+
+.result-details button {
+    pointer-events: auto;
+    border: 2px solid var(--ink);
+    background: var(--ink);
+    color: white;
+    padding: 12px 16px;
+    font: 700 11px 'DM Mono', monospace;
+}
+
+.result-instruction { opacity: .7; }
+
+.cup-result.visible .result-header,
+.cup-result.visible .result-details {
+    z-index: 10;
+}
+
+/* RESPONSIVE */
 
 @media (max-width: 1000px) {
     .game-layout { grid-template-columns: 1fr; }
@@ -856,7 +826,6 @@ footer h2 {
 
     .hero-title { font-size: 32vw; }
     .hero-copy { font-size: 10px; bottom: 15%; }
-
     .flavour-title { top: 25%; font-size: 13vw; }
 
     .flavour-description {
@@ -929,7 +898,7 @@ footer h2 {
 
 <body>
 
-<!-- LOADING SCREEN -->
+<!-- LOADING -->
 <div class="loader" id="loader">
     <h1>FRUIT.</h1>
     <p>PREPARING THE GOOD STUFF...</p>
@@ -952,10 +921,7 @@ footer h2 {
         <a href="#hero">HOME</a>
         <a href="#flavours">FLAVOURS</a>
         <a href="#play">PLAY</a>
-
-        <button id="nextScene" aria-label="Volgende scène">
-            ↗
-        </button>
+        <button id="nextScene" aria-label="Volgende scène">↗</button>
     </nav>
 </header>
 
@@ -1015,14 +981,12 @@ footer h2 {
     </div>
 </section>
 
-<!-- PLAY WITH YOUR FOOD -->
+<!-- BLENDER -->
 <section id="play">
 
     <div class="play-head">
         <div>
-            <div class="overline">
-                003 / THE INTERACTIVE FRUIT LAB
-            </div>
+            <div class="overline">003 / THE INTERACTIVE FRUIT LAB</div>
 
             <h2>
                 PLAY WITH<br>
@@ -1031,15 +995,15 @@ footer h2 {
         </div>
 
         <p>
-            PAK EEN STUK FRUIT, SLEEP HET IN DE
-            BLENDER EN MAAK JE EIGEN MIX.
-            ELKE COMBINATIE IS ANDERS. ✳
+            PAK EEN STUK FRUIT, SLEEP HET IN DE BLENDER
+            EN MAAK JE EIGEN MIX. ELKE COMBINATIE IS ANDERS. ✳
         </p>
     </div>
 
     <div class="game-layout">
 
         <div class="game-stage" id="gameStage">
+
             <canvas
                 id="blenderCanvas"
                 aria-label="Interactieve 3D-blender met sleepbaar fruit">
@@ -1064,7 +1028,6 @@ footer h2 {
 
                 <div class="result-details">
                     <h3>YOUR OWN<br>MIX!</h3>
-
                     <p id="resultIngredients"></p>
                     <strong id="resultHex">#FFFFFF</strong>
 
@@ -1084,6 +1047,7 @@ footer h2 {
         </div>
 
         <aside class="recipe">
+
             <div class="receipt-top">
                 *** FRUIT LAB / MIX TICKET ***
             </div>
@@ -1097,10 +1061,7 @@ footer h2 {
                 class="ingredients"
                 id="ingredients"
                 aria-live="polite">
-
-                <li class="empty">
-                    NOG GEEN FRUIT TOEGEVOEGD.
-                </li>
+                <li class="empty">NOG GEEN FRUIT TOEGEVOEGD.</li>
             </ul>
 
             <hr class="dash">
@@ -1117,16 +1078,11 @@ footer h2 {
             </div>
 
             <div class="actions">
-                <button
-                    class="action-btn"
-                    id="blendBtn"
-                    disabled>
+                <button class="action-btn" id="blendBtn" disabled>
                     ✳ BLEND IT!
                 </button>
 
-                <button
-                    class="action-btn secondary"
-                    id="resetBtn">
+                <button class="action-btn secondary" id="resetBtn">
                     ↺ RESET
                 </button>
             </div>
@@ -1144,8 +1100,8 @@ footer h2 {
         <h3>THE INGREDIENT SHELF ↗</h3>
 
         <p>
-            JE KUNT OOK HIER KLIKKEN OM FRUIT TOE
-            TE VOEGEN. DEZELFDE SMAAK MAG VAKER.
+            JE KUNT OOK HIER KLIKKEN OM FRUIT TOE TE VOEGEN.
+            DEZELFDE SMAAK MAG VAKER.
         </p>
 
         <div class="picker-grid" id="pickerGrid"></div>
@@ -1182,7 +1138,8 @@ footer h2 {
 
 <script type="module">
 
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
+import * as THREE from
+    'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
 
 const gsap = window.gsap;
 const ScrollTrigger = window.ScrollTrigger;
@@ -1194,7 +1151,7 @@ const reduce = matchMedia(
 ).matches;
 
 /* ==========================================
-   FLAVOUR DATA
+   FLAVOURS
 ========================================== */
 
 const FLAVOURS = [
@@ -1313,6 +1270,7 @@ function hexFromRgb(r, g, b) {
 }
 
 function averageColors(ids) {
+
     if (!ids.length) return '#F5F0E4';
 
     const sum = [0, 0, 0];
@@ -1346,10 +1304,11 @@ const mat = (color, roughness = .35) =>
         clearcoatRoughness: .15
     });
 
-const mesh = (geo, material) =>
-    new THREE.Mesh(geo, material);
+const mesh = (geometry, material) =>
+    new THREE.Mesh(geometry, material);
 
 function smoothColor(material, hex, duration = .6) {
+
     const to = new THREE.Color(hex);
 
     gsap.to(material.color, {
@@ -1362,20 +1321,18 @@ function smoothColor(material, hex, duration = .6) {
 }
 
 /* ==========================================
-   CREATE FRUIT MODELS
+   CREATE FRUIT
 ========================================== */
 
 function fruitModel(id) {
 
     const g = new THREE.Group();
     const item = findIngredient(id);
-
     const skin = mat(item.color, .32);
-    const leafMat = mat('#267943', .55);
 
     g.userData.skin = skin;
 
-    /* STRAWBERRY */
+    const leafMat = mat('#267943', .55);
 
     if (id === 'strawberry') {
 
@@ -1430,11 +1387,8 @@ function fruitModel(id) {
 
             g.add(leaf);
         }
-    }
 
-    /* MANGO */
-
-    else if (id === 'mango') {
+    } else if (id === 'mango') {
 
         const body = mesh(
             new THREE.SphereGeometry(.5, 32, 24),
@@ -1455,11 +1409,8 @@ function fruitModel(id) {
         leaf.rotation.z = -.3;
 
         g.add(leaf);
-    }
 
-    /* BLUEBERRY */
-
-    else if (id === 'blueberry') {
+    } else if (id === 'blueberry') {
 
         for (let i = 0; i < 7; i++) {
 
@@ -1479,11 +1430,8 @@ function fruitModel(id) {
 
             g.add(b);
         }
-    }
 
-    /* LIME */
-
-    else if (id === 'lime') {
+    } else if (id === 'lime') {
 
         const body = mesh(
             new THREE.SphereGeometry(.48, 32, 24),
@@ -1505,7 +1453,9 @@ function fruitModel(id) {
             const a = i * Math.PI / 4;
 
             const line = mesh(
-                new THREE.CylinderGeometry(.012, .012, .34, 6),
+                new THREE.CylinderGeometry(
+                    .012, .012, .34, 6
+                ),
                 mat('#f1ffc2')
             );
 
@@ -1519,11 +1469,8 @@ function fruitModel(id) {
 
             g.add(line);
         }
-    }
 
-    /* PEACH */
-
-    else if (id === 'peach') {
+    } else if (id === 'peach') {
 
         const body = mesh(
             new THREE.SphereGeometry(.5, 32, 24),
@@ -1551,11 +1498,8 @@ function fruitModel(id) {
         leaf.rotation.z = .5;
 
         g.add(leaf);
-    }
 
-    /* GRAPES */
-
-    else if (id === 'grape') {
+    } else if (id === 'grape') {
 
         for (let row = 0; row < 4; row++) {
             for (let col = 0; col < 3 - row % 2; col++) {
@@ -1582,11 +1526,8 @@ function fruitModel(id) {
 
         stem.position.y = .6;
         g.add(stem);
-    }
 
-    /* COCONUT */
-
-    else if (id === 'coconut') {
+    } else if (id === 'coconut') {
 
         const body = mesh(
             new THREE.SphereGeometry(.5, 32, 24),
@@ -1612,6 +1553,7 @@ function fruitModel(id) {
 
         rim.rotation.x = Math.PI / 2;
         rim.position.y = .405;
+
         g.add(rim);
     }
 
@@ -1619,7 +1561,7 @@ function fruitModel(id) {
 }
 
 /* ==========================================
-   BACKGROUND 3D SCENE
+   BACKGROUND THREE.JS
 ========================================== */
 
 const bgCanvas = document.querySelector('#webgl');
@@ -1630,7 +1572,10 @@ const renderer = new THREE.WebGLRenderer({
     alpha: true
 });
 
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setPixelRatio(
+    Math.min(devicePixelRatio, 2)
+);
+
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.setSize(innerWidth, innerHeight);
@@ -1659,7 +1604,7 @@ rim.position.set(-5, 3, -4);
 scene.add(rim);
 
 /* ==========================================
-   CUP LABEL
+   DRINK CUP LABEL
 ========================================== */
 
 function cupLabel(flavour) {
@@ -1697,7 +1642,7 @@ function cupLabel(flavour) {
 }
 
 /* ==========================================
-   CREATE 3D CUP
+   CREATE DRINK CUP
 ========================================== */
 
 function makeCup(flavour) {
@@ -1722,8 +1667,9 @@ function makeCup(flavour) {
 
     const dome = mesh(
         new THREE.SphereGeometry(
-            .65, 32, 16, 0,
-            Math.PI * 2, 0, Math.PI / 2
+            .65, 32, 16,
+            0, Math.PI * 2,
+            0, Math.PI / 2
         ),
         new THREE.MeshPhysicalMaterial({
             color: 'white',
@@ -1755,8 +1701,12 @@ function makeCup(flavour) {
 
     const label = mesh(
         new THREE.CylinderGeometry(
-            .708, .508, 1.5, 48,
-            1, true,
+            .708,
+            .508,
+            1.5,
+            48,
+            1,
+            true,
             -Math.PI * .83,
             Math.PI * 1.66
         ),
@@ -1846,9 +1796,7 @@ flavourGrid.innerHTML = FLAVOURS.map((f, i) => `
             style="background:${f.primary}">
         </span>
 
-        <span class="option-name">
-            ${f.short}
-        </span>
+        <span class="option-name">${f.short}</span>
     </button>
 `).join('');
 
@@ -1923,7 +1871,6 @@ function selectFlavour(i) {
 
     featureFruit = fruitModel(f.id);
     featureFruit.scale.setScalar(2.3);
-
     flavourGroup.add(featureFruit);
 
     if (!reduce) {
@@ -1940,6 +1887,7 @@ function selectFlavour(i) {
 }
 
 flavourGrid.addEventListener('click', e => {
+
     const b = e.target.closest('[data-flavour]');
 
     if (b) {
@@ -1948,7 +1896,7 @@ flavourGrid.addEventListener('click', e => {
 });
 
 /* ==========================================
-   SCROLL TRANSITIONS
+   SCROLL ANIMATIONS
 ========================================== */
 
 const motion = {
@@ -1979,13 +1927,17 @@ t1.to(heroGroup.rotation, {
 }, 0);
 
 t1.to(heroGroup.scale, {
-    x: .2, y: .2, z: .2,
+    x: .2,
+    y: .2,
+    z: .2,
     duration: 1,
     ease: 'none'
 }, 0);
 
 t1.to(flavourGroup.scale, {
-    x: 1, y: 1, z: 1,
+    x: 1,
+    y: 1,
+    z: 1,
     duration: .75,
     ease: 'none'
 }, .25);
@@ -2010,7 +1962,7 @@ t1.to('#heroTitle', {
     ease: 'none'
 }, 0);
 
-/* FLAVOURS TO PLAY */
+/* FLAVOURS → PLAY */
 
 const t2 = gsap.timeline({
     scrollTrigger: {
@@ -2036,7 +1988,9 @@ t2.to(flavourGroup.rotation, {
 }, 0);
 
 t2.to(flavourGroup.scale, {
-    x: .1, y: .1, z: .1,
+    x: .1,
+    y: .1,
+    z: .1,
     duration: 1,
     ease: 'none'
 }, 0);
@@ -2048,20 +2002,19 @@ t2.to(motion, {
     ease: 'none'
 }, 0);
 
-/* SCROLL PROGRESS */
+/* PROGRESS */
 
 ScrollTrigger.create({
     trigger: document.body,
     start: 'top top',
     end: 'bottom bottom',
-
     onUpdate: self => {
         document.querySelector('#progressFill').style.width =
             `${self.progress * 100}%`;
     }
 });
 
-/* NEXT SCENE */
+/* NAVIGATION */
 
 document.querySelector('#nextScene').addEventListener('click', () => {
 
@@ -2080,7 +2033,7 @@ document.querySelector('#nextScene').addEventListener('click', () => {
     });
 });
 
-/* MOUSE PARALLAX */
+/* MOUSE */
 
 let mx = 0;
 let my = 0;
@@ -2091,7 +2044,7 @@ window.addEventListener('pointermove', e => {
 });
 
 /* ==========================================
-   BLENDER THREE.JS SCENE
+   BLENDER 3D SCENE
 ========================================== */
 
 const gameCanvas = document.querySelector('#blenderCanvas');
@@ -2103,7 +2056,10 @@ const gameRenderer = new THREE.WebGLRenderer({
     alpha: true
 });
 
-gameRenderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+gameRenderer.setPixelRatio(
+    Math.min(devicePixelRatio, 2)
+);
+
 gameRenderer.outputColorSpace = THREE.SRGBColorSpace;
 gameRenderer.toneMapping = THREE.ACESFilmicToneMapping;
 
@@ -2128,9 +2084,7 @@ const gameRim = new THREE.DirectionalLight('#fff1a4', 2);
 gameRim.position.set(4, 4, -4);
 gameScene.add(gameRim);
 
-/* ==========================================
-   TABLE
-========================================== */
+/* TABLE */
 
 const surface = mesh(
     new THREE.BoxGeometry(18, .16, 4.3),
@@ -2140,9 +2094,7 @@ const surface = mesh(
 surface.position.set(0, -2.65, -.3);
 gameScene.add(surface);
 
-/* ==========================================
-   FRUITS
-========================================== */
+/* DRAGGABLE FRUIT */
 
 const fruitPositions = [
     [-4.8, 1.3],
@@ -2182,12 +2134,14 @@ INGREDIENTS.forEach((item, i) => {
 });
 
 /* ==========================================
-   BLENDER BASE
+   BLENDER MOTOR
 ========================================== */
 
 const blender = new THREE.Group();
 
-blender.position.set(2.25, -.25, 0);
+/* NIEUW: BLENDER IETS NAAR LINKS */
+
+blender.position.set(1.1, -.25, 0);
 gameScene.add(blender);
 
 const base = mesh(
@@ -2216,7 +2170,7 @@ dial.position.set(0, -1.72, 1.09);
 blender.add(dial);
 
 /* ==========================================
-   BLENDER JAR
+   GLASS JAR
 ========================================== */
 
 const glassMaterial = new THREE.MeshPhysicalMaterial({
@@ -2230,7 +2184,14 @@ const glassMaterial = new THREE.MeshPhysicalMaterial({
 });
 
 const jar = mesh(
-    new THREE.CylinderGeometry(.98, .72, 2.7, 48, 1, true),
+    new THREE.CylinderGeometry(
+        .98,
+        .72,
+        2.7,
+        48,
+        1,
+        true
+    ),
     glassMaterial
 );
 
@@ -2254,18 +2215,66 @@ rimJar.rotation.x = Math.PI / 2;
 rimJar.position.y = 1.5;
 blender.add(rimJar);
 
-/* HANDLE */
+/* ==========================================
+   NIEUW: MOOIER BLENDERHANDVAT
+========================================== */
+
+/*
+   Het oude handvat was een open torus.
+
+   Dit handvat is een vloeiende 3D-buis.
+   Het zit aan de linkerkant van de kan,
+   zodat de rechterkant vrij is om te schenken.
+*/
+
+const handleCurve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(-.78, .96, 0),
+    new THREE.Vector3(-1.12, .98, 0),
+    new THREE.Vector3(-1.47, .73, 0),
+    new THREE.Vector3(-1.59, .31, 0),
+    new THREE.Vector3(-1.59, -.19, 0),
+    new THREE.Vector3(-1.39, -.61, 0),
+    new THREE.Vector3(-1.01, -.78, 0),
+    new THREE.Vector3(-.74, -.72, 0)
+], false, 'centripetal');
+
+const handleMat = mat('#f4f1e8', .32);
 
 const handle = mesh(
-    new THREE.TorusGeometry(.57, .14, 12, 40, Math.PI * 1.55),
-    mat('#f4f1e8')
+    new THREE.TubeGeometry(
+        handleCurve,
+        72,
+        .115,
+        14,
+        false
+    ),
+    handleMat
 );
 
-handle.position.set(1.1, .1, 0);
-handle.rotation.z = -.25;
 blender.add(handle);
 
-/* LID */
+/* TWEE BEVESTIGINGSPUNTEN */
+
+const handleMounts = new THREE.Group();
+
+for (const y of [.96, -.72]) {
+
+    const collar = mesh(
+        new THREE.CylinderGeometry(.16, .16, .20, 18),
+        mat('#a5beca', .24)
+    );
+
+    collar.rotation.z = Math.PI / 2;
+    collar.position.set(-.78, y, 0);
+
+    handleMounts.add(collar);
+}
+
+blender.add(handleMounts);
+
+/* ==========================================
+   BLENDER LID
+========================================== */
 
 const lid = mesh(
     new THREE.CylinderGeometry(1.06, 1.03, .18, 48),
@@ -2306,13 +2315,11 @@ liquid.scale.y = .05;
 
 blender.add(liquid);
 
-/* ==========================================
-   BLADES
-========================================== */
+/* BLADES */
 
 const blades = new THREE.Group();
-
 blades.position.y = -1.06;
+
 blender.add(blades);
 
 for (let i = 0; i < 4; i++) {
@@ -2326,9 +2333,7 @@ for (let i = 0; i < 4; i++) {
     blades.add(blade);
 }
 
-/* ==========================================
-   DROP HIGHLIGHT
-========================================== */
+/* DROP HIGHLIGHT */
 
 const blenderGlow = mesh(
     new THREE.TorusGeometry(1.16, .04, 8, 48),
@@ -2345,7 +2350,7 @@ blenderGlow.position.y = 1.52;
 blender.add(blenderGlow);
 
 /* ==========================================
-   NEW: REMOVABLE BLENDER JUG
+   MOVABLE JUG
 ========================================== */
 
 const jugPivot = new THREE.Group();
@@ -2353,11 +2358,18 @@ const jugPivot = new THREE.Group();
 jugPivot.position.set(0, -1.18, 0);
 blender.add(jugPivot);
 
+/*
+   Alle onderdelen van de kan gaan mee:
+   glas, bodem, rand, handvat, deksel,
+   vloeistof en messen.
+*/
+
 for (const part of [
     jar,
     jarBottom,
     rimJar,
     handle,
+    handleMounts,
     lid,
     lidKnob,
     liquid,
@@ -2371,7 +2383,7 @@ for (const part of [
 }
 
 /* ==========================================
-   NEW: REALISTIC FILL HEIGHT
+   FILL HEIGHT
 ========================================== */
 
 const FILL_MAX = 2.22;
@@ -2403,17 +2415,17 @@ function setFillLevel(level, duration = .45) {
 setFillLevel(.03, 0);
 
 /* ==========================================
-   NEW: CUP POSITION
+   NIEUW: BEKER STAAT RECHTS
 ========================================== */
 
 const CUP_SPOT = new THREE.Vector3(
-    -.42,
+    3.65,
     -1.38,
     1.05
 );
 
 /* ==========================================
-   NEW: POURING LIQUID STREAM
+   POURING STREAM
 ========================================== */
 
 const juiceStream = mesh(
@@ -2427,7 +2439,6 @@ const juiceStream = mesh(
 );
 
 juiceStream.visible = false;
-
 gameScene.add(juiceStream);
 
 const streamProgress = { value: 0 };
@@ -2442,9 +2453,11 @@ function refreshStream() {
 
     jugPivot.updateWorldMatrix(true, false);
 
+    /* SCHENKPUNT AAN RECHTERKANT */
+
     sourceWorld.copy(
         jugPivot.localToWorld(
-            new THREE.Vector3(-.91, 2.68, .17)
+            new THREE.Vector3(.85, 2.68, .17)
         )
     );
 
@@ -2463,7 +2476,10 @@ function refreshStream() {
 
     juiceStream.position
         .copy(sourceWorld)
-        .addScaledVector(streamDelta, portion * .5);
+        .addScaledVector(
+            streamDelta,
+            portion * .5
+        );
 
     juiceStream.quaternion.setFromUnitVectors(
         new THREE.Vector3(0, 1, 0),
@@ -2480,7 +2496,7 @@ function refreshStream() {
 }
 
 /* ==========================================
-   CUSTOM RESULT CUP
+   FINISHED DRINK
 ========================================== */
 
 const resultRoot = new THREE.Group();
@@ -2492,7 +2508,6 @@ gameScene.add(resultRoot);
 
 let resultCup = null;
 let resultLiquid = null;
-
 let resultVisible = false;
 let rotatingResult = false;
 let resultPointerX = 0;
@@ -2506,6 +2521,7 @@ const resultPanel = document.querySelector('#cupResult');
 function makeCustomLabel(color, ids) {
 
     const c = document.createElement('canvas');
+
     c.width = 1024;
     c.height = 1024;
 
@@ -2541,7 +2557,6 @@ function makeCustomLabel(color, ids) {
     x.fillText(color.toUpperCase(), 512, 885);
 
     x.font = 'bold 23px monospace';
-
     x.fillText(
         ids.length + ' INGREDIENTEN · MADE BY YOU',
         512,
@@ -2549,14 +2564,13 @@ function makeCustomLabel(color, ids) {
     );
 
     const t = new THREE.CanvasTexture(c);
-
     t.colorSpace = THREE.SRGBColorSpace;
 
     return t;
 }
 
 /* ==========================================
-   PREPARE EMPTY CUP
+   PREPARE RESULT CUP
 ========================================== */
 
 function prepareResult(color, ids) {
@@ -2577,6 +2591,7 @@ function prepareResult(color, ids) {
         resultCup.traverse(o => {
 
             if (o.isMesh) {
+
                 o.geometry.dispose();
 
                 if (o.material.map) {
@@ -2597,19 +2612,19 @@ function prepareResult(color, ids) {
 
     resultRoot.add(resultCup);
 
-    /* Transparent cup */
+    /* EMPTY CUP */
 
     resultCup.userData.bodyMat.transparent = true;
     resultCup.userData.bodyMat.opacity = .24;
     resultCup.userData.bodyMat.depthWrite = false;
 
-    /* Start without a lid */
+    /* HIDE LID BEFORE POURING */
 
     resultCup.children[1].visible = false;
     resultCup.children[2].visible = false;
     resultCup.children[3].visible = false;
 
-    /* Liquid inside the cup */
+    /* DRINK INSIDE CUP */
 
     resultLiquid = mesh(
         new THREE.CylinderGeometry(.57, .43, 1, 40),
@@ -2630,16 +2645,12 @@ function prepareResult(color, ids) {
     resultRoot.rotation.set(0, -.12, 0);
     resultRoot.scale.setScalar(0);
 
-    document.querySelector('#resultHex').textContent =
-        color;
+    document.querySelector('#resultHex').textContent = color;
 
     const counts = new Map();
 
     for (const id of ids) {
-        counts.set(
-            id,
-            (counts.get(id) || 0) + 1
-        );
+        counts.set(id, (counts.get(id) || 0) + 1);
     }
 
     document.querySelector('#resultIngredients').textContent =
@@ -2653,7 +2664,7 @@ function prepareResult(color, ids) {
 }
 
 /* ==========================================
-   SHOW FINISHED CUP
+   SHOW RESULT
 ========================================== */
 
 function showResult() {
@@ -2724,7 +2735,7 @@ document.querySelector('#closeResult')
     .addEventListener('click', hideResult);
 
 /* ==========================================
-   RECIPE
+   RECIPE STATE
 ========================================== */
 
 const recipe = [];
@@ -2733,23 +2744,12 @@ let blending = false;
 let pouring = false;
 let activeDrag = null;
 
-const ingredientsEl =
-    document.querySelector('#ingredients');
-
-const colorDisc =
-    document.querySelector('#colorDisc');
-
-const colorCode =
-    document.querySelector('#colorCode');
-
-const mixCount =
-    document.querySelector('#mixCount');
-
-const blendStatus =
-    document.querySelector('#blendStatus');
-
-const blendBtn =
-    document.querySelector('#blendBtn');
+const ingredientsEl = document.querySelector('#ingredients');
+const colorDisc = document.querySelector('#colorDisc');
+const colorCode = document.querySelector('#colorCode');
+const mixCount = document.querySelector('#mixCount');
+const blendStatus = document.querySelector('#blendStatus');
+const blendBtn = document.querySelector('#blendBtn');
 
 /* ==========================================
    REFRESH RECIPE
@@ -2767,9 +2767,7 @@ function refreshRecipe() {
     }
 
     ingredientsEl.innerHTML = counts.size
-
         ? [...counts].map(([id, count]) => `
-
             <li>
                 <span>
                     ${count} × ${findIngredient(id).name}
@@ -2782,9 +2780,7 @@ function refreshRecipe() {
                     −
                 </button>
             </li>
-
         `).join('')
-
         : '<li class="empty">NOG GEEN FRUIT TOEGEVOEGD.</li>';
 
     const color = averageColors(recipe);
@@ -2808,12 +2804,8 @@ function refreshRecipe() {
         overwrite: true
     });
 
-    /* Fill rises from the bottom */
-
     if (!pouring) {
-        setFillLevel(
-            recipe.length / 8 * FILL_MAX
-        );
+        setFillLevel(recipe.length / 8 * FILL_MAX);
     }
 }
 
@@ -2846,7 +2838,11 @@ function addIngredient(id) {
 
     gsap.fromTo(
         blender.scale,
-        { x: 1.05, y: 1.05, z: 1.05 },
+        {
+            x: 1.05,
+            y: 1.05,
+            z: 1.05
+        },
         {
             x: 1,
             y: 1,
@@ -2880,8 +2876,7 @@ ingredientsEl.addEventListener('click', e => {
         recipe.splice(idx, 1);
     }
 
-    blendStatus.textContent =
-        'INGREDIËNT VERWIJDERD.';
+    blendStatus.textContent = 'INGREDIËNT VERWIJDERD.';
 
     refreshRecipe();
 });
@@ -2892,7 +2887,6 @@ ingredientsEl.addEventListener('click', e => {
 
 document.querySelector('#pickerGrid').innerHTML =
     INGREDIENTS.map(i => `
-
         <button
             type="button"
             class="pick-btn"
@@ -2908,7 +2902,6 @@ document.querySelector('#pickerGrid').innerHTML =
                 + ${i.name}
             </span>
         </button>
-
     `).join('');
 
 document.querySelector('#pickerGrid')
@@ -2931,11 +2924,9 @@ document.querySelector('#resetBtn')
         if (blending || pouring) return;
 
         hideResult();
-
         recipe.length = 0;
 
-        blendStatus.textContent =
-            'READY FOR A NEW MIX.';
+        blendStatus.textContent = 'READY FOR A NEW MIX.';
 
         refreshRecipe();
     });
@@ -2944,17 +2935,15 @@ document.querySelector('#newMixBtn')
     .addEventListener('click', () => {
 
         hideResult();
-
         recipe.length = 0;
 
-        blendStatus.textContent =
-            'READY FOR A NEW MIX.';
+        blendStatus.textContent = 'READY FOR A NEW MIX.';
 
         refreshRecipe();
     });
 
 /* ==========================================
-   NEW: COMPLETE POURING ANIMATION
+   BLENDING & POURING
 ========================================== */
 
 blendBtn.addEventListener('click', () => {
@@ -2973,10 +2962,7 @@ blendBtn.addEventListener('click', () => {
 
     const color = averageColors(recipe);
 
-    blendStatus.textContent =
-        'BLENDING IN PROGRESS...';
-
-    /* Prepare an empty cup next to the blender */
+    blendStatus.textContent = 'BLENDING IN PROGRESS...';
 
     prepareResult(color, [...recipe]);
 
@@ -3000,7 +2986,7 @@ blendBtn.addEventListener('click', () => {
         }
     });
 
-    /* PHASE 1 — BLEND */
+    /* 1. BLEND */
 
     tl.to(blender.rotation, {
         z: .035,
@@ -3020,7 +3006,7 @@ blendBtn.addEventListener('click', () => {
         duration: .12 * d
     }, '>');
 
-    /* PHASE 2 — CUP APPEARS BESIDE THE BLENDER */
+    /* 2. BEKER VERSCHIJNT RECHTS */
 
     tl.to(resultRoot.scale, {
         x: .86,
@@ -3035,14 +3021,11 @@ blendBtn.addEventListener('click', () => {
         duration: .2 * d
     }, '<');
 
-    /* PHASE 3 — LIFT JUG */
+    /* 3. KAN KOMT OMHOOG */
 
     tl.call(() => {
-
         pouring = true;
-
-        blendStatus.textContent =
-            'POURING YOUR MIX...';
+        blendStatus.textContent = 'POURING YOUR MIX...';
     });
 
     tl.to(jugPivot.position, {
@@ -3051,15 +3034,15 @@ blendBtn.addEventListener('click', () => {
         ease: 'power2.inOut'
     }, '>');
 
-    /* PHASE 4 — TILT JUG TOWARD CUP */
+    /* 4. KAN KANTELT NAAR RECHTS */
 
     tl.to(jugPivot.rotation, {
-        z: .9,
+        z: -.82,
         duration: .7 * d,
         ease: 'power2.inOut'
     }, '>');
 
-    /* PHASE 5 — START POURING */
+    /* 5. SCHENKEN */
 
     tl.call(() => {
 
@@ -3067,19 +3050,14 @@ blendBtn.addEventListener('click', () => {
         lidKnob.visible = false;
 
         juiceStream.visible = true;
-
         streamProgress.value = 0;
     });
-
-    /* Liquid stream grows */
 
     tl.to(streamProgress, {
         value: 1,
         duration: .2 * d,
         ease: 'power1.out'
     }, '>');
-
-    /* Blender slowly empties */
 
     tl.to(liquid.scale, {
         y: .03,
@@ -3093,8 +3071,6 @@ blendBtn.addEventListener('click', () => {
         ease: 'none'
     }, '<');
 
-    /* Cup slowly fills */
-
     tl.to(resultLiquid.scale, {
         y: 1.65,
         duration: 1.25 * d,
@@ -3107,15 +3083,13 @@ blendBtn.addEventListener('click', () => {
         ease: 'none'
     }, '<');
 
-    /* Liquid stream stops */
+    /* 6. STRAAL STOPT */
 
     tl.to(streamProgress, {
         value: 0,
         duration: .25 * d,
         ease: 'power2.in'
     }, '>');
-
-    /* Add cup lid after pouring */
 
     tl.call(() => {
 
@@ -3129,7 +3103,7 @@ blendBtn.addEventListener('click', () => {
         resultCup.children[3].visible = true;
     });
 
-    /* PHASE 6 — PUT JUG BACK */
+    /* 7. KAN TERUG */
 
     tl.to(jugPivot.rotation, {
         z: 0,
@@ -3142,8 +3116,6 @@ blendBtn.addEventListener('click', () => {
         duration: .65 * d,
         ease: 'power2.inOut'
     }, '<');
-
-    /* Finished cup remains standing */
 
     tl.to(resultRoot.scale, {
         x: 1,
@@ -3159,7 +3131,6 @@ blendBtn.addEventListener('click', () => {
 ========================================== */
 
 const ray = new THREE.Raycaster();
-
 const pointer = new THREE.Vector2();
 
 const dragPlane = new THREE.Plane(
@@ -3199,8 +3170,6 @@ function locateFruit(object) {
 
 gameCanvas.addEventListener('pointerdown', e => {
 
-    /* Rotate finished cup */
-
     if (resultVisible) {
 
         setPointer(e);
@@ -3234,9 +3203,7 @@ gameCanvas.addEventListener('pointerdown', e => {
 
     if (!root) return;
 
-    const d = draggable.find(
-        x => x.root === root
-    );
+    const d = draggable.find(x => x.root === root);
 
     activeDrag = {
         entry: d,
@@ -3248,7 +3215,6 @@ gameCanvas.addEventListener('pointerdown', e => {
     root.scale.setScalar(1.16);
 
     gameCanvas.setPointerCapture(e.pointerId);
-
     gameCanvas.classList.add('dragging');
 
     e.preventDefault();
@@ -3307,9 +3273,11 @@ gameCanvas.addEventListener('pointermove', e => {
         .5
     );
 
+    /* NIEUWE DROPZONE */
+
     const over =
-        dragHit.x > 1 &&
-        dragHit.x < 3.5 &&
+        dragHit.x > -.05 &&
+        dragHit.x < 2.2 &&
         dragHit.y > -.9 &&
         dragHit.y < 1.7;
 
@@ -3346,9 +3314,11 @@ function endDrag(e) {
 
     const root = entry.root;
 
+    /* NIEUWE DROPZONE */
+
     const dropped =
-        root.position.x > 1 &&
-        root.position.x < 3.5 &&
+        root.position.x > -.05 &&
+        root.position.x < 2.2 &&
         root.position.y > -.9 &&
         root.position.y < 1.7;
 
@@ -3367,7 +3337,7 @@ function endDrag(e) {
         addIngredient(entry.id);
 
         gsap.to(root.position, {
-            x: 2.25,
+            x: 1.1,
             y: .2,
             z: .5,
             duration: reduce ? 0 : .25,
@@ -3401,7 +3371,7 @@ gameCanvas.addEventListener('pointerup', endDrag);
 gameCanvas.addEventListener('pointercancel', endDrag);
 
 /* ==========================================
-   RESIZE BLENDER SCENE
+   RESIZE
 ========================================== */
 
 const observer = new ResizeObserver(() => {
@@ -3415,32 +3385,21 @@ const observer = new ResizeObserver(() => {
 
     gameCamera.aspect = w / h;
 
-    gameCamera.position.z =
-        w < 600 ? 18 : 13;
+    gameCamera.position.z = w < 600 ? 18 : 13;
 
     gameCamera.updateProjectionMatrix();
 });
 
 observer.observe(gameStage);
 
-/* ==========================================
-   WINDOW RESIZE
-========================================== */
-
 function resize() {
 
-    camera.aspect =
-        innerWidth / innerHeight;
-
-    camera.fov =
-        innerWidth < 650 ? 48 : 35;
+    camera.aspect = innerWidth / innerHeight;
+    camera.fov = innerWidth < 650 ? 48 : 35;
 
     camera.updateProjectionMatrix();
 
-    renderer.setSize(
-        innerWidth,
-        innerHeight
-    );
+    renderer.setSize(innerWidth, innerHeight);
 
     renderer.setPixelRatio(
         Math.min(devicePixelRatio, 2)
@@ -3448,7 +3407,6 @@ function resize() {
 }
 
 addEventListener('resize', resize);
-
 resize();
 
 /* ==========================================
@@ -3465,8 +3423,6 @@ function frame() {
 
     if (!reduce) {
 
-        /* Floating hero drinks */
-
         leftCup.position.y =
             -.1 + Math.sin(t * .7) * .12;
 
@@ -3476,11 +3432,7 @@ function frame() {
         rightCup.position.y =
             -.15 + Math.sin(t * .75 + 2) * .12;
 
-        /* Feature fruit */
-
         featureFruit.rotation.y += .004;
-
-        /* Ingredients on shelf */
 
         draggable.forEach((f, i) => {
 
@@ -3516,19 +3468,16 @@ function frame() {
 
     renderer.render(scene, camera);
 
-    /* Update liquid stream every frame */
-
     refreshStream();
 
     gameRenderer.render(gameScene, gameCamera);
 }
 
 frame();
-
 refreshRecipe();
 
 /* ==========================================
-   LOADING ANIMATION
+   LOADING
 ========================================== */
 
 const loader = gsap.timeline({
@@ -3536,7 +3485,6 @@ const loader = gsap.timeline({
     onComplete() {
 
         document.querySelector('#loader').remove();
-
         ScrollTrigger.refresh();
     }
 });
