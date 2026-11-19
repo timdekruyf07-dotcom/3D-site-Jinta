@@ -19,13 +19,9 @@
     --ink: #24112f;
 }
 
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
-html {
-    scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
     margin: 0;
@@ -35,15 +31,8 @@ body {
     font-family: 'DM Sans', sans-serif;
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-button {
-    font: inherit;
-    cursor: pointer;
-}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
 
 button:focus-visible,
 a:focus-visible {
@@ -82,9 +71,7 @@ a:focus-visible {
 }
 
 .header a,
-.header button {
-    pointer-events: auto;
-}
+.header button { pointer-events: auto; }
 
 .logo {
     font: 32px/.9 'Archivo Black', sans-serif;
@@ -153,9 +140,7 @@ a:focus-visible {
 }
 
 .content a,
-.content button {
-    pointer-events: auto;
-}
+.content button { pointer-events: auto; }
 
 /* ==========================================
    HERO
@@ -219,9 +204,7 @@ a:focus-visible {
    FLAVOURS
 ========================================== */
 
-#flavours {
-    background: #f8e8e8;
-}
+#flavours { background: #f8e8e8; }
 
 .flavour-top {
     position: absolute;
@@ -316,9 +299,7 @@ a:focus-visible {
     transition: transform .25s, border-color .25s;
 }
 
-.flavour-option:hover {
-    transform: translateY(-4px);
-}
+.flavour-option:hover { transform: translateY(-4px); }
 
 .flavour-option.active {
     border-color: var(--ink);
@@ -461,12 +442,15 @@ a:focus-visible {
     touch-action: none;
 }
 
-#blenderCanvas.dragging {
-    cursor: grabbing;
-}
+#blenderCanvas.dragging { cursor: grabbing; }
 
 #blenderCanvas.result-active {
+    z-index: 8;
     cursor: grab;
+}
+
+#blenderCanvas.result-active:active {
+    cursor: grabbing;
 }
 
 .drop-hint {
@@ -480,7 +464,7 @@ a:focus-visible {
 }
 
 /* ==========================================
-   RESULT CUP OVERLAY
+   CUSTOM MIX RESULT
 ========================================== */
 
 .cup-result {
@@ -498,7 +482,6 @@ a:focus-visible {
     visibility: visible;
     z-index: 9;
     pointer-events: none;
-    background: transparent;
 }
 
 .result-header {
@@ -560,12 +543,10 @@ a:focus-visible {
     font: 700 11px 'DM Mono', monospace;
 }
 
-.result-instruction {
-    opacity: .7;
-}
+.result-instruction { opacity: .7; }
 
 /* ==========================================
-   RECIPE TICKET
+   RECIPE
 ========================================== */
 
 .recipe {
@@ -767,7 +748,7 @@ a:focus-visible {
 }
 
 /* ==========================================
-   TICKER
+   TICKER & FOOTER
 ========================================== */
 
 .ticker {
@@ -787,14 +768,8 @@ a:focus-visible {
 }
 
 @keyframes marquee {
-    to {
-        transform: translateX(-50%);
-    }
+    to { transform: translateX(-50%); }
 }
-
-/* ==========================================
-   FOOTER
-========================================== */
 
 footer {
     position: relative;
@@ -868,49 +843,21 @@ footer h2 {
 ========================================== */
 
 @media (max-width: 1000px) {
-    .game-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .game-stage {
-        min-height: 470px;
-    }
-
-    .picker-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
+    .game-layout { grid-template-columns: 1fr; }
+    .game-stage { min-height: 470px; }
+    .picker-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 @media (max-width: 650px) {
-    .header {
-        padding: 20px;
-    }
+    .header { padding: 20px; }
+    .logo { font-size: 26px; }
+    .nav { gap: 12px; }
+    .nav a { display: none; }
 
-    .logo {
-        font-size: 26px;
-    }
+    .hero-title { font-size: 32vw; }
+    .hero-copy { font-size: 10px; bottom: 15%; }
 
-    .nav {
-        gap: 12px;
-    }
-
-    .nav a {
-        display: none;
-    }
-
-    .hero-title {
-        font-size: 32vw;
-    }
-
-    .hero-copy {
-        font-size: 10px;
-        bottom: 15%;
-    }
-
-    .flavour-title {
-        top: 25%;
-        font-size: 13vw;
-    }
+    .flavour-title { top: 25%; font-size: 13vw; }
 
     .flavour-description {
         top: 54%;
@@ -921,13 +868,8 @@ footer h2 {
         text-align: center;
     }
 
-    .flavour-description h3 {
-        font-size: 24px;
-    }
-
-    .flavour-description p {
-        font-size: 11px;
-    }
+    .flavour-description h3 { font-size: 24px; }
+    .flavour-description p { font-size: 11px; }
 
     .flavour-selector {
         left: 50%;
@@ -939,56 +881,24 @@ footer h2 {
         box-shadow: 5px 5px 0 var(--ink);
     }
 
-    .flavour-option {
-        min-height: 61px;
-        padding: 6px 2px;
-    }
+    .flavour-option { min-height: 61px; padding: 6px 2px; }
+    .swatch { height: 24px; width: 24px; }
+    .option-name { font-size: 8px; }
+    .selector-heading { font-size: 10px; }
 
-    .swatch {
-        width: 24px;
-        height: 24px;
-    }
-
-    .option-name {
-        font-size: 8px;
-    }
-
-    .selector-heading {
-        font-size: 10px;
-    }
-
-    #play {
-        padding: 95px 4vw 65px;
-    }
-
-    .play-head {
-        display: block;
-    }
-
-    .play-head h2 {
-        font-size: 15vw;
-    }
-
-    .play-head p {
-        max-width: 400px;
-    }
+    #play { padding: 95px 4vw 65px; }
+    .play-head { display: block; }
+    .play-head h2 { font-size: 15vw; }
+    .play-head p { max-width: 400px; }
 
     .game-stage {
         min-height: 390px;
         box-shadow: 5px 5px 0 var(--ink);
     }
 
-    .recipe {
-        box-shadow: 5px 5px 0 var(--ink);
-    }
-
-    .picker-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .pick-btn {
-        min-height: 85px;
-    }
+    .recipe { box-shadow: 5px 5px 0 var(--ink); }
+    .picker-grid { grid-template-columns: repeat(3, 1fr); }
+    .pick-btn { min-height: 85px; }
 
     .play-bottom,
     .footer-bottom {
@@ -996,28 +906,14 @@ footer h2 {
         align-items: flex-start;
     }
 
-    .result-details {
-        bottom: 5%;
-        gap: 5px;
-    }
-
-    .result-details h3 {
-        font-size: 23px;
-    }
-
-    .result-instruction {
-        display: none;
-    }
+    .result-details { bottom: 5%; gap: 5px; }
+    .result-details h3 { font-size: 23px; }
+    .result-instruction { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
-    }
-
-    .ticker-track {
-        animation: none;
-    }
+    html { scroll-behavior: auto; }
+    .ticker-track { animation: none; }
 
     *,
     *::before,
@@ -1033,40 +929,22 @@ footer h2 {
 
 <body>
 
-<!-- ==========================================
-     LOADING SCREEN
-========================================== -->
-
+<!-- LOADING SCREEN -->
 <div class="loader" id="loader">
     <h1>FRUIT.</h1>
     <p>PREPARING THE GOOD STUFF...</p>
-
     <div class="loader-track">
         <div class="loader-fill" id="loadFill"></div>
     </div>
 </div>
 
-<!-- ==========================================
-     PROGRESS
-========================================== -->
-
 <div class="progress">
     <span class="progress-fill" id="progressFill"></span>
 </div>
 
-<!-- ==========================================
-     WEBGL
-========================================== -->
+<canvas id="webgl" aria-label="Geanimeerde 3D-drankproducten"></canvas>
 
-<canvas
-    id="webgl"
-    aria-label="Geanimeerde 3D-drankproducten">
-</canvas>
-
-<!-- ==========================================
-     HEADER
-========================================== -->
-
+<!-- HEADER -->
 <header class="header">
     <a href="#hero" class="logo">FRUIT®</a>
 
@@ -1075,9 +953,7 @@ footer h2 {
         <a href="#flavours">FLAVOURS</a>
         <a href="#play">PLAY</a>
 
-        <button
-            id="nextScene"
-            aria-label="Volgende scène">
+        <button id="nextScene" aria-label="Volgende scène">
             ↗
         </button>
     </nav>
@@ -1085,19 +961,12 @@ footer h2 {
 
 <main>
 
-<!-- ==========================================
-     HERO
-========================================== -->
-
+<!-- HERO -->
 <section class="section" id="hero">
     <div class="content">
-        <div class="eyebrow">
-            THE GOOD STUFF / 001
-        </div>
+        <div class="eyebrow">THE GOOD STUFF / 001</div>
 
-        <h1 class="hero-title" id="heroTitle">
-            FRUIT
-        </h1>
+        <h1 class="hero-title" id="heroTitle">FRUIT</h1>
 
         <div class="hero-copy">
             SIX FLAVOURS.<br>
@@ -1105,35 +974,22 @@ footer h2 {
             ZERO BORING DESIGN.
         </div>
 
-        <div class="scene-number">
-            01 / 03
-        </div>
-
-        <div class="scroll-note">
-            SCROLL TO EXPLORE ↓
-        </div>
+        <div class="scene-number">01 / 03</div>
+        <div class="scroll-note">SCROLL TO EXPLORE ↓</div>
     </div>
 </section>
 
-<!-- ==========================================
-     FLAVOURS
-========================================== -->
-
+<!-- FLAVOURS -->
 <section class="section" id="flavours">
     <div class="content">
-        <div class="flavour-top">
-            PICK YOUR FLAVOUR / 002
-        </div>
+        <div class="flavour-top">PICK YOUR FLAVOUR / 002</div>
 
         <h2 class="flavour-title" id="flavourTitle">
             <span>SO</span> STRAWBERRY
         </h2>
 
         <div class="flavour-description">
-            <h3 id="flavourName">
-                STRAWBERRY RUSH
-            </h3>
-
+            <h3 id="flavourName">STRAWBERRY RUSH</h3>
             <p id="flavourDescription">
                 Big berry energy. Sweet design. Bold personality.
             </p>
@@ -1159,10 +1015,7 @@ footer h2 {
     </div>
 </section>
 
-<!-- ==========================================
-     PLAY WITH YOUR FOOD
-========================================== -->
-
+<!-- PLAY WITH YOUR FOOD -->
 <section id="play">
 
     <div class="play-head">
@@ -1186,16 +1039,11 @@ footer h2 {
 
     <div class="game-layout">
 
-        <!-- 3D BLENDER -->
-
         <div class="game-stage" id="gameStage">
-
             <canvas
                 id="blenderCanvas"
                 aria-label="Interactieve 3D-blender met sleepbaar fruit">
             </canvas>
-
-            <!-- CUSTOM DRINK RESULT -->
 
             <div
                 class="cup-result"
@@ -1204,9 +1052,7 @@ footer h2 {
                 aria-hidden="true">
 
                 <div class="result-header">
-                    <span>
-                        ✳ FRESH FROM THE BLENDER
-                    </span>
+                    <span>✳ FRESHLY POURED / YOUR OWN MIX</span>
 
                     <button
                         type="button"
@@ -1217,51 +1063,35 @@ footer h2 {
                 </div>
 
                 <div class="result-details">
-
-                    <h3>
-                        YOUR OWN<br>MIX!
-                    </h3>
+                    <h3>YOUR OWN<br>MIX!</h3>
 
                     <p id="resultIngredients"></p>
-
-                    <strong id="resultHex">
-                        #FFFFFF
-                    </strong>
+                    <strong id="resultHex">#FFFFFF</strong>
 
                     <p class="result-instruction">
-                        SLEEP OVER DE BEKER OM HEM TE DRAAIEN ↔
+                        DRAAI DE BEKER MET JE MUIS OF VINGER ↔
                     </p>
 
-                    <button
-                        type="button"
-                        id="newMixBtn">
+                    <button type="button" id="newMixBtn">
                         ↺ MAAK NOG EEN MIX
                     </button>
-
                 </div>
             </div>
 
             <span class="drop-hint" id="dropHint">
                 KIES FRUIT LINKS · DROP IN DE KAN RECHTS ↗
             </span>
-
         </div>
 
-        <!-- RECIPE -->
-
         <aside class="recipe">
-
             <div class="receipt-top">
                 *** FRUIT LAB / MIX TICKET ***
             </div>
 
             <h3>YOUR MIX.</h3>
-
             <hr class="dash">
 
-            <div class="recipe-label">
-                INGREDIENTS / MAX 8
-            </div>
+            <div class="recipe-label">INGREDIENTS / MAX 8</div>
 
             <ul
                 class="ingredients"
@@ -1271,36 +1101,22 @@ footer h2 {
                 <li class="empty">
                     NOG GEEN FRUIT TOEGEVOEGD.
                 </li>
-
             </ul>
 
             <hr class="dash">
 
-            <div class="recipe-label">
-                COLOUR PREVIEW
-            </div>
+            <div class="recipe-label">COLOUR PREVIEW</div>
 
             <div class="mix-preview">
-
-                <div
-                    class="color-disc"
-                    id="colorDisc">
-                </div>
+                <div class="color-disc" id="colorDisc"></div>
 
                 <div>
-                    <strong id="colorCode">
-                        #F5F0E4
-                    </strong>
-
-                    <small id="mixCount">
-                        0 INGREDIENTEN
-                    </small>
+                    <strong id="colorCode">#F5F0E4</strong>
+                    <small id="mixCount">0 INGREDIENTEN</small>
                 </div>
-
             </div>
 
             <div class="actions">
-
                 <button
                     class="action-btn"
                     id="blendBtn"
@@ -1313,7 +1129,6 @@ footer h2 {
                     id="resetBtn">
                     ↺ RESET
                 </button>
-
             </div>
 
             <div
@@ -1322,49 +1137,30 @@ footer h2 {
                 aria-live="polite">
                 DROP FRUIT TO GET STARTED.
             </div>
-
         </aside>
-
     </div>
 
-    <!-- INGREDIENT SHELF -->
-
     <div class="ingredient-picker">
-
-        <h3>
-            THE INGREDIENT SHELF ↗
-        </h3>
+        <h3>THE INGREDIENT SHELF ↗</h3>
 
         <p>
             JE KUNT OOK HIER KLIKKEN OM FRUIT TOE
             TE VOEGEN. DEZELFDE SMAAK MAG VAKER.
         </p>
 
-        <div
-            class="picker-grid"
-            id="pickerGrid">
-        </div>
-
+        <div class="picker-grid" id="pickerGrid"></div>
     </div>
 
     <div class="play-bottom">
-
         <span>
             7 INGREDIENTEN · ONE BLENDER · ENDLESS POSSIBILITIES
         </span>
 
-        <a href="#flavours">
-            ← BACK TO FLAVOURS
-        </a>
-
+        <a href="#flavours">← BACK TO FLAVOURS</a>
     </div>
 </section>
 
 </main>
-
-<!-- ==========================================
-     TICKER
-========================================== -->
 
 <div class="ticker" id="ticker">
     <div class="ticker-track">
@@ -1374,42 +1170,19 @@ footer h2 {
     </div>
 </div>
 
-<!-- ==========================================
-     FOOTER
-========================================== -->
-
 <footer>
-
-    <h2>
-        STAY<br>JUICY.
-    </h2>
+    <h2>STAY<br>JUICY.</h2>
 
     <div class="footer-bottom">
-
-        <span>
-            © 2026 FRUIT LAB — INTERACTIVE CONCEPT
-        </span>
-
-        <span>
-            THREE.JS / GSAP / WEBGL
-        </span>
-
-        <a href="#hero">
-            BACK TO TOP ↑
-        </a>
-
+        <span>© 2026 FRUIT LAB — INTERACTIVE CONCEPT</span>
+        <span>THREE.JS / GSAP / WEBGL</span>
+        <a href="#hero">BACK TO TOP ↑</a>
     </div>
-
 </footer>
-
-<!-- ==========================================
-     JAVASCRIPT
-========================================== -->
 
 <script type="module">
 
-import * as THREE from
-'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
 
 const gsap = window.gsap;
 const ScrollTrigger = window.ScrollTrigger;
@@ -1589,13 +1362,14 @@ function smoothColor(material, hex, duration = .6) {
 }
 
 /* ==========================================
-   CREATE 3D FRUIT
+   CREATE FRUIT MODELS
 ========================================== */
 
 function fruitModel(id) {
 
     const g = new THREE.Group();
     const item = findIngredient(id);
+
     const skin = mat(item.color, .32);
     const leafMat = mat('#267943', .55);
 
@@ -1784,7 +1558,6 @@ function fruitModel(id) {
     else if (id === 'grape') {
 
         for (let row = 0; row < 4; row++) {
-
             for (let col = 0; col < 3 - row % 2; col++) {
 
                 const b = mesh(
@@ -1846,7 +1619,7 @@ function fruitModel(id) {
 }
 
 /* ==========================================
-   BACKGROUND THREE.JS
+   BACKGROUND 3D SCENE
 ========================================== */
 
 const bgCanvas = document.querySelector('#webgl');
@@ -1886,7 +1659,7 @@ rim.position.set(-5, 3, -4);
 scene.add(rim);
 
 /* ==========================================
-   CUP LABEL TEXTURE
+   CUP LABEL
 ========================================== */
 
 function cupLabel(flavour) {
@@ -1924,13 +1697,12 @@ function cupLabel(flavour) {
 }
 
 /* ==========================================
-   CREATE 3D DRINK CUP
+   CREATE 3D CUP
 ========================================== */
 
 function makeCup(flavour) {
 
     const g = new THREE.Group();
-
     const bodyMat = mat(flavour.primary, .25);
 
     g.add(
@@ -1950,13 +1722,8 @@ function makeCup(flavour) {
 
     const dome = mesh(
         new THREE.SphereGeometry(
-            .65,
-            32,
-            16,
-            0,
-            Math.PI * 2,
-            0,
-            Math.PI / 2
+            .65, 32, 16, 0,
+            Math.PI * 2, 0, Math.PI / 2
         ),
         new THREE.MeshPhysicalMaterial({
             color: 'white',
@@ -1988,12 +1755,8 @@ function makeCup(flavour) {
 
     const label = mesh(
         new THREE.CylinderGeometry(
-            .708,
-            .508,
-            1.5,
-            48,
-            1,
-            true,
+            .708, .508, 1.5, 48,
+            1, true,
             -Math.PI * .83,
             Math.PI * 1.66
         ),
@@ -2003,17 +1766,10 @@ function makeCup(flavour) {
     label.position.y = -.13;
     g.add(label);
 
-    g.userData = {
-        bodyMat,
-        labelMat
-    };
+    g.userData = { bodyMat, labelMat };
 
     return g;
 }
-
-/* ==========================================
-   RECOLOR CUP
-========================================== */
 
 function recolorCup(cup, flavour) {
 
@@ -2061,7 +1817,6 @@ scene.add(flavourGroup);
 
 let featureFruit = fruitModel('strawberry');
 featureFruit.scale.setScalar(2.3);
-
 flavourGroup.add(featureFruit);
 
 const miniCup = makeCup(FLAVOURS[0]);
@@ -2110,11 +1865,7 @@ function selectFlavour(i) {
             Number(b.dataset.flavour) === activeFlavour;
 
         b.classList.toggle('active', active);
-
-        b.setAttribute(
-            'aria-pressed',
-            String(active)
-        );
+        b.setAttribute('aria-pressed', String(active));
     });
 
     document.querySelector('#flavourTitle').innerHTML =
@@ -2189,7 +1940,6 @@ function selectFlavour(i) {
 }
 
 flavourGrid.addEventListener('click', e => {
-
     const b = e.target.closest('[data-flavour]');
 
     if (b) {
@@ -2229,17 +1979,13 @@ t1.to(heroGroup.rotation, {
 }, 0);
 
 t1.to(heroGroup.scale, {
-    x: .2,
-    y: .2,
-    z: .2,
+    x: .2, y: .2, z: .2,
     duration: 1,
     ease: 'none'
 }, 0);
 
 t1.to(flavourGroup.scale, {
-    x: 1,
-    y: 1,
-    z: 1,
+    x: 1, y: 1, z: 1,
     duration: .75,
     ease: 'none'
 }, .25);
@@ -2290,9 +2036,7 @@ t2.to(flavourGroup.rotation, {
 }, 0);
 
 t2.to(flavourGroup.scale, {
-    x: .1,
-    y: .1,
-    z: .1,
+    x: .1, y: .1, z: .1,
     duration: 1,
     ease: 'none'
 }, 0);
@@ -2304,23 +2048,20 @@ t2.to(motion, {
     ease: 'none'
 }, 0);
 
-/* ==========================================
-   SCROLL PROGRESS
-========================================== */
+/* SCROLL PROGRESS */
 
 ScrollTrigger.create({
     trigger: document.body,
     start: 'top top',
     end: 'bottom bottom',
+
     onUpdate: self => {
         document.querySelector('#progressFill').style.width =
             `${self.progress * 100}%`;
     }
 });
 
-/* ==========================================
-   NEXT SCENE BUTTON
-========================================== */
+/* NEXT SCENE */
 
 document.querySelector('#nextScene').addEventListener('click', () => {
 
@@ -2339,9 +2080,7 @@ document.querySelector('#nextScene').addEventListener('click', () => {
     });
 });
 
-/* ==========================================
-   MOUSE PARALLAX
-========================================== */
+/* MOUSE PARALLAX */
 
 let mx = 0;
 let my = 0;
@@ -2371,10 +2110,7 @@ gameRenderer.toneMapping = THREE.ACESFilmicToneMapping;
 const gameScene = new THREE.Scene();
 
 const gameCamera = new THREE.PerspectiveCamera(
-    35,
-    1,
-    .1,
-    100
+    35, 1, .1, 100
 );
 
 gameCamera.position.set(0, 1.2, 13);
@@ -2393,7 +2129,7 @@ gameRim.position.set(4, 4, -4);
 gameScene.add(gameRim);
 
 /* ==========================================
-   TABLE SURFACE
+   TABLE
 ========================================== */
 
 const surface = mesh(
@@ -2405,7 +2141,7 @@ surface.position.set(0, -2.65, -.3);
 gameScene.add(surface);
 
 /* ==========================================
-   DRAGGABLE FRUITS
+   FRUITS
 ========================================== */
 
 const fruitPositions = [
@@ -2446,14 +2182,13 @@ INGREDIENTS.forEach((item, i) => {
 });
 
 /* ==========================================
-   CREATE BLENDER
+   BLENDER BASE
 ========================================== */
 
 const blender = new THREE.Group();
+
 blender.position.set(2.25, -.25, 0);
 gameScene.add(blender);
-
-/* BASE */
 
 const base = mesh(
     new THREE.CylinderGeometry(1.05, 1.15, .85, 48),
@@ -2463,8 +2198,6 @@ const base = mesh(
 base.position.y = -1.8;
 blender.add(base);
 
-/* BASE TRIM */
-
 const baseTrim = mesh(
     new THREE.CylinderGeometry(1.14, 1.14, .08, 48),
     mat('#34303b', .28)
@@ -2472,8 +2205,6 @@ const baseTrim = mesh(
 
 baseTrim.position.y = -2.22;
 blender.add(baseTrim);
-
-/* CONTROL DIAL */
 
 const dial = mesh(
     new THREE.CylinderGeometry(.24, .24, .12, 30),
@@ -2484,7 +2215,9 @@ dial.rotation.x = Math.PI / 2;
 dial.position.set(0, -1.72, 1.09);
 blender.add(dial);
 
-/* GLASS JAR */
+/* ==========================================
+   BLENDER JAR
+========================================== */
 
 const glassMaterial = new THREE.MeshPhysicalMaterial({
     color: '#ffffff',
@@ -2504,8 +2237,6 @@ const jar = mesh(
 jar.position.y = .15;
 blender.add(jar);
 
-/* JAR BOTTOM */
-
 const jarBottom = mesh(
     new THREE.CylinderGeometry(.72, .72, .1, 48),
     mat('#b8cad1', .25)
@@ -2513,8 +2244,6 @@ const jarBottom = mesh(
 
 jarBottom.position.y = -1.22;
 blender.add(jarBottom);
-
-/* JAR RIM */
 
 const rimJar = mesh(
     new THREE.TorusGeometry(.99, .055, 12, 48),
@@ -2546,8 +2275,6 @@ const lid = mesh(
 lid.position.y = 1.62;
 blender.add(lid);
 
-/* LID KNOB */
-
 const lidKnob = mesh(
     new THREE.CylinderGeometry(.25, .25, .18, 32),
     mat('#f4eeeb')
@@ -2557,7 +2284,7 @@ lidKnob.position.y = 1.79;
 blender.add(lidKnob);
 
 /* ==========================================
-   LIQUID
+   BLENDER LIQUID
 ========================================== */
 
 const liquidMaterial = new THREE.MeshPhysicalMaterial({
@@ -2584,8 +2311,8 @@ blender.add(liquid);
 ========================================== */
 
 const blades = new THREE.Group();
-blades.position.y = -1.06;
 
+blades.position.y = -1.06;
 blender.add(blades);
 
 for (let i = 0; i < 4; i++) {
@@ -2600,7 +2327,7 @@ for (let i = 0; i < 4; i++) {
 }
 
 /* ==========================================
-   DROP GLOW
+   DROP HIGHLIGHT
 ========================================== */
 
 const blenderGlow = mesh(
@@ -2618,17 +2345,154 @@ blenderGlow.position.y = 1.52;
 blender.add(blenderGlow);
 
 /* ==========================================
+   NEW: REMOVABLE BLENDER JUG
+========================================== */
+
+const jugPivot = new THREE.Group();
+
+jugPivot.position.set(0, -1.18, 0);
+blender.add(jugPivot);
+
+for (const part of [
+    jar,
+    jarBottom,
+    rimJar,
+    handle,
+    lid,
+    lidKnob,
+    liquid,
+    blades
+]) {
+    blender.remove(part);
+
+    part.position.y += 1.18;
+
+    jugPivot.add(part);
+}
+
+/* ==========================================
+   NEW: REALISTIC FILL HEIGHT
+========================================== */
+
+const FILL_MAX = 2.22;
+
+let fillLevel = .03;
+
+function setFillLevel(level, duration = .45) {
+
+    fillLevel = Math.max(
+        .03,
+        Math.min(FILL_MAX, level)
+    );
+
+    gsap.to(liquid.scale, {
+        y: fillLevel,
+        duration: reduce ? 0 : duration,
+        overwrite: true,
+        ease: 'power2.out'
+    });
+
+    gsap.to(liquid.position, {
+        y: .13 + fillLevel / 2,
+        duration: reduce ? 0 : duration,
+        overwrite: true,
+        ease: 'power2.out'
+    });
+}
+
+setFillLevel(.03, 0);
+
+/* ==========================================
+   NEW: CUP POSITION
+========================================== */
+
+const CUP_SPOT = new THREE.Vector3(
+    -.42,
+    -1.38,
+    1.05
+);
+
+/* ==========================================
+   NEW: POURING LIQUID STREAM
+========================================== */
+
+const juiceStream = mesh(
+    new THREE.CylinderGeometry(.09, .065, 1, 16),
+    new THREE.MeshBasicMaterial({
+        color: '#ff7799',
+        transparent: true,
+        opacity: 0,
+        depthWrite: false
+    })
+);
+
+juiceStream.visible = false;
+
+gameScene.add(juiceStream);
+
+const streamProgress = { value: 0 };
+
+const sourceWorld = new THREE.Vector3();
+const endWorld = new THREE.Vector3();
+const streamDelta = new THREE.Vector3();
+
+function refreshStream() {
+
+    if (!juiceStream.visible) return;
+
+    jugPivot.updateWorldMatrix(true, false);
+
+    sourceWorld.copy(
+        jugPivot.localToWorld(
+            new THREE.Vector3(-.91, 2.68, .17)
+        )
+    );
+
+    endWorld.set(
+        CUP_SPOT.x,
+        CUP_SPOT.y + 1.12,
+        CUP_SPOT.z
+    );
+
+    streamDelta.copy(endWorld).sub(sourceWorld);
+
+    const portion = Math.max(
+        .001,
+        streamProgress.value
+    );
+
+    juiceStream.position
+        .copy(sourceWorld)
+        .addScaledVector(streamDelta, portion * .5);
+
+    juiceStream.quaternion.setFromUnitVectors(
+        new THREE.Vector3(0, 1, 0),
+        streamDelta.clone().normalize()
+    );
+
+    juiceStream.scale.set(
+        1,
+        streamDelta.length() * portion,
+        1
+    );
+
+    juiceStream.material.opacity = .83 * portion;
+}
+
+/* ==========================================
    CUSTOM RESULT CUP
 ========================================== */
 
 const resultRoot = new THREE.Group();
 
-resultRoot.position.set(0, -.2, 7);
+resultRoot.position.copy(CUP_SPOT);
 resultRoot.scale.setScalar(0);
 
 gameScene.add(resultRoot);
 
 let resultCup = null;
+let resultLiquid = null;
+
 let resultVisible = false;
 let rotatingResult = false;
 let resultPointerX = 0;
@@ -2636,13 +2500,12 @@ let resultPointerX = 0;
 const resultPanel = document.querySelector('#cupResult');
 
 /* ==========================================
-   CUSTOM LABEL TEXTURE
+   CUSTOM LABEL
 ========================================== */
 
 function makeCustomLabel(color, ids) {
 
     const c = document.createElement('canvas');
-
     c.width = 1024;
     c.height = 1024;
 
@@ -2663,8 +2526,6 @@ function makeCustomLabel(color, ids) {
     x.fillText('YOUR', 512, 355);
     x.fillText('MIX!', 512, 515);
 
-    /* MIX COLOUR CIRCLE */
-
     x.fillStyle = color;
     x.beginPath();
     x.arc(512, 690, 115, 0, Math.PI * 2);
@@ -2680,23 +2541,25 @@ function makeCustomLabel(color, ids) {
     x.fillText(color.toUpperCase(), 512, 885);
 
     x.font = 'bold 23px monospace';
+
     x.fillText(
         ids.length + ' INGREDIENTEN · MADE BY YOU',
         512,
         960
     );
 
-    const texture = new THREE.CanvasTexture(c);
-    texture.colorSpace = THREE.SRGBColorSpace;
+    const t = new THREE.CanvasTexture(c);
 
-    return texture;
+    t.colorSpace = THREE.SRGBColorSpace;
+
+    return t;
 }
 
 /* ==========================================
-   SHOW FINISHED MIX
+   PREPARE EMPTY CUP
 ========================================== */
 
-function showResult(color, ids) {
+function prepareResult(color, ids) {
 
     const texture = makeCustomLabel(color, ids);
 
@@ -2707,8 +2570,6 @@ function showResult(color, ids) {
         short: 'MY MIX'
     };
 
-    /* REMOVE PREVIOUS CUP */
-
     if (resultCup) {
 
         resultRoot.remove(resultCup);
@@ -2716,7 +2577,6 @@ function showResult(color, ids) {
         resultCup.traverse(o => {
 
             if (o.isMesh) {
-
                 o.geometry.dispose();
 
                 if (o.material.map) {
@@ -2728,8 +2588,6 @@ function showResult(color, ids) {
         });
     }
 
-    /* CREATE NEW CUP */
-
     resultCup = makeCup(flavour);
 
     resultCup.userData.labelMat.map.dispose();
@@ -2739,13 +2597,38 @@ function showResult(color, ids) {
 
     resultRoot.add(resultCup);
 
-    /* START POSITION */
+    /* Transparent cup */
 
-    resultRoot.rotation.set(0, -.4, 0);
+    resultCup.userData.bodyMat.transparent = true;
+    resultCup.userData.bodyMat.opacity = .24;
+    resultCup.userData.bodyMat.depthWrite = false;
+
+    /* Start without a lid */
+
+    resultCup.children[1].visible = false;
+    resultCup.children[2].visible = false;
+    resultCup.children[3].visible = false;
+
+    /* Liquid inside the cup */
+
+    resultLiquid = mesh(
+        new THREE.CylinderGeometry(.57, .43, 1, 40),
+        new THREE.MeshStandardMaterial({
+            color,
+            transparent: true,
+            opacity: .92,
+            roughness: .2
+        })
+    );
+
+    resultLiquid.position.y = -1.08;
+    resultLiquid.scale.y = .001;
+
+    resultCup.add(resultLiquid);
+
+    resultRoot.position.copy(CUP_SPOT);
+    resultRoot.rotation.set(0, -.12, 0);
     resultRoot.scale.setScalar(0);
-    resultRoot.position.set(0, -2.7, 7);
-
-    /* UPDATE RESULT INFORMATION */
 
     document.querySelector('#resultHex').textContent =
         color;
@@ -2766,7 +2649,14 @@ function showResult(color, ids) {
             )
             .join(' + ');
 
-    /* SHOW RESULT PANEL */
+    resultVisible = false;
+}
+
+/* ==========================================
+   SHOW FINISHED CUP
+========================================== */
+
+function showResult() {
 
     resultVisible = true;
 
@@ -2779,29 +2669,11 @@ function showResult(color, ids) {
 
     gameCanvas.classList.add('result-active');
 
-    /* CUP ENTRANCE ANIMATION */
-
-    gsap.timeline()
-
-        .to(resultRoot.position, {
-            y: .35,
-            duration: reduce ? 0 : .9,
-            ease: 'back.out(1.5)'
-        }, 0)
-
-        .to(resultRoot.scale, {
-            x: 1.42,
-            y: 1.42,
-            z: 1.42,
-            duration: reduce ? 0 : .9,
-            ease: 'back.out(1.6)'
-        }, 0)
-
-        .to(resultRoot.rotation, {
-            y: Math.PI * 2 - .4,
-            duration: reduce ? 0 : 1.2,
-            ease: 'power3.out'
-        }, 0);
+    gsap.to(resultRoot.rotation, {
+        y: Math.PI * 2 - .12,
+        duration: reduce ? 0 : 1.15,
+        ease: 'power2.out'
+    });
 }
 
 /* ==========================================
@@ -2831,35 +2703,34 @@ function hideResult() {
         duration: reduce ? 0 : .35,
         overwrite: true
     });
-}
 
-/* ==========================================
-   RESULT BUTTONS
-========================================== */
+    gsap.to(jugPivot.position, {
+        y: -1.18,
+        duration: reduce ? 0 : .35,
+        overwrite: true
+    });
+
+    gsap.to(jugPivot.rotation, {
+        z: 0,
+        duration: reduce ? 0 : .35,
+        overwrite: true
+    });
+
+    juiceStream.visible = false;
+    streamProgress.value = 0;
+}
 
 document.querySelector('#closeResult')
     .addEventListener('click', hideResult);
 
-document.querySelector('#newMixBtn')
-    .addEventListener('click', () => {
-
-        hideResult();
-
-        recipe.length = 0;
-
-        blendStatus.textContent =
-            'READY FOR A NEW MIX.';
-
-        refreshRecipe();
-    });
-
 /* ==========================================
-   RECIPE STATE
+   RECIPE
 ========================================== */
 
 const recipe = [];
 
 let blending = false;
+let pouring = false;
 let activeDrag = null;
 
 const ingredientsEl =
@@ -2933,17 +2804,17 @@ function refreshRecipe() {
         r: c.r,
         g: c.g,
         b: c.b,
-        duration: reduce ? 0 : .5
-    });
-
-    gsap.to(liquid.scale, {
-        y: Math.max(.05, recipe.length * .17),
-        duration: reduce ? 0 : .45,
+        duration: reduce ? 0 : .5,
         overwrite: true
     });
 
-    liquid.position.y =
-        -1.15 + liquid.scale.y * .48;
+    /* Fill rises from the bottom */
+
+    if (!pouring) {
+        setFillLevel(
+            recipe.length / 8 * FILL_MAX
+        );
+    }
 }
 
 /* ==========================================
@@ -2952,7 +2823,7 @@ function refreshRecipe() {
 
 function addIngredient(id) {
 
-    if (blending) return;
+    if (blending || pouring) return;
 
     if (resultVisible) {
         hideResult();
@@ -2975,11 +2846,7 @@ function addIngredient(id) {
 
     gsap.fromTo(
         blender.scale,
-        {
-            x: 1.05,
-            y: 1.05,
-            z: 1.05
-        },
+        { x: 1.05, y: 1.05, z: 1.05 },
         {
             x: 1,
             y: 1,
@@ -2999,7 +2866,7 @@ ingredientsEl.addEventListener('click', e => {
 
     const button = e.target.closest('[data-remove]');
 
-    if (!button || blending) return;
+    if (!button || blending || pouring) return;
 
     if (resultVisible) {
         hideResult();
@@ -3040,7 +2907,6 @@ document.querySelector('#pickerGrid').innerHTML =
             <span class="pick-name">
                 + ${i.name}
             </span>
-
         </button>
 
     `).join('');
@@ -3062,7 +2928,20 @@ document.querySelector('#pickerGrid')
 document.querySelector('#resetBtn')
     .addEventListener('click', () => {
 
-        if (blending) return;
+        if (blending || pouring) return;
+
+        hideResult();
+
+        recipe.length = 0;
+
+        blendStatus.textContent =
+            'READY FOR A NEW MIX.';
+
+        refreshRecipe();
+    });
+
+document.querySelector('#newMixBtn')
+    .addEventListener('click', () => {
 
         hideResult();
 
@@ -3075,12 +2954,19 @@ document.querySelector('#resetBtn')
     });
 
 /* ==========================================
-   BLEND ANIMATION
+   NEW: COMPLETE POURING ANIMATION
 ========================================== */
 
 blendBtn.addEventListener('click', () => {
 
-    if (blending || !recipe.length) return;
+    if (
+        blending ||
+        pouring ||
+        !recipe.length ||
+        resultVisible
+    ) {
+        return;
+    }
 
     blending = true;
     blendBtn.disabled = true;
@@ -3090,54 +2976,182 @@ blendBtn.addEventListener('click', () => {
     blendStatus.textContent =
         'BLENDING IN PROGRESS...';
 
+    /* Prepare an empty cup next to the blender */
+
+    prepareResult(color, [...recipe]);
+
+    juiceStream.material.color.set(color);
+
+    const d = reduce ? 0 : 1;
+
     const tl = gsap.timeline({
 
         onComplete() {
 
             blending = false;
+            pouring = false;
 
             blendStatus.textContent =
                 `YOUR CUSTOM MIX IS READY! ${color} ✳`;
 
-            refreshRecipe();
+            blendBtn.disabled = false;
 
-            /* SHOW CUSTOM 3D CUP */
-
-            showResult(color, [...recipe]);
+            showResult();
         }
     });
 
-    /* SHAKE BLENDER */
+    /* PHASE 1 — BLEND */
 
     tl.to(blender.rotation, {
-        z: .045,
-        duration: .08,
-        repeat: 7,
+        z: .035,
+        duration: .07 * d,
+        repeat: 8,
         yoyo: true
     }, 0);
 
-    /* SPIN BLADES */
-
     tl.to(blades.rotation, {
-        y: Math.PI * 20,
-        duration: reduce ? 0 : .9,
+        y: blades.rotation.y + Math.PI * 20,
+        duration: .95 * d,
         ease: 'power2.inOut'
     }, 0);
 
-    /* LIQUID MOVEMENT */
-
-    tl.to(liquid.scale, {
-        y: Math.min(1.25, recipe.length * .18),
-        duration: reduce ? 0 : .7,
-        ease: 'back.out(1.4)'
-    }, 0);
-
-    /* RETURN TO NORMAL */
-
     tl.to(blender.rotation, {
         z: 0,
-        duration: .15
+        duration: .12 * d
     }, '>');
+
+    /* PHASE 2 — CUP APPEARS BESIDE THE BLENDER */
+
+    tl.to(resultRoot.scale, {
+        x: .86,
+        y: .86,
+        z: .86,
+        duration: .5 * d,
+        ease: 'back.out(1.3)'
+    }, '>');
+
+    tl.to(resultRoot.position, {
+        y: CUP_SPOT.y,
+        duration: .2 * d
+    }, '<');
+
+    /* PHASE 3 — LIFT JUG */
+
+    tl.call(() => {
+
+        pouring = true;
+
+        blendStatus.textContent =
+            'POURING YOUR MIX...';
+    });
+
+    tl.to(jugPivot.position, {
+        y: .35,
+        duration: .65 * d,
+        ease: 'power2.inOut'
+    }, '>');
+
+    /* PHASE 4 — TILT JUG TOWARD CUP */
+
+    tl.to(jugPivot.rotation, {
+        z: .9,
+        duration: .7 * d,
+        ease: 'power2.inOut'
+    }, '>');
+
+    /* PHASE 5 — START POURING */
+
+    tl.call(() => {
+
+        lid.visible = false;
+        lidKnob.visible = false;
+
+        juiceStream.visible = true;
+
+        streamProgress.value = 0;
+    });
+
+    /* Liquid stream grows */
+
+    tl.to(streamProgress, {
+        value: 1,
+        duration: .2 * d,
+        ease: 'power1.out'
+    }, '>');
+
+    /* Blender slowly empties */
+
+    tl.to(liquid.scale, {
+        y: .03,
+        duration: 1.25 * d,
+        ease: 'none'
+    }, '>');
+
+    tl.to(liquid.position, {
+        y: .145,
+        duration: 1.25 * d,
+        ease: 'none'
+    }, '<');
+
+    /* Cup slowly fills */
+
+    tl.to(resultLiquid.scale, {
+        y: 1.65,
+        duration: 1.25 * d,
+        ease: 'none'
+    }, '<');
+
+    tl.to(resultLiquid.position, {
+        y: -.255,
+        duration: 1.25 * d,
+        ease: 'none'
+    }, '<');
+
+    /* Liquid stream stops */
+
+    tl.to(streamProgress, {
+        value: 0,
+        duration: .25 * d,
+        ease: 'power2.in'
+    }, '>');
+
+    /* Add cup lid after pouring */
+
+    tl.call(() => {
+
+        juiceStream.visible = false;
+
+        lid.visible = true;
+        lidKnob.visible = true;
+
+        resultCup.children[1].visible = true;
+        resultCup.children[2].visible = true;
+        resultCup.children[3].visible = true;
+    });
+
+    /* PHASE 6 — PUT JUG BACK */
+
+    tl.to(jugPivot.rotation, {
+        z: 0,
+        duration: .65 * d,
+        ease: 'power2.inOut'
+    }, '>');
+
+    tl.to(jugPivot.position, {
+        y: -1.18,
+        duration: .65 * d,
+        ease: 'power2.inOut'
+    }, '<');
+
+    /* Finished cup remains standing */
+
+    tl.to(resultRoot.scale, {
+        x: 1,
+        y: 1,
+        z: 1,
+        duration: .4 * d,
+        ease: 'back.out(1.5)'
+    }, '<');
 });
 
 /* ==========================================
@@ -3155,8 +3169,6 @@ const dragPlane = new THREE.Plane(
 
 const dragHit = new THREE.Vector3();
 
-/* POINTER POSITION */
-
 function setPointer(e) {
 
     const rect = gameCanvas.getBoundingClientRect();
@@ -3168,8 +3180,6 @@ function setPointer(e) {
 
     ray.setFromCamera(pointer, gameCamera);
 }
-
-/* FIND FRUIT ROOT */
 
 function locateFruit(object) {
 
@@ -3189,9 +3199,17 @@ function locateFruit(object) {
 
 gameCanvas.addEventListener('pointerdown', e => {
 
-    /* ROTATE FINISHED DRINK */
+    /* Rotate finished cup */
 
     if (resultVisible) {
+
+        setPointer(e);
+
+        if (
+            !ray.intersectObjects([resultRoot], true).length
+        ) {
+            return;
+        }
 
         rotatingResult = true;
         resultPointerX = e.clientX;
@@ -3242,8 +3260,6 @@ gameCanvas.addEventListener('pointerdown', e => {
 
 gameCanvas.addEventListener('pointermove', e => {
 
-    /* ROTATE CUSTOM CUP */
-
     if (resultVisible) {
 
         if (rotatingResult) {
@@ -3292,13 +3308,12 @@ gameCanvas.addEventListener('pointermove', e => {
     );
 
     const over =
-        dragHit.x > 1.0 &&
+        dragHit.x > 1 &&
         dragHit.x < 3.5 &&
         dragHit.y > -.9 &&
         dragHit.y < 1.7;
 
-    blenderGlow.material.opacity =
-        over ? 1 : 0;
+    blenderGlow.material.opacity = over ? 1 : 0;
 
     e.preventDefault();
 });
@@ -3382,18 +3397,11 @@ function endDrag(e) {
     }
 }
 
-gameCanvas.addEventListener(
-    'pointerup',
-    endDrag
-);
-
-gameCanvas.addEventListener(
-    'pointercancel',
-    endDrag
-);
+gameCanvas.addEventListener('pointerup', endDrag);
+gameCanvas.addEventListener('pointercancel', endDrag);
 
 /* ==========================================
-   BLENDER RESIZE
+   RESIZE BLENDER SCENE
 ========================================== */
 
 const observer = new ResizeObserver(() => {
@@ -3457,7 +3465,7 @@ function frame() {
 
     if (!reduce) {
 
-        /* FLOATING HERO CUPS */
+        /* Floating hero drinks */
 
         leftCup.position.y =
             -.1 + Math.sin(t * .7) * .12;
@@ -3468,17 +3476,15 @@ function frame() {
         rightCup.position.y =
             -.15 + Math.sin(t * .75 + 2) * .12;
 
-        /* FEATURE FRUIT */
+        /* Feature fruit */
 
         featureFruit.rotation.y += .004;
 
-        /* DRAGGABLE FRUITS */
+        /* Ingredients on shelf */
 
         draggable.forEach((f, i) => {
 
-            if (activeDrag?.entry === f) {
-                return;
-            }
+            if (activeDrag?.entry === f) return;
 
             f.root.rotation.y =
                 Math.sin(t * .5 + i) * .15;
@@ -3489,22 +3495,16 @@ function frame() {
         });
     }
 
-    /* SMOOTH CAMERA X */
-
     camera.position.x += (
         motion.cameraX +
         (reduce ? 0 : mx * .16) -
         camera.position.x
     ) * .06;
 
-    /* SMOOTH CAMERA Y */
-
     camera.position.y += (
         (reduce ? 0 : -my * .12) -
         camera.position.y
     ) * .06;
-
-    /* SMOOTH CAMERA Z */
 
     camera.position.z += (
         motion.cameraZ +
@@ -3515,6 +3515,10 @@ function frame() {
     camera.lookAt(0, 0, 0);
 
     renderer.render(scene, camera);
+
+    /* Update liquid stream every frame */
+
+    refreshStream();
 
     gameRenderer.render(gameScene, gameCamera);
 }
